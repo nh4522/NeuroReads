@@ -1,43 +1,36 @@
-// simple client-side preview + save to localStorage demo
+
+/* small demo JS: file preview + localStorage (optional) */
 document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
   const avatarPreview = document.getElementById('avatarPreview');
+  const saveBtn = document.getElementById('saveBtn');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
-  const saveBtn = document.getElementById('saveBtn');
 
-  // load saved values
-  const savedAvatar = localStorage.getItem('nr_avatar');
-  const savedName = localStorage.getItem('nr_name');
-  const savedEmail = localStorage.getItem('nr_email');
+  // load saved
+  const img = localStorage.getItem('nr_demo_avatar');
+  if (img) avatarPreview.src = img;
+  const n = localStorage.getItem('nr_demo_name');
+  if (n) nameInput.value = n;
+  const e = localStorage.getItem('nr_demo_email');
+  if (e) emailInput.value = e;
 
-  if (savedAvatar) avatarPreview.src = savedAvatar;
-  if (savedName) nameInput.value = savedName;
-  if (savedEmail) emailInput.value = savedEmail;
-
-  // file chooser triggered by label
-  fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      avatarPreview.src = reader.result;
-      localStorage.setItem('nr_avatar', reader.result);
+  fileInput.addEventListener('change', (ev)=>{
+    const f = ev.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => {
+      avatarPreview.src = r.result;
+      localStorage.setItem('nr_demo_avatar', r.result);
     };
-    reader.readAsDataURL(file);
+    r.readAsDataURL(f);
   });
 
-  // save button stores fields (demo)
-  saveBtn.addEventListener('click', () => {
-    localStorage.setItem('nr_name', nameInput.value.trim());
-    localStorage.setItem('nr_email', emailInput.value.trim());
-
-    // simple visual feedback
+  saveBtn.addEventListener('click', ()=>{
+    localStorage.setItem('nr_demo_name', nameInput.value.trim());
+    localStorage.setItem('nr_demo_email', emailInput.value.trim());
     saveBtn.textContent = 'saved ✓';
-    saveBtn.style.background = '#b8860b';
-    setTimeout(() => {
-      saveBtn.textContent = 'save';
-      saveBtn.style.background = '';
-    }, 1200);
+    setTimeout(()=> saveBtn.textContent = 'save',1200);
   });
 });
+
