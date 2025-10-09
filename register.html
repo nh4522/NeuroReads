@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | NeuroReads</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2>Create Account</h2>
+      <p class="subtitle">Join the NeuroReads community</p>
+
+      <form>
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your name" required>
+        </div>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-group password-group">
+          <label>Password</label>
+          <input type="password" id="registerPassword" placeholder="Create a password" required>
+          <span class="toggle-password" data-target="registerPassword">👁️</span>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="input-group password-group">
+          <label>Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+          <span class="toggle-password" data-target="confirmPassword">👁️</span>
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+      </form>
+
+      <p class="footer-text">Already have an account? <a href="login.html">Log in</a></p>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+  </div>
+</body>
+</html>

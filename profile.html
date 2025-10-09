@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NeuroReads — Profile</title>
+
+  <!-- fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+  <script defer src="profile.js"></script>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- HEADER (spans full width) -->
+    <header class="topbar">
+      <div class="logo">
+        <h1>NeuroReads</h1>
+      </div>
+
+      <div class="search">
+        <input type="search" placeholder="🔍  Title, Author, ISBN" aria-label="search">
+      </div>
+
+      <div class="top-right">
+        <button class="icon-btn bell" title="Notifications">
+         <img src="icons/top-bell.png" alt="bell" />
+        </button>
+
+
+        <button class="profile-mini" title="Account">
+          <img src="icons/top-user.png" alt="user" />
+          <span class="username">User XYZ...</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden><path d="M7 10l5 5 5-5z" fill="#6b5d3c"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <nav class="side-nav">
+        <ul>
+          <li><a href="index.html"><img src="icons/home.png" alt=""><span>Home</span></a></li>
+          <li><a href="#"><img src="icons/explore.png" alt=""><span>Explore</span></a></li>
+          <li><a href="#"><img src="icons/books.png" alt=""><span>My Books</span></a></li>
+          <li><a href="#"><img src="icons/search.png" alt=""><span>Search</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""><span>Settings</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="side-bottom">
+        <div class="side-card connect">
+          <h4>Connect With Us</h4>
+          <div class="icons">
+            <a href="#"><img src="icons/gmail_icon.png" alt="mail"></a>
+            <a href="#"><img src="icons/instagram_icon.png" alt="instagram"></a>
+            <a href="#"><img src="icons/x_icon.png" alt="x"></a>
+          </div>
+        </div>
+
+        <div class="side-card support">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+
+        <div class="copyright">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-area">
+      <section class="profile-section">
+        <div class="profile-left">
+          <div class="avatar-card">
+            <img id="avatarPreview" src="images/avatar-placeholder.png" alt="avatar preview">
+          </div>
+
+          <label class="change-photo" for="fileInput">Change Photo</label>
+          <input id="fileInput" type="file" accept="image/*" style="display:none">
+        </div>
+
+        <div class="profile-right">
+          <div class="profile-header">
+            <h2>Profile</h2>
+            <p class="subtitle">Update user photo and personal details</p>
+            <button id="saveBtn" class="save-btn">save</button>
+          </div>
+
+          <form id="profileForm" class="profile-form" autocomplete="off">
+            <div class="field">
+              <label for="name">Name:</label>
+              <input id="name" name="name" type="text" placeholder="Your name">
+            </div>
+
+            <div class="field">
+              <label for="email">Email:</label>
+              <input id="email" name="email" type="email" placeholder="your@email.com">
+            </div>
+
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
