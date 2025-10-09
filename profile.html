@@ -1,6 +1,3 @@
-<!---Internal CSS due to not unable to merge .js, .css file-->
-<!--==========================================================-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,11 +56,24 @@ body {
   padding: 10px 18px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
 .nr-topbar .nr-logo {
   font-family: "Kavoon", serif;
   font-size: 28px;
   color:#3a2c17;
-  margin-right: 18px;
+  line-height: 1;
+}
+.nr-topbar .nr-subtitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  color:#6b5d3c;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
 }
 .nr-topbar .nr-search {
   flex:1;
@@ -230,15 +240,51 @@ body {
   color: #b78f5c;
 }
 
+/* User info section */
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:white;
+  padding:6px 10px;
+  border-radius:20px;
+}
+.nr-user-avatar {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.nr-username {
+  color:#3a2c17;
+  font-weight:600;
+  font-size: 14px;
+}
+
 /* small screens */
 @media (max-width:900px){
   .nr-page { grid-template-columns: 1fr; grid-template-areas: "nr-top" "nr-main"; }
   .nr-sidebar { display:none; }
   .nr-topbar .nr-logo { font-size:22px; }
+  .nr-topbar .nr-subtitle { font-size:10px; }
   .nr-topbar input[type="search"] { width:60%; }
   .nr-profile { flex-direction:column; align-items:center; gap:20px; }
   .nr-avatar-card { width:260px; height:260px; }
   .nr-main { padding: 20px; }
+  .nr-user-info { width:200px; }
 }
 </style>
 
@@ -250,13 +296,16 @@ body {
 
     <!-- topbar -->
     <header class="nr-topbar">
-      <div class="nr-logo">NeuroReads</div>
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
       <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
-      <div style="width:260px;display:flex;justify-content:flex-end;gap:10px;align-items:center;">
-        <button title="notification" style="background:transparent;border:0;cursor:pointer">🔔</button>
-        <div style="display:flex;align-items:center;gap:8px;background:white;padding:6px 10px;border-radius:20px;">
-          <img src="icons/top-user.png" alt="mini" style="width:30px;height:30px;border-radius:50%;">
-          <span style="color:#3a2c17;font-weight:600;">User XYZ...</span>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile">
+          <img src="icons/top-user.png" alt="mini" class="nr-user-avatar">
+          <span class="nr-username">User XYZ...</span>
         </div>
       </div>
     </header>
@@ -266,7 +315,7 @@ body {
       <div class="brand-name">Pages &amp; Peace</div>
       <nav class="nr-side-nav">
         <ul>
-          <li><a href="index.html"><img src="icons/home.png" alt=""> <span>Home</span></a></li>
+          <li><a href="#"><img src="icons/home.png" alt=""> <span>Home</span></a></li>
           <li><a href="#"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
           <li><a href="#"><img src="icons/books.png" alt=""> <span>My Books</span></a></li>
           <li><a href="#"><img src="icons/search.png" alt=""> <span>Search</span></a></li>
@@ -308,7 +357,7 @@ body {
         <!-- left avatar -->
         <div class="nr-avatar-col">
           <div class="nr-avatar-card">
-            <img id="avatarPreview" src="images/avatar-placeholder.png" alt="avatar preview">
+            <img id="avatarPreview" src="icons/avatar-placeholder.png" alt="avatar preview">
           </div>
           <label class="nr-change-photo" for="fileInput">Change Photo</label>
           <input id="fileInput" type="file" accept="image/*" style="display:none;">
