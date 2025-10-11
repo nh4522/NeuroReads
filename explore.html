@@ -94,6 +94,7 @@ body {
   justify-content:flex-end;
   gap:10px;
   align-items:center;
+  position: relative;
 }
 .nr-notification-btn {
   background:transparent;
@@ -109,9 +110,98 @@ body {
   background:white;
   padding:6px 10px;
   border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+.nr-user-profile:hover {
+  background: #f0f0f0;
 }
 .nr-user-avatar { width:30px; height:30px; border-radius:50%; }
 .nr-username { color:#3a2c17; font-weight:600; font-size: 14px; }
+
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #3a2c17;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #b78f5c;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
+}
 
 /* ==========================
    Sidebar
@@ -237,6 +327,11 @@ body {
   .nr-page{grid-template-columns:1fr;grid-template-areas:"nr-top" "nr-main";}
   .nr-sidebar{display:none;}
   .nr-main{padding:20px;}
+  .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
 }
 </style>
 </head>
@@ -254,9 +349,18 @@ body {
       <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
       <div class="nr-user-info">
         <button title="notification" class="nr-notification-btn">🔔</button>
-        <div class="nr-user-profile">
+        <div class="nr-user-profile" id="userProfile">
           <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
           <span class="nr-username">User XYZ</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="profile.html"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
         </div>
       </div>
     </header>
@@ -265,7 +369,7 @@ body {
     <aside class="nr-sidebar">
       <nav class="nr-side-nav">
         <ul>
-          <li><a href="home.html"><img src="icons/home.png" alt=""> Home</a></li>
+          <li><a href="profile.html"><img src="icons/home.png" alt=""> Home</a></li>
           <li><a href="explore.html" class="active"><img src="icons/explore.png" alt=""> Explore</a></li>
           <li><a href="mybooks.html"><img src="icons/books.png" alt=""> My Books</a></li>
           <li><a href="search.html"><img src="icons/search.png" alt=""> Search</a></li>
@@ -354,6 +458,40 @@ body {
 <script>
 // Wait for the DOM to load
 document.addEventListener("DOMContentLoaded", () => {
+
+  // ==========================
+  // Dropdown Menu Functionality
+  // ==========================
+  const userProfile = document.getElementById('userProfile');
+  const userDropdown = document.getElementById('userDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Dropdown menu functionality
+  userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('active');
+    userProfile.classList.toggle('dropdown-active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    userDropdown.classList.remove('active');
+    userProfile.classList.remove('dropdown-active');
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to log out?')) {
+      alert('Logging out...');
+      // Add your logout logic here
+      // window.location.href = 'login.html';
+    }
+  });
+
+  // Close dropdown when clicking on dropdown items
+  userDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 
   // Book data for different sections
   const bookData = {
