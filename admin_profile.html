@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NeuroReads — Profile Demo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================
+   Global Reset
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================
+   Body & Global Fonts
+========================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('images/white-bg.jpg') no-repeat center center/cover;
+  color: #333;
+  height: 100vh;
+}
+
+/* Profile */
+/* ---------- scoped to avoid collisions ---------- */
+.nr-wrapper { 
+  --sidebar-w: 230px; 
+  --top-h: 72px; 
+  min-height: 100vh;
+}
+
+/* Layout grid */
+.nr-page {
+  min-height:100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
+}
+
+/* Topbar */
+.nr-topbar {
+  grid-area: nr-top;
+  background: #2C8685;
+  height: var(--top-h);
+  display:flex;
+  align-items:center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
+.nr-topbar .nr-logo {
+  font-family: "Kavoon", serif;
+  font-size: 28px;
+  color:#383225;
+  line-height: 1;
+}
+.nr-topbar .nr-subtitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  color:#383225;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.nr-topbar .nr-search {
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+.nr-topbar input[type="search"] {
+  width: 60%;
+  max-width:640px;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:white;
+}
+
+/* Sidebar */
+.nr-sidebar {
+  grid-area: nr-sidebar;
+  background: #ececec;
+  padding: 18px 14px;
+  height: calc(100vh - var(--top-h));
+  position: sticky;
+  top: var(--top-h);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  border-right:1px solid rgba(0,0,0,0.04);
+  box-shadow: 6px 0 20px rgba(0,0,0,0.04);
+  overflow-y: auto;
+}
+.nr-sidebar .brand-name {
+  font-family: "Kavoon", serif;
+  color:#4b3b1a;
+  font-size:20px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* nav links */
+.nr-side-nav { width:100%; }
+.nr-side-nav ul { list-style:none; padding:0; margin:0; }
+.nr-side-nav li { margin: 12px 0; }
+.nr-side-nav a {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:#222; font-weight:600;
+  padding:8px 10px; border-radius:8px;
+}
+.nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
+.nr-side-nav a:hover { background: rgba(0,0,0,0.03); color:#b78f5c; }
+
+/* bottom cards inside sidebar */
+.nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; box-shadow:0 6px 16px rgba(0,0,0,0.04); text-align:center; }
+.nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
+.nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
+.nr-side-card .icons a { 
+  display: inline-block; 
+  transition: all 0.3s ease; 
+  border-radius: 50%; 
+  padding: 4px;
+}
+
+
+/* Main content */
+.nr-main {
+  grid-area: nr-main;
+  padding: 34px 48px;
+  background: rgba(255, 255, 255, 0.9);
+  min-height: calc(100vh - var(--top-h));
+}
+
+/* Profile layout */
+.nr-profile {
+  max-width:1100px;
+  margin: 6px auto;
+  display:flex;
+  gap:48px;
+  align-items:flex-start;
+}
+
+/* avatar left */
+.nr-avatar-col { width:360px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+.nr-avatar-card {
+  width:320px; height:320px; border-radius:16px; overflow:hidden;
+  background: white;
+  border:1px solid rgba(210,164,77,0.12);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.06);
+  display:flex; align-items:center; justify-content:center;
+}
+.nr-avatar-card img { width:92%; height:92%; object-fit:cover; border-radius:12px; }
+.nr-change-photo {
+  display:inline-block; padding:12px 34px; border-radius:18px; background:#2C8685; color:white; cursor:pointer; font-weight:600;
+  transition: background 0.3s ease;
+}
+.nr-change-photo:hover {
+  background: #8a7e76;
+}
+
+/* right col */
+.nr-info-col { flex:1; position:relative; padding-top:6px; }
+
+/* Profile heading + subtitle under it */
+.nr-profile-head { margin-bottom: 18px; }
+.nr-profile-head h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-size:36px; color:#297a79; margin:0 0 6px 0;
+}
+.nr-profile-head .subtitle {
+  display:block;
+  color:#0e1313; font-size:14px; margin-top:2px;
+}
+
+/* Save button */
+.nr-save-btn {
+  position:absolute; right:0; top:0;
+  background:#2C8685; color:white; border:0; padding:10px 16px; border-radius:18px; cursor:pointer; font-weight:600;
+  transition: background 0.3s ease;
+}
+.nr-save-btn:hover {
+  background: #ada095;
+}
+
+/* form fields */
+.nr-form { margin-top:20px; max-width:560px; }
+.nr-field { margin-bottom:18px; display:flex; flex-direction:column; }
+.nr-field label { font-weight:700; color:#3a2c17; margin-bottom:8px; }
+.nr-field input {
+  padding:12px 18px; border-radius:26px; border:1px solid rgba(210,164,77,0.18);
+  background:white; outline:none; font-size:1rem; color:#333;
+  transition: border-color 0.3s ease;
+}
+.nr-field input:focus {
+  border-color: #d2a44d;
+}
+
+
+
+/* User info section */
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:white;
+  padding:6px 10px;
+  border-radius:20px;
+}
+.nr-user-avatar {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.nr-username {
+  color:#3a2c17;
+  font-weight:600;
+  font-size: 14px;
+}
+
+/* small screens */
+@media (max-width:900px){
+  .nr-page { grid-template-columns: 1fr; grid-template-areas: "nr-top" "nr-main"; }
+  .nr-sidebar { display:none; }
+  .nr-topbar .nr-logo { font-size:22px; }
+  .nr-topbar .nr-subtitle { font-size:10px; }
+  .nr-topbar input[type="search"] { width:60%; }
+  .nr-profile { flex-direction:column; align-items:center; gap:20px; }
+  .nr-avatar-card { width:260px; height:260px; }
+  .nr-main { padding: 20px; }
+  .nr-user-info { width:200px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile">
+          <img src="icons/top-user.png" alt="mini" class="nr-user-avatar">
+          <span class="nr-username">User XYZ...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="index.html"><img src="icons/home.png" alt=""> <span>Home</span></a></li>
+          <li><a href="#"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
+          <li><a href="#"><img src="icons/books.png" alt=""> <span>My Books</span></a></li>
+          <li><a href="search.html"><img src="icons/search.png" alt=""> <span>Search</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> <span>Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        
+        
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <section class="nr-profile">
+
+        <!-- left avatar -->
+        <div class="nr-avatar-col">
+          <div class="nr-avatar-card">
+            <img id="avatarPreview" src="icons/avatar-placeholder.png" alt="avatar preview">
+          </div>
+          <label class="nr-change-photo" for="fileInput">Change Photo</label>
+          <input id="fileInput" type="file" accept="image/*" style="display:none;">
+        </div>
+
+        <!-- right info -->
+        <div class="nr-info-col">
+          <div class="nr-profile-head">
+            <h2>Profile</h2>
+            <span class="subtitle">Update user photo and personal details</span>
+          </div>
+          <button id="saveBtn" class="nr-save-btn">save</button>
+          <form id="profileForm" class="nr-form" autocomplete="off">
+            <div class="nr-field">
+              <label for="name">Name:</label>
+              <input id="name" name="name" type="text" placeholder="Your name">
+            </div>
+            <div class="nr-field">
+              <label for="email">Email:</label>
+              <input id="email" name="email" type="email" placeholder="your@email.com">
+            </div>
+          </form>
+        </div>
+
+      </section>
+    </main>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const fileInput = document.getElementById('fileInput');
+  const avatarPreview = document.getElementById('avatarPreview');
+  const saveBtn = document.getElementById('saveBtn');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+
+  // Load saved data from localStorage
+  const img = localStorage.getItem('nr_demo_avatar');
+  if (img) avatarPreview.src = img;
+  const n = localStorage.getItem('nr_demo_name');
+  if (n) nameInput.value = n;
+  const e = localStorage.getItem('nr_demo_email');
+  if (e) emailInput.value = e;
+
+  // File input change
+  fileInput.addEventListener('change', (ev) => {
+    const f = ev.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      avatarPreview.src = reader.result;
+      localStorage.setItem('nr_demo_avatar', reader.result);
+    };
+    reader.readAsDataURL(f);
+  });
+
+  // Save button click
+  saveBtn.addEventListener('click', () => {
+    localStorage.setItem('nr_demo_name', nameInput.value.trim());
+    localStorage.setItem('nr_demo_email', emailInput.value.trim());
+    saveBtn.textContent = 'saved ✓';
+    setTimeout(() => saveBtn.textContent = 'save', 1200);
+  });
+});
+</script>
+</body>
+</html>
