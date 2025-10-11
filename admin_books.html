@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NeuroReads — Books Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================
+   Global Reset
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================
+   Body & Global Fonts
+========================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Books Management */
+/* ---------- scoped to avoid collisions ---------- */
+.nr-wrapper { 
+  --sidebar-w: 230px; 
+  --top-h: 72px; 
+  min-height: 100vh;
+}
+
+/* Layout grid */
+.nr-page {
+  min-height:100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
+}
+
+/* Topbar */
+.nr-topbar {
+  grid-area: nr-top;
+  background: #2C8685;
+  height: var(--top-h);
+  display:flex;
+  align-items:center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
+.nr-topbar .nr-logo {
+  font-family: "Kavoon", serif;
+  font-size: 28px;
+  color:#ffffff;
+  line-height: 1;
+}
+.nr-topbar .nr-subtitle {
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  color:#e0f0ef;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.nr-topbar .nr-search {
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+.nr-topbar input[type="search"] {
+  width: 60%;
+  max-width:640px;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:white;
+}
+
+/* Sidebar - FIXED POSITION */
+.nr-sidebar {
+  grid-area: nr-sidebar;
+  background: #ececec;
+  padding: 18px 14px;
+  height: calc(100vh - var(--top-h));
+  position: fixed;
+  top: var(--top-h);
+  left: 0;
+  width: var(--sidebar-w);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  border-right:1px solid rgba(0,0,0,0.04);
+  box-shadow: 6px 0 20px rgba(0,0,0,0.04);
+  overflow-y: auto;
+  z-index: 999;
+}
+
+/* nav links */
+.nr-side-nav { width:100%; }
+.nr-side-nav ul { list-style:none; padding:0; margin:0; }
+.nr-side-nav li { margin: 12px 0; }
+.nr-side-nav a {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:#222; font-weight:600;
+  padding:12px 10px; border-radius:8px;
+  transition: all 0.3s ease;
+}
+.nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
+.nr-side-nav a:hover { 
+  background: rgba(0,0,0,0.05); 
+  color:#2C8685;
+  transform: translateX(5px);
+}
+.nr-side-nav a.active {
+  background: #2C8685;
+  color: white;
+}
+
+/* bottom cards inside sidebar */
+.nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; text-align:center; }
+.nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
+.nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
+.nr-side-card .icons a { 
+  display: inline-block; 
+  transition: all 0.3s ease; 
+  border-radius: 50%; 
+  padding: 4px;
+}
+.nr-side-card .icons a:hover { 
+  transform: scale(1.2); 
+  background: rgba(44, 134, 133, 0.1);
+}
+.nr-side-card .icons img { 
+  width:20px; 
+  height:20px; 
+  display: block;
+}
+
+/* Main content - NO GAP WITH SIDEBAR */
+.nr-main {
+  grid-area: nr-main;
+  padding: 34px 48px;
+  background: #ffffff;
+  min-height: calc(100vh - var(--top-h));
+  margin-left: var(--sidebar-w);
+  margin-top: var(--top-h);
+  border-left: none;
+}
+
+/* Books Header */
+.nr-books-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.nr-books-title h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px;
+  color: #297a79;
+  margin-bottom: 5px;
+}
+.nr-books-title p {
+  color: #666;
+  font-size: 14px;
+}
+.nr-books-actions {
+  display: flex;
+  gap: 15px;
+}
+.nr-books-btn {
+  background: #2C8685;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nr-books-btn:hover {
+  background: #246c6b;
+}
+.nr-books-btn.secondary {
+  background: #6c757d;
+}
+.nr-books-btn.secondary:hover {
+  background: #5a6268;
+}
+
+/* Books Filters */
+.nr-books-filters {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+.nr-filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.nr-filters-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+}
+.nr-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+.nr-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nr-filter-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+.nr-filter-select, .nr-filter-input {
+  padding: 10px 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 6px;
+  background: white;
+  font-family: "Poppins", sans-serif;
+  transition: border-color 0.3s ease;
+}
+.nr-filter-select:focus, .nr-filter-input:focus {
+  border-color: #2C8685;
+  outline: none;
+}
+
+/* Books Table */
+.nr-books-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+.nr-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+.nr-table-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 18px;
+}
+.nr-table-actions {
+  display: flex;
+  gap: 10px;
+}
+.nr-table-action-btn {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+.nr-table-action-btn:hover {
+  background: #f8f9fa;
+}
+
+.nr-books-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.nr-books-table th {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #e9ecef;
+}
+.nr-books-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+  color: #6c757d;
+}
+.nr-books-table tr:hover {
+  background: #f8f9fa;
+}
+.nr-book-cover {
+  width: 40px;
+  height: 60px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 10px;
+}
+.nr-book-title {
+  font-weight: 600;
+  color: #333;
+}
+.nr-book-author {
+  color: #6c757d;
+  font-size: 14px;
+}
+.nr-action-buttons {
+  display: flex;
+  gap: 8px;
+}
+.nr-action-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.nr-action-btn.edit:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.nr-action-btn.delete:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+/* Pagination */
+.nr-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+}
+.nr-pagination-info {
+  color: #6c757d;
+  font-size: 14px;
+}
+.nr-pagination-controls {
+  display: flex;
+  gap: 8px;
+}
+.nr-pagination-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.nr-pagination-btn:hover {
+  background: #f8f9fa;
+}
+.nr-pagination-btn.active {
+  background: #2C8685;
+  color: white;
+  border-color: #2C8685;
+}
+
+/* User info section */
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+  position: relative;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+  color: white;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.2);
+  padding:6px 12px;
+  border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+.nr-user-profile:hover {
+  background: rgba(255,255,255,0.3);
+}
+.nr-user-avatar {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.nr-username {
+  color:#ffffff;
+  font-weight:600;
+  font-size: 14px;
+}
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #ffffff;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #2C8685;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
+}
+
+/* small screens */
+@media (max-width:900px){
+  .nr-page { 
+    grid-template-columns: 1fr; 
+    grid-template-areas: "nr-top" "nr-main"; 
+  }
+  .nr-sidebar { 
+    display:none; 
+  }
+  .nr-topbar .nr-logo { font-size:22px; }
+  .nr-topbar .nr-subtitle { font-size:10px; }
+  .nr-topbar input[type="search"] { width:60%; }
+  .nr-main { 
+    padding: 20px; 
+    margin-left: 0;
+    margin-top: var(--top-h);
+  }
+  .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
+  .nr-books-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .nr-filters-grid {
+    grid-template-columns: 1fr;
+  }
+  .nr-books-table {
+    font-size: 14px;
+  }
+  .nr-books-table th,
+  .nr-books-table td {
+    padding: 10px 12px;
+  }
+}
+</style>
+
+</head>
+<body>
+
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Search books, authors, ISBN..."></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="icons/top-user.png" alt="mini" class="nr-user-avatar">
+          <span class="nr-username">Admin User</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="admin_profile.html"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="#"><img src="icons/books.png" alt=""> Account Settings</a></li>
+            <li><a href="#"><img src="icons/explore.png" alt=""> Preferences</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="admin_dashboard.html"><img src="icons/explore.png" alt=""> <span>Dashboard</span></a></li>
+          <li><a href="admin_books.html" class="active"><img src="icons/books.png" alt=""> <span>Books</span></a></li>
+          <li><a href="#"><img src="icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="#"><img src="icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> <span>System Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <!-- Books Header -->
+      <div class="nr-books-header">
+        <div class="nr-books-title">
+          <h1>Books Management</h1>
+          <p>Manage your library's book collection, inventory, and availability</p>
+        </div>
+        <div class="nr-books-actions">
+          <button class="nr-books-btn secondary">📥 Import Books</button>
+          <button class="nr-books-btn">➕ Add New Book</button>
+        </div>
+      </div>
+
+      <!-- Books Filters -->
+      <div class="nr-books-filters">
+        <div class="nr-filters-header">
+          <div class="nr-filters-title">Filter Books</div>
+        </div>
+        <div class="nr-filters-grid">
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Category</label>
+            <select class="nr-filter-select">
+              <option>All Categories</option>
+              <option>Fiction</option>
+              <option>Non-Fiction</option>
+              <option>Science</option>
+              <option>Technology</option>
+              <option>Literature</option>
+            </select>
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Search</label>
+            <input type="text" class="nr-filter-input" placeholder="Title, author, or ISBN...">
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Sort By</label>
+            <select class="nr-filter-select">
+              <option>Newest First</option>
+              <option>Oldest First</option>
+              <option>Title A-Z</option>
+              <option>Title Z-A</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Books Table -->
+      <div class="nr-books-table-container">
+        <div class="nr-table-header">
+          <div class="nr-table-title">Book Collection (1,247 books)</div>
+          <div class="nr-table-actions">
+            <button class="nr-table-action-btn">📋 Export</button>
+            <button class="nr-table-action-btn">🖨️ Print</button>
+          </div>
+        </div>
+        
+        <table class="nr-books-table">
+          <thead>
+            <tr>
+              <th>Cover</th>
+              <th>Book Details</th>
+              <th>ISBN</th>
+              <th>Category</th>
+              <th>Added Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="nr-book-cover">📘</div>
+              </td>
+              <td>
+                <div class="nr-book-title">The Great Gatsby</div>
+                <div class="nr-book-author">F. Scott Fitzgerald</div>
+              </td>
+              <td>978-0-7432-7356-5</td>
+              <td>Fiction</td>
+              <td>2024-01-15</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit">✏️</button>
+                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="nr-book-cover">🔬</div>
+              </td>
+              <td>
+                <div class="nr-book-title">A Brief History of Time</div>
+                <div class="nr-book-author">Stephen Hawking</div>
+              </td>
+              <td>978-0-553-10953-5</td>
+              <td>Science</td>
+              <td>2024-01-10</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit">✏️</button>
+                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="nr-book-cover">💻</div>
+              </td>
+              <td>
+                <div class="nr-book-title">Clean Code</div>
+                <div class="nr-book-author">Robert C. Martin</div>
+              </td>
+              <td>978-0-13-235088-4</td>
+              <td>Technology</td>
+              <td>2024-01-08</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit">✏️</button>
+                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="nr-book-cover">🌍</div>
+              </td>
+              <td>
+                <div class="nr-book-title">Sapiens: A Brief History</div>
+                <div class="nr-book-author">Yuval Noah Harari</div>
+              </td>
+              <td>978-0-06-231609-7</td>
+              <td>History</td>
+              <td>2024-01-05</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit">✏️</button>
+                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="nr-book-cover">🧠</div>
+              </td>
+              <td>
+                <div class="nr-book-title">Thinking, Fast and Slow</div>
+                <div class="nr-book-author">Daniel Kahneman</div>
+              </td>
+              <td>978-0-374-27563-1</td>
+              <td>Psychology</td>
+              <td>2024-01-03</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit">✏️</button>
+                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="nr-pagination">
+          <div class="nr-pagination-info">Showing 1-5 of 1,247 books</div>
+          <div class="nr-pagination-controls">
+            <button class="nr-pagination-btn">« Previous</button>
+            <button class="nr-pagination-btn active">1</button>
+            <button class="nr-pagination-btn">2</button>
+            <button class="nr-pagination-btn">3</button>
+            <button class="nr-pagination-btn">...</button>
+            <button class="nr-pagination-btn">250</button>
+            <button class="nr-pagination-btn">Next »</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const userProfile = document.getElementById('userProfile');
+  const userDropdown = document.getElementById('userDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Dropdown menu functionality
+  userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('active');
+    userProfile.classList.toggle('dropdown-active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    userDropdown.classList.remove('active');
+    userProfile.classList.remove('dropdown-active');
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to log out?')) {
+      alert('Logging out...');
+      // Add your logout logic here
+      // window.location.href = 'login.html';
+    }
+  });
+
+  // Close dropdown when clicking on dropdown items
+  userDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  // Table row click functionality (for demonstration)
+  const tableRows = document.querySelectorAll('.nr-books-table tbody tr');
+  tableRows.forEach(row => {
+    row.addEventListener('click', (e) => {
+      if (!e.target.closest('.nr-action-buttons')) {
+        const bookTitle = row.querySelector('.nr-book-title').textContent;
+        console.log(`Viewing details for: ${bookTitle}`);
+        // In real implementation, you would open a modal or navigate to details page
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
