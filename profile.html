@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NeuroReads — Profile Demo</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -90,6 +90,60 @@ body {
   border:1px solid rgba(0,0,0,0.06);
   background:white;
 }
+
+/* User info section */
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+  position: relative;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:white;
+  padding:6px 10px;
+  border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+.nr-user-profile:hover {
+  background: #f0f0f0;
+}
+.nr-user-avatar {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.nr-username {
+  color:#3a2c17;
+  font-weight:600;
+  font-size: 14px;
+}
+
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #3a2c17;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
 /* Dropdown Menu*/
 .nr-dropdown {
   position: absolute;
@@ -219,6 +273,27 @@ body {
   transition: transform 0.3s ease;
 }
 
+/* Support links */
+.nr-support-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: #444;
+}
+.nr-support-links li {
+  margin: 8px 0;
+  padding: 4px 0;
+}
+.nr-support-links a {
+  text-decoration: none;
+  color: #444;
+  transition: color 0.3s ease;
+}
+.nr-support-links a:hover {
+  color: #b78f5c;
+}
+
 /* Main content */
 .nr-main {
   grid-area: nr-main;
@@ -291,61 +366,6 @@ body {
   border-color: #d2a44d;
 }
 
-/* Support links */
-.nr-support-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  text-align: left;
-  color: #444;
-}
-.nr-support-links li {
-  margin: 8px 0;
-  padding: 4px 0;
-}
-.nr-support-links a {
-  text-decoration: none;
-  color: #444;
-  transition: color 0.3s ease;
-}
-.nr-support-links a:hover {
-  color: #b78f5c;
-}
-
-/* User info section */
-.nr-user-info {
-  width:260px;
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  align-items:center;
-}
-.nr-notification-btn {
-  background:transparent;
-  border:0;
-  cursor:pointer;
-  font-size: 18px;
-  padding: 5px;
-}
-.nr-user-profile {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  background:white;
-  padding:6px 10px;
-  border-radius:20px;
-}
-.nr-user-avatar {
-  width:30px;
-  height:30px;
-  border-radius:50%;
-}
-.nr-username {
-  color:#3a2c17;
-  font-weight:600;
-  font-size: 14px;
-}
-
 /* small screens */
 @media (max-width:900px){
   .nr-page { grid-template-columns: 1fr; grid-template-areas: "nr-top" "nr-main"; }
@@ -357,6 +377,10 @@ body {
   .nr-avatar-card { width:260px; height:260px; }
   .nr-main { padding: 20px; }
   .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
 }
 </style>
 
@@ -383,7 +407,7 @@ body {
         <!-- Dropdown Menu -->
         <div class="nr-dropdown" id="userDropdown">
           <ul>
-            <li><a href="#"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="profile.html"><img src="icons/settings.png" alt=""> My Profile</a></li>
             <li class="nr-dropdown-divider"></li>
             <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
           </ul>
@@ -397,8 +421,8 @@ body {
       <nav class="nr-side-nav">
         <ul>
           <li><a href="index.html"><img src="icons/home.png" alt=""> <span>Home</span></a></li>
-          <li><a href="#"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
-          <li><a href="#"><img src="icons/books.png" alt=""> <span>My Books</span></a></li>
+          <li><a href="explore.html"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
+          <li><a href="mybooks.html"><img src="icons/books.png" alt=""> <span>My Books</span></a></li>
           <li><a href="search.html"><img src="icons/search.png" alt=""> <span>Search</span></a></li>
           <li><a href="#"><img src="icons/settings.png" alt=""> <span>Settings</span></a></li>
         </ul>
@@ -477,6 +501,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
 
+  // ==========================
+  // Profile Functionality
+  // ==========================
+  
   // Load saved data from localStorage
   const img = localStorage.getItem('nr_demo_avatar');
   if (img) avatarPreview.src = img;
@@ -503,6 +531,40 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('nr_demo_email', emailInput.value.trim());
     saveBtn.textContent = 'saved ✓';
     setTimeout(() => saveBtn.textContent = 'save', 1200);
+  });
+
+  // ==========================
+  // Dropdown Menu Functionality
+  // ==========================
+  const userProfile = document.getElementById('userProfile');
+  const userDropdown = document.getElementById('userDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Dropdown menu functionality
+  userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('active');
+    userProfile.classList.toggle('dropdown-active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    userDropdown.classList.remove('active');
+    userProfile.classList.remove('dropdown-active');
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to log out?')) {
+      alert('Logging out...');
+      // Add your logout logic here
+      // window.location.href = 'login.html';
+    }
+  });
+
+  // Close dropdown when clicking on dropdown items
+  userDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
   });
 });
 </script>
