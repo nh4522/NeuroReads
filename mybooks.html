@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeuroReads — My Books</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ==========================
+   Global Reset
+========================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ==========================
+   Body & Fonts
+========================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('images/white-bg.jpg') no-repeat center center/cover;
+  color: #3a2c17;
+  height: 100vh;
+  overflow: hidden; /* Prevent body scrolling */
+}
+
+.nr-wrapper { 
+  --sidebar-w: 230px; 
+  --top-h: 72px; 
+  min-height: 100vh;
+}
+
+/* Layout grid */
+.nr-page {
+  min-height:100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
+}
+
+/* ==========================
+   Topbar
+========================== */
+.nr-topbar {
+  grid-area: nr-top;
+  background: #dccdbd;
+  height: var(--top-h);
+  display:flex;
+  align-items:center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
+.nr-topbar .nr-logo {
+  font-family: "Kavoon", serif;
+  font-size: 28px;
+  color:#3a2c17;
+  line-height: 1;
+}
+.nr-topbar .nr-subtitle {
+  font-size: 12px;
+  color:#6b5d3c;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.nr-topbar .nr-search {
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+.nr-topbar input[type="search"] {
+  width: 60%;
+  max-width:640px;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:white;
+}
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+  position: relative;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:white;
+  padding:6px 10px;
+  border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+.nr-user-profile:hover {
+  background: #f0f0f0;
+}
+.nr-user-avatar { width:30px; height:30px; border-radius:50%; }
+.nr-username { color:#3a2c17; font-weight:600; font-size: 14px; }
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #3a2c17;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #b78f5c;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
+}
+
+/* ==========================
+   Sidebar
+========================== */
+.nr-sidebar {
+  grid-area: nr-sidebar;
+  background: #ececec;
+  padding: 18px 14px;
+  height: calc(100vh - var(--top-h));
+  position: sticky;
+  top: var(--top-h);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  border-right:1px solid rgba(0,0,0,0.04);
+  box-shadow: 6px 0 20px rgba(0,0,0,0.04);
+  overflow-y: auto;
+}
+
+.nr-side-nav { width:100%; }
+.nr-side-nav ul { list-style:none; padding:0; margin:0; }
+.nr-side-nav li { margin: 12px 0; }
+.nr-side-nav a {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:#222; font-weight:600;
+  padding:8px 10px; border-radius:8px;
+}
+.nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
+.nr-side-nav a:hover, .nr-side-nav a.active { background: rgba(0,0,0,0.03); color:#b78f5c; }
+
+/* bottom cards inside sidebar */
+.nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; box-shadow:0 6px 16px rgba(0,0,0,0.04); text-align:center; }
+.nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
+.nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
+.nr-side-card .icons a { display: inline-block; transition: all 0.3s ease; border-radius: 50%; padding: 4px; }
+.nr-side-card .icons a:hover { transform: scale(1.2); background: rgba(210, 164, 77, 0.1); }
+.nr-side-card .icons img { width:20px; height:20px; display: block; transition: transform 0.3s ease; }
+
+/* ==========================
+   Main Area (Books)
+========================== */
+.nr-main {
+  grid-area: nr-main;
+  background: rgba(255,255,255,0.9);
+  padding: 40px 60px;
+  overflow-y: auto; /* Only main content scrolls */
+  height: calc(100vh - var(--top-h));
+}
+
+.section-title {
+  font-family:"Fredoka", sans-serif;
+  font-size:20px;
+  margin-bottom:16px;
+  color:#3a2c17;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-all-btn {
+  background: #dccdbd;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2c17;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: #c9b8a5;
+  transform: translateY(-2px);
+}
+
+.book-section { margin-bottom:40px; }
+.book-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap:20px;
+}
+.book-card {
+  background:#f7f7f7;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  cursor:pointer;
+  display: flex;
+  flex-direction: column;
+}
+.book-card:hover { transform:translateY(-4px); }
+.book-card img { width:100%; height:220px; object-fit:cover; }
+.book-info { padding:10px 12px; flex-grow: 1; display: flex; flex-direction: column; }
+.book-info h4 { font-size:14px; color:#3a2c17; margin-bottom: 4px; }
+.book-info p { font-size:12px; color:#7a6f67; margin-bottom: 8px; }
+
+/* Progress Bar Styles */
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 11px;
+}
+
+.progress-percent {
+  font-weight: 600;
+  color: #3a2c17;
+}
+
+.progress-time {
+  color: #7a6f67;
+}
+
+.progress-bar-container {
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #b78f5c;
+  border-radius: 3px;
+}
+
+/* Button Styles */
+.book-action-btn {
+  background: #b78f5c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+  text-align: center;
+}
+
+.book-action-btn:hover {
+  background: #a57d4a;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .nr-page{grid-template-columns:1fr;grid-template-areas:"nr-top" "nr-main";}
+  .nr-sidebar{display:none;}
+  .nr-main{padding:20px;}
+  .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- Topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
+          <span class="nr-username">User XYZ</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="#"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="home.html"><img src="icons/home.png" alt=""> Home</a></li>
+          <li><a href="explore.html"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
+         <li><a href="mybooks.html" class="active"><img src="icons/books.png" alt=""> My Books</a></li>
+          <li><a href="search.html"><img src="icons/search.png" alt=""> Search</a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> Settings</a></li>
+        </ul>
+      </nav>
+
+      <div class="nr-side-bottom">
+        
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="nr-main">
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Continue Reading</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="continueReading" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <div class="book-section">
+        <div class="section-title">
+          <h3>My Booklist</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="myBooklist" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+
+  // ==========================
+  // Redirect Buttons (main page)
+  // ==========================
+  const loginBtn = document.getElementById("loginBtn");
+  const registerBtn = document.getElementById("registerBtn");
+
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
+      window.location.href = "login.html";
+    });
+  }
+
+  if (registerBtn) {
+    registerBtn.addEventListener("click", () => {
+      window.location.href = "register.html";
+    });
+  }
+
+  // ==========================
+  // Toggle Password Visibility (auth pages)
+  // ==========================
+  const toggleIcons = document.querySelectorAll('.toggle-password');
+  toggleIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+      const target = document.getElementById(icon.dataset.target);
+      if (target) {
+        if (target.type === 'password') {
+          target.type = 'text';
+          icon.textContent = '🙈';
+        } else {
+          target.type = 'password';
+          icon.textContent = '👁️';
+        }
+      }
+    });
+  });
+
+  // ==========================
+  // Dynamic Book Loading (mybooks.html)
+  // ==========================
+  const continueReadingContainer = document.getElementById("continueReading");
+  const myBooklistContainer = document.getElementById("myBooklist");
+
+  // Only run this part if we're on mybooks.html
+  if (continueReadingContainer && myBooklistContainer) {
+
+    // Updated book data with progress and last read info
+    const continueReadingBooks = [
+      {
+        title: "Harry Potter and the Half Blood Prince",
+        author: "J.K. Rowling",
+        progress: 98,
+        lastRead: "6 days ago",
+        image: "images/harry_potter_hbp.jpg"
+      },
+      {
+        title: "Pride and Prejudice",
+        author: "Jane Austen",
+        progress: 60,
+        lastRead: "6 days ago",
+        image: "images/pride_and_prejudice.jpeg"
+      },
+      {
+        title: "Crime and Punishment",
+        author: "Fyodor Dostoyevsky",
+        progress: 100,
+        lastRead: "8 days ago",
+        image: "images/crime_and_punishment.jpeg"
+      }
+    ];
+
+    const myBooklistBooks = [
+      {
+        title: "Harry Potter and the Philosopher's Stone",
+        author: "J.K. Rowling",
+        image: "images/harry_potter_tps.jpg"
+      },
+      {
+        title: "Pride and Prejudice",
+        author: "Jane Austen",
+        image: "images/pride_and_prejudice.jpeg"
+      }
+    ];
+
+    // Function to create book card for Continue Reading section
+    function createContinueReadingCard(book) {
+      return `
+        <div class="book-card">
+          <img src="${book.image}" alt="${book.title}">
+          <div class="book-info">
+            <h4>${book.title}</h4>
+            <p>By ${book.author}</p>
+            <div class="progress-info">
+              <span class="progress-percent">${book.progress}%</span>
+              <span class="progress-time">${book.lastRead}</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: ${book.progress}%"></div>
+            </div>
+            <button class="book-action-btn">Continue Reading</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Function to create book card for My Booklist section
+    function createMyBooklistCard(book) {
+      return `
+        <div class="book-card">
+          <img src="${book.image}" alt="${book.title}">
+          <div class="book-info">
+            <h4>${book.title}</h4>
+            <p>By ${book.author}</p>
+            <button class="book-action-btn">Start Reading</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render books
+    continueReadingContainer.innerHTML = continueReadingBooks.map(createContinueReadingCard).join("");
+    myBooklistContainer.innerHTML = myBooklistBooks.map(createMyBooklistCard).join("");
+
+    // Add event listeners for View All buttons
+    const viewAllButtons = document.querySelectorAll('.view-all-btn');
+    viewAllButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        alert('View All functionality would go here');
+      });
+    });
+
+    // Add event listeners for book action buttons
+    const continueReadingButtons = document.querySelectorAll('#continueReading .book-action-btn');
+    continueReadingButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        alert('Continue Reading functionality would go here');
+      });
+    });
+
+    const startReadingButtons = document.querySelectorAll('#myBooklist .book-action-btn');
+    startReadingButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        alert('Start Reading functionality would go here');
+      });
+    });
+
+    // Add click event for book cards
+    const bookCards = document.querySelectorAll('.book-card');
+    bookCards.forEach(card => {
+      card.addEventListener('click', () => {
+        alert('Book details would open here');
+      });
+    });
+  }
+
+  // ==========================
+  // Dropdown Menu Functionality
+  // ==========================
+  const userProfile = document.getElementById('userProfile');
+  const userDropdown = document.getElementById('userDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Dropdown menu functionality
+  userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('active');
+    userProfile.classList.toggle('dropdown-active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    userDropdown.classList.remove('active');
+    userProfile.classList.remove('dropdown-active');
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to log out?')) {
+      alert('Logging out...');
+      // Add your logout logic here
+      // window.location.href = 'login.html';
+    }
+  });
+
+  // Close dropdown when clicking on dropdown items
+  userDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+});
+</script>
+</body>
+</html>

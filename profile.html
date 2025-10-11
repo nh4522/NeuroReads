@@ -55,6 +55,9 @@ body {
   align-items:center;
   padding: 10px 18px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .nr-topbar .nr-logo-container {
   display: flex;
@@ -68,7 +71,6 @@ body {
   line-height: 1;
 }
 .nr-topbar .nr-subtitle {
-  font-family: "Poppins", sans-serif;
   font-size: 12px;
   color:#6b5d3c;
   font-weight: 500;
@@ -87,6 +89,76 @@ body {
   border-radius:6px;
   border:1px solid rgba(0,0,0,0.06);
   background:white;
+}
+/* Dropdown Menu*/
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #b78f5c;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
 }
 
 /* Sidebar */
@@ -294,7 +366,7 @@ body {
 <div class="nr-wrapper">
   <div class="nr-page">
 
-    <!-- topbar -->
+    <!-- Topbar -->
     <header class="nr-topbar">
       <div class="nr-logo-container">
         <div class="nr-logo">NeuroReads</div>
@@ -303,9 +375,18 @@ body {
       <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
       <div class="nr-user-info">
         <button title="notification" class="nr-notification-btn">🔔</button>
-        <div class="nr-user-profile">
-          <img src="icons/top-user.png" alt="mini" class="nr-user-avatar">
-          <span class="nr-username">User XYZ...</span>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
+          <span class="nr-username">User XYZ</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="#"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
         </div>
       </div>
     </header>

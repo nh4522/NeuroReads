@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeuroReads — Explore</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+<style>
+/* ==========================
+   Global Reset
+========================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ==========================
+   Body & Fonts
+========================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url('images/white-bg.jpg') no-repeat center center/cover;
+  color: #3a2c17;
+  height: 100vh;
+  overflow: hidden; /* Prevent body scrolling */
+}
+
+.nr-wrapper { 
+  --sidebar-w: 230px; 
+  --top-h: 72px; 
+  min-height: 100vh;
+}
+
+/* Layout grid */
+.nr-page {
+  min-height:100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
+}
+
+/* ==========================
+   Topbar
+========================== */
+.nr-topbar {
+  grid-area: nr-top;
+  background: #dccdbd;
+  height: var(--top-h);
+  display:flex;
+  align-items:center;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
+.nr-topbar .nr-logo {
+  font-family: "Kavoon", serif;
+  font-size: 28px;
+  color:#3a2c17;
+  line-height: 1;
+}
+.nr-topbar .nr-subtitle {
+  font-size: 12px;
+  color:#6b5d3c;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.nr-topbar .nr-search {
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+.nr-topbar input[type="search"] {
+  width: 60%;
+  max-width:640px;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:white;
+}
+.nr-user-info {
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+.nr-user-profile {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:white;
+  padding:6px 10px;
+  border-radius:20px;
+}
+.nr-user-avatar { width:30px; height:30px; border-radius:50%; }
+.nr-username { color:#3a2c17; font-weight:600; font-size: 14px; }
+
+/* ==========================
+   Sidebar
+========================== */
+.nr-sidebar {
+  grid-area: nr-sidebar;
+  background: #ececec;
+  padding: 18px 14px;
+  height: calc(100vh - var(--top-h));
+  position: sticky;
+  top: var(--top-h);
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  align-items:center;
+  border-right:1px solid rgba(0,0,0,0.04);
+  box-shadow: 6px 0 20px rgba(0,0,0,0.04);
+  overflow-y: auto;
+}
+
+.nr-side-nav { width:100%; }
+.nr-side-nav ul { list-style:none; padding:0; margin:0; }
+.nr-side-nav li { margin: 12px 0; }
+.nr-side-nav a {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; color:#222; font-weight:600;
+  padding:8px 10px; border-radius:8px;
+}
+.nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
+.nr-side-nav a:hover, .nr-side-nav a.active { background: rgba(0,0,0,0.03); color:#b78f5c; }
+
+/* bottom cards inside sidebar */
+.nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; box-shadow:0 6px 16px rgba(0,0,0,0.04); text-align:center; }
+.nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
+.nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
+.nr-side-card .icons a { display: inline-block; transition: all 0.3s ease; border-radius: 50%; padding: 4px; }
+.nr-side-card .icons a:hover { transform: scale(1.2); background: rgba(210, 164, 77, 0.1); }
+.nr-side-card .icons img { width:20px; height:20px; display: block; transition: transform 0.3s ease; }
+
+/* ==========================
+   Main Area (Books)
+========================== */
+.nr-main {
+  grid-area: nr-main;
+  background: rgba(255,255,255,0.9);
+  padding: 40px 60px;
+  overflow-y: auto; /* Only main content scrolls */
+  height: calc(100vh - var(--top-h));
+}
+
+.section-title {
+  font-family:"Fredoka", sans-serif;
+  font-size:20px;
+  margin-bottom:16px;
+  color:#3a2c17;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-all-btn {
+  background: #dccdbd;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2c17;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: #c9b8a5;
+  transform: translateY(-2px);
+}
+
+.book-section { margin-bottom:40px; }
+.book-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap:20px;
+}
+.book-card {
+  background:#f7f7f7;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+  cursor:pointer;
+  display: flex;
+  flex-direction: column;
+}
+.book-card:hover { transform:translateY(-4px); }
+.book-card img { width:100%; height:220px; object-fit:cover; }
+.book-info { padding:10px 12px; flex-grow: 1; display: flex; flex-direction: column; }
+.book-info h4 { font-size:14px; color:#3a2c17; margin-bottom: 4px; }
+.book-info p { font-size:12px; color:#7a6f67; margin-bottom: 8px; }
+
+/* Button Styles */
+.book-action-btn {
+  background: #b78f5c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+  text-align: center;
+}
+
+.book-action-btn:hover {
+  background: #a57d4a;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .nr-page{grid-template-columns:1fr;grid-template-areas:"nr-top" "nr-main";}
+  .nr-sidebar{display:none;}
+  .nr-main{padding:20px;}
+}
+</style>
+</head>
+
+<body>
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- Topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile">
+          <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
+          <span class="nr-username">User XYZ</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="home.html"><img src="icons/home.png" alt=""> Home</a></li>
+          <li><a href="explore.html" class="active"><img src="icons/explore.png" alt=""> Explore</a></li>
+          <li><a href="mybooks.html"><img src="icons/books.png" alt=""> My Books</a></li>
+          <li><a href="search.html"><img src="icons/search.png" alt=""> Search</a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> Settings</a></li>
+        </ul>
+      </nav>
+
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="nr-main">
+      <!-- Featured This Season -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Featured This Season</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="featuredSeason" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Best Sellers This Year -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Best Sellers This Year</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="bestSellers" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- New Releases -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>New Releases</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="newReleases" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Classics Revisited -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Classics Revisited</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="classics" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Quick Reads -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Quick Reads</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="quickReads" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Trending on Social Media -->
+      <div class="book-section">
+        <div class="section-title">
+          <h3>Trending on Social Media</h3>
+          <button class="view-all-btn">View All</button>
+        </div>
+        <div id="trending" class="book-grid">
+          <!-- Books inserted dynamically by JS -->
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+// Wait for the DOM to load
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Book data for different sections
+  const bookData = {
+    featuredSeason: [
+      {
+        title: "The Summer Escape",
+        author: "Lily Roberts",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=Summer+Escape"
+      },
+      {
+        title: "Beach House Memories",
+        author: "Michael Chen",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=Beach+House"
+      },
+      {
+        title: "Ocean Breezes",
+        author: "Sarah Johnson",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=Ocean+Breezes"
+      },
+      {
+        title: "Island Adventure",
+        author: "David Wilson",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=Island+Adventure"
+      }
+    ],
+    bestSellers: [
+      {
+        title: "The Midnight Library",
+        author: "Matt Haig",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=Midnight+Library"
+      },
+      {
+        title: "Project Hail Mary",
+        author: "Andy Weir",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=Project+Hail+Mary"
+      },
+      {
+        title: "The Four Winds",
+        author: "Kristin Hannah",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=Four+Winds"
+      },
+      {
+        title: "The Last Thing He Told Me",
+        author: "Laura Dave",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=Last+Thing"
+      }
+    ],
+    newReleases: [
+      {
+        title: "Tomorrow, and Tomorrow, and Tomorrow",
+        author: "Gabrielle Zevin",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=Tomorrow"
+      },
+      {
+        title: "Lessons in Chemistry",
+        author: "Bonnie Garmus",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=Chemistry"
+      },
+      {
+        title: "I'm Glad My Mom Died",
+        author: "Jennette McCurdy",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=Mom+Died"
+      },
+      {
+        title: "The Maid",
+        author: "Nita Prose",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=The+Maid"
+      }
+    ],
+    classics: [
+      {
+        title: "To Kill a Mockingbird",
+        author: "Harper Lee",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=Mockingbird"
+      },
+      {
+        title: "1984",
+        author: "George Orwell",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=1984"
+      },
+      {
+        title: "Pride and Prejudice",
+        author: "Jane Austen",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=Pride"
+      },
+      {
+        title: "The Great Gatsby",
+        author: "F. Scott Fitzgerald",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=Gatsby"
+      }
+    ],
+    quickReads: [
+      {
+        title: "The Alchemist",
+        author: "Paulo Coelho",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=Alchemist"
+      },
+      {
+        title: "Animal Farm",
+        author: "George Orwell",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=Animal+Farm"
+      },
+      {
+        title: "The Old Man and the Sea",
+        author: "Ernest Hemingway",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=Old+Man+Sea"
+      },
+      {
+        title: "Of Mice and Men",
+        author: "John Steinbeck",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=Mice+Men"
+      }
+    ],
+    trending: [
+      {
+        title: "It Ends With Us",
+        author: "Colleen Hoover",
+        image: "https://via.placeholder.com/180x220/4A6572/FFFFFF?text=It+Ends+With+Us"
+      },
+      {
+        title: "The Seven Husbands of Evelyn Hugo",
+        author: "Taylor Jenkins Reid",
+        image: "https://via.placeholder.com/180x220/856A5D/FFFFFF?text=Evelyn+Hugo"
+      },
+      {
+        title: "They Both Die at the End",
+        author: "Adam Silvera",
+        image: "https://via.placeholder.com/180x220/6B5D4A/FFFFFF?text=They+Both+Die"
+      },
+      {
+        title: "A Court of Thorns and Roses",
+        author: "Sarah J. Maas",
+        image: "https://via.placeholder.com/180x220/5D6B4A/FFFFFF?text=Court+Thorns"
+      }
+    ]
+  };
+
+  // Function to create book card
+  function createBookCard(book) {
+    return `
+      <div class="book-card">
+        <img src="${book.image}" alt="${book.title}" onerror="this.src='https://via.placeholder.com/180x220/CCCCCC/666666?text=No+Image'">
+        <div class="book-info">
+          <h4>${book.title}</h4>
+          <p>By ${book.author}</p>
+          <button class="book-action-btn">Add to My Books</button>
+        </div>
+      </div>
+    `;
+  }
+
+  // Render books for all sections
+  function renderAllBooks() {
+    for (const section in bookData) {
+      const container = document.getElementById(section);
+      if (container) {
+        container.innerHTML = bookData[section].map(createBookCard).join("");
+      }
+    }
+  }
+
+  // Add event listeners for View All buttons
+  function setupEventListeners() {
+    const viewAllButtons = document.querySelectorAll('.view-all-btn');
+    viewAllButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const sectionTitle = e.target.closest('.section-title').querySelector('h3').textContent;
+        alert(`View All functionality for "${sectionTitle}" would go here`);
+      });
+    });
+
+    // Add click event for book cards
+    const bookCards = document.querySelectorAll('.book-card');
+    bookCards.forEach(card => {
+      card.addEventListener('click', () => {
+        alert('Book details would open here');
+      });
+    });
+
+    // Add event listeners for Add to My Books buttons
+    const addButtons = document.querySelectorAll('.book-action-btn');
+    addButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const bookTitle = e.target.closest('.book-card').querySelector('h4').textContent;
+        alert(`"${bookTitle}" added to your books!`);
+      });
+    });
+  }
+
+  // Initialize the page
+  renderAllBooks();
+  setupEventListeners();
+
+});
+</script>
+</body>
+</html>
