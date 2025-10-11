@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>NeuroReads — Profile Demo</title>
+<title>NeuroReads — Admin Profile</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -55,6 +55,8 @@ body {
   align-items:center;
   padding: 10px 18px;
   border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  z-index: 1000;
 }
 .nr-topbar .nr-logo-container {
   display: flex;
@@ -64,13 +66,13 @@ body {
 .nr-topbar .nr-logo {
   font-family: "Kavoon", serif;
   font-size: 28px;
-  color:#383225;
+  color:#1b1919;
   line-height: 1;
 }
 .nr-topbar .nr-subtitle {
   font-family: "Poppins", sans-serif;
   font-size: 12px;
-  color:#383225;
+  color:#e0f0ef;
   font-weight: 500;
   margin-top: 2px;
   letter-spacing: 0.5px;
@@ -105,13 +107,6 @@ body {
   box-shadow: 6px 0 20px rgba(0,0,0,0.04);
   overflow-y: auto;
 }
-.nr-sidebar .brand-name {
-  font-family: "Kavoon", serif;
-  color:#4b3b1a;
-  font-size:20px;
-  margin-bottom: 16px;
-  text-align: center;
-}
 
 /* nav links */
 .nr-side-nav { width:100%; }
@@ -120,14 +115,19 @@ body {
 .nr-side-nav a {
   display:flex; align-items:center; gap:10px;
   text-decoration:none; color:#222; font-weight:600;
-  padding:8px 10px; border-radius:8px;
+  padding:12px 10px; border-radius:8px;
+  transition: all 0.3s ease;
 }
 .nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
-.nr-side-nav a:hover { background: rgba(0,0,0,0.03); color:#b78f5c; }
+.nr-side-nav a:hover { 
+  background: rgba(0,0,0,0.05); 
+  color:#2C8685;
+  transform: translateX(5px);
+}
 
 /* bottom cards inside sidebar */
 .nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
-.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; box-shadow:0 6px 16px rgba(0,0,0,0.04); text-align:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; text-align:center; }
 .nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
 .nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
 .nr-side-card .icons a { 
@@ -136,7 +136,15 @@ body {
   border-radius: 50%; 
   padding: 4px;
 }
-
+.nr-side-card .icons a:hover { 
+  transform: scale(1.2); 
+  background: rgba(44, 134, 133, 0.1);
+}
+.nr-side-card .icons img { 
+  width:20px; 
+  height:20px; 
+  display: block;
+}
 
 /* Main content */
 .nr-main {
@@ -160,17 +168,19 @@ body {
 .nr-avatar-card {
   width:320px; height:320px; border-radius:16px; overflow:hidden;
   background: white;
-  border:1px solid rgba(210,164,77,0.12);
-  box-shadow: 0 12px 34px rgba(0,0,0,0.06);
+  border:2px solid #2C8685;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.1);
   display:flex; align-items:center; justify-content:center;
 }
 .nr-avatar-card img { width:92%; height:92%; object-fit:cover; border-radius:12px; }
 .nr-change-photo {
   display:inline-block; padding:12px 34px; border-radius:18px; background:#2C8685; color:white; cursor:pointer; font-weight:600;
   transition: background 0.3s ease;
+  border: none;
+  font-family: "Poppins", sans-serif;
 }
 .nr-change-photo:hover {
-  background: #8a7e76;
+  background: #246c6b;
 }
 
 /* right col */
@@ -190,11 +200,12 @@ body {
 /* Save button */
 .nr-save-btn {
   position:absolute; right:0; top:0;
-  background:#2C8685; color:white; border:0; padding:10px 16px; border-radius:18px; cursor:pointer; font-weight:600;
+  background:#2C8685; color:white; border:0; padding:12px 24px; border-radius:18px; cursor:pointer; font-weight:600;
   transition: background 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
 .nr-save-btn:hover {
-  background: #ada095;
+  background: #246c6b;
 }
 
 /* form fields */
@@ -202,15 +213,14 @@ body {
 .nr-field { margin-bottom:18px; display:flex; flex-direction:column; }
 .nr-field label { font-weight:700; color:#3a2c17; margin-bottom:8px; }
 .nr-field input {
-  padding:12px 18px; border-radius:26px; border:1px solid rgba(210,164,77,0.18);
+  padding:12px 18px; border-radius:26px; border:2px solid #e0e0e0;
   background:white; outline:none; font-size:1rem; color:#333;
   transition: border-color 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
 .nr-field input:focus {
-  border-color: #d2a44d;
+  border-color: #2C8685;
 }
-
-
 
 /* User info section */
 .nr-user-info {
@@ -219,6 +229,7 @@ body {
   justify-content:flex-end;
   gap:10px;
   align-items:center;
+  position: relative;
 }
 .nr-notification-btn {
   background:transparent;
@@ -226,14 +237,21 @@ body {
   cursor:pointer;
   font-size: 18px;
   padding: 5px;
+  color: white;
 }
 .nr-user-profile {
   display:flex;
   align-items:center;
   gap:8px;
-  background:white;
-  padding:6px 10px;
+  background:rgba(255,255,255,0.2);
+  padding:6px 12px;
   border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
+}
+.nr-user-profile:hover {
+  background: rgba(255,255,255,0.3);
 }
 .nr-user-avatar {
   width:30px;
@@ -241,9 +259,112 @@ body {
   border-radius:50%;
 }
 .nr-username {
-  color:#3a2c17;
+  color:#ffffff;
   font-weight:600;
   font-size: 14px;
+}
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #ffffff;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #2C8685;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
+}
+
+/* Support links */
+.nr-support-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: #444;
+}
+.nr-support-links li {
+  margin: 8px 0;
+  padding: 4px 0;
+}
+.nr-support-links a {
+  text-decoration: none;
+  color: #444;
+  transition: color 0.3s ease;
+}
+.nr-support-links a:hover {
+  color: #2C8685;
 }
 
 /* small screens */
@@ -257,6 +378,10 @@ body {
   .nr-avatar-card { width:260px; height:260px; }
   .nr-main { padding: 20px; }
   .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
 }
 </style>
 
@@ -275,29 +400,37 @@ body {
       <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
       <div class="nr-user-info">
         <button title="notification" class="nr-notification-btn">🔔</button>
-        <div class="nr-user-profile">
+        <div class="nr-user-profile" id="userProfile">
           <img src="icons/top-user.png" alt="mini" class="nr-user-avatar">
-          <span class="nr-username">User XYZ...</span>
+          <span class="nr-username">Admin User</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="#"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="#"><img src="icons/books.png" alt=""> Account Settings</a></li>
+            <li><a href="#"><img src="icons/explore.png" alt=""> Preferences</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
         </div>
       </div>
     </header>
 
     <!-- sidebar -->
     <aside class="nr-sidebar">
-      
       <nav class="nr-side-nav">
         <ul>
           <li><a href="#"><img src="icons/explore.png" alt=""> <span>Dashboard</span></a></li>
           <li><a href="#"><img src="icons/books.png" alt=""> <span>Books</span></a></li>
-          <li><a href="#"><img src="icons/user_mngmt.png" alt=""> <span>User Management</span></a></li>
-          <li><a href="#"><img src="icons/moderation.png" alt=""> <span>Moderation</span></a></li>
-          <li><a href="#"><img src="icons/report.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="#"><img src="icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="#"><img src="icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> <span>Reports</span></a></li>
           <li><a href="#"><img src="icons/settings.png" alt=""> <span>System Settings</span></a></li>
         </ul>
       </nav>
       <div class="nr-side-bottom">
-        
-        
         <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
       </div>
     </aside>
@@ -318,18 +451,18 @@ body {
         <!-- right info -->
         <div class="nr-info-col">
           <div class="nr-profile-head">
-            <h2>Profile</h2>
-            <span class="subtitle">Update user photo and personal details</span>
+            <h2>Admin Profile</h2>
+            <span class="subtitle">Update admin photo and personal details</span>
           </div>
           <button id="saveBtn" class="nr-save-btn">save</button>
           <form id="profileForm" class="nr-form" autocomplete="off">
             <div class="nr-field">
               <label for="name">Name:</label>
-              <input id="name" name="name" type="text" placeholder="Your name">
+              <input id="name" name="name" type="text" placeholder="Admin name">
             </div>
             <div class="nr-field">
               <label for="email">Email:</label>
-              <input id="email" name="email" type="email" placeholder="your@email.com">
+              <input id="email" name="email" type="email" placeholder="admin@neuroreads.com">
             </div>
           </form>
         </div>
@@ -347,6 +480,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveBtn = document.getElementById('saveBtn');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
+  const userProfile = document.getElementById('userProfile');
+  const userDropdown = document.getElementById('userDropdown');
+  const logoutBtn = document.getElementById('logoutBtn');
 
   // Load saved data from localStorage
   const img = localStorage.getItem('nr_demo_avatar');
@@ -374,6 +510,33 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('nr_demo_email', emailInput.value.trim());
     saveBtn.textContent = 'saved ✓';
     setTimeout(() => saveBtn.textContent = 'save', 1200);
+  });
+
+  // Dropdown menu functionality
+  userProfile.addEventListener('click', (e) => {
+    e.stopPropagation();
+    userDropdown.classList.toggle('active');
+    userProfile.classList.toggle('dropdown-active');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    userDropdown.classList.remove('active');
+    userProfile.classList.remove('dropdown-active');
+  });
+
+  // Logout functionality
+  logoutBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to log out?')) {
+      alert('Logging out...');
+      // Add your logout logic here
+      // window.location.href = 'login.html';
+    }
+  });
+
+  // Close dropdown when clicking on dropdown items
+  userDropdown.addEventListener('click', (e) => {
+    e.stopPropagation();
   });
 });
 </script>
