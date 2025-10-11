@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=4Lo2nNMF7pEflaMGBABJbMIH-Y4ecvyyRhoTm-2vBoIdEz0ilFZnwFIKr9lXLKK2Yjx38MMIoksZMn-8R20HdDUUfuSUeR4vJzkN00vsgK7_z7OtBsJFTfvaSKpcvFQFQ7aIGuTxM9GCog5bzyE59MTiIroRg5izncthRdvC334kXLfLG8v-e27tBkh2_l_BxLlN8_kRQV40d9XJil1pHGXn8IogkEkIZE1A7l9ASoGv853Xg8gpr37Srj5qlu3UkUWYYbmtm3Cshkt6Fsyk-g" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvODA3NDk2NzcxMDc2ODgyNDQyLzE0MjYxODAwMDM5MTMxNDIyNzIvc2VhcmNoLmh0bWw_ZXg9NjhlYTQ5MjImaXM9NjhlOGY3YTImaG09YjQ3ZTAxNGQzZjI4ZGIyMWYyNGJlOTA1MDgzODliZDFkNmVjZGQ5NTc0MDA5YTg4NGNmYjQ5Y2FjZjNjMjMzMSY"/><style>
+<style>
 /* ==========================
    Global + Layout
 ========================== */
@@ -21,105 +21,279 @@ body {
 }
 
 /* Wrapper Grid */
+.nr-wrapper { 
+  --sidebar-w: 230px; 
+  --top-h: 72px; 
+  min-height: 100vh;
+}
+
 .nr-page {
-  display:grid;
-  grid-template-columns:230px 1fr;
-  grid-template-rows:72px 1fr;
-  grid-template-areas:
-    "top top"
-    "sidebar main";
   min-height:100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
 }
 
 /* ==========================
-   Topbar
+   Topbar (Updated to match profile.html)
 ========================== */
 .nr-topbar {
-  grid-area: top;
-  background:#dccdbd;
+  grid-area: nr-top;
+  background: #dccdbd;
+  height: var(--top-h);
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:10px 20px;
-  border-bottom:1px solid rgba(0,0,0,0.08);
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.nr-logo {
-  font-family:"Kavoon",serif;
-  font-size:28px;
+.nr-topbar .nr-logo-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 18px;
+}
+.nr-topbar .nr-logo {
+  font-family: "Kavoon", serif;
+  font-size: 28px;
   color:#3a2c17;
+  line-height: 1;
 }
-.nr-search input {
-  padding:8px 14px;
-  border:1px solid rgba(0,0,0,0.1);
-  border-radius:8px;
-  width:300px;
+.nr-topbar .nr-subtitle {
+  font-size: 12px;
+  color:#6b5d3c;
+  font-weight: 500;
+  margin-top: 2px;
+  letter-spacing: 0.5px;
 }
+.nr-topbar .nr-search {
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+.nr-topbar input[type="search"] {
+  width: 60%;
+  max-width:640px;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:white;
+}
+
+/* User info section */
 .nr-user-info {
-  display:flex; align-items:center; gap:12px;
+  width:260px;
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  align-items:center;
+  position: relative;
+}
+.nr-notification-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  font-size: 18px;
+  padding: 5px;
 }
 .nr-user-profile {
-  display:flex; align-items:center; gap:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
   background:white;
-  padding:6px 12px;
+  padding:6px 10px;
   border-radius:20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  position: relative;
 }
-.nr-user-avatar { width:28px; height:28px; border-radius:50%; }
-.nr-username { font-weight:600; color:#3a2c17; }
+.nr-user-profile:hover {
+  background: #f0f0f0;
+}
+.nr-user-avatar {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+}
+.nr-username {
+  color:#3a2c17;
+  font-weight:600;
+  font-size: 14px;
+}
+
+/* Down arrow for dropdown */
+.nr-user-profile::after {
+  content: '▼';
+  font-size: 10px;
+  color: #3a2c17;
+  margin-left: 4px;
+  transition: transform 0.3s ease;
+}
+.nr-user-profile.dropdown-active::after {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu*/
+.nr-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.nr-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.nr-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+.nr-dropdown ul {
+  list-style: none;
+  padding: 8px 0;
+  margin: 0;
+}
+.nr-dropdown li {
+  margin: 0;
+}
+.nr-dropdown a, .nr-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  text-align: left;
+}
+.nr-dropdown a:hover, .nr-dropdown button:hover {
+  background: #f5f5f5;
+  color: #b78f5c;
+}
+.nr-dropdown img {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.nr-dropdown-divider {
+  height: 1px;
+  background: #e0e0e0;
+  margin: 4px 0;
+}
 
 /* ==========================
-   Sidebar (matches Profile)
+   Sidebar (Updated to match profile.html)
 ========================== */
 .nr-sidebar {
-  grid-area: sidebar;
-  background:#ececec;
-  padding:18px 14px;
-  height: calc(100vh - 72px);
+  grid-area: nr-sidebar;
+  background: #ececec;
+  padding: 18px 14px;
+  height: calc(100vh - var(--top-h));
   position: sticky;
-  top:72px;
+  top: var(--top-h);
   display:flex;
   flex-direction:column;
-  align-items:center;
   gap:18px;
+  align-items:center;
   border-right:1px solid rgba(0,0,0,0.04);
-  box-shadow:6px 0 20px rgba(0,0,0,0.04);
-  overflow-y:auto;
+  box-shadow: 6px 0 20px rgba(0,0,0,0.04);
+  overflow-y: auto;
 }
-
-.brand-name {
-  font-family:"Kavoon", serif;
+.nr-sidebar .brand-name {
+  font-family: "Kavoon", serif;
   color:#4b3b1a;
   font-size:20px;
-  margin-bottom:16px;
-  text-align:center;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
-/* Sidebar nav links */
+/* nav links */
 .nr-side-nav { width:100%; }
 .nr-side-nav ul { list-style:none; padding:0; margin:0; }
-.nr-side-nav li { margin:12px 0; }
+.nr-side-nav li { margin: 12px 0; }
 .nr-side-nav a {
   display:flex; align-items:center; gap:10px;
   text-decoration:none; color:#222; font-weight:600;
   padding:8px 10px; border-radius:8px;
-  transition:all 0.3s ease;
 }
 .nr-side-nav a img { width:18px; height:18px; opacity:0.9; }
-.nr-side-nav a:hover, .nr-side-nav a.active {
-  background:rgba(0,0,0,0.03);
-  color:#b78f5c;
+.nr-side-nav a:hover, .nr-side-nav a.active { background: rgba(0,0,0,0.03); color:#b78f5c; }
+
+/* bottom cards inside sidebar */
+.nr-side-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.nr-side-card { width:86%; background:white; border-radius:12px; padding:12px; box-shadow:0 6px 16px rgba(0,0,0,0.04); text-align:center; }
+.nr-side-card h4 { margin:0 0 10px 0; color:#3a2c17; font-size:0.95rem; }
+.nr-side-card .icons { display: flex; justify-content: center; gap: 12px; }
+.nr-side-card .icons a { 
+  display: inline-block; 
+  transition: all 0.3s ease; 
+  border-radius: 50%; 
+  padding: 4px;
+}
+.nr-side-card .icons a:hover { 
+  transform: scale(1.2); 
+  background: rgba(210, 164, 77, 0.1);
+}
+.nr-side-card .icons img { 
+  width:20px; 
+  height:20px; 
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-.nr-side-bottom {
-  margin-top:auto;
-  font-size:12px;
-  color:#9b8f86;
+/* Support links */
+.nr-support-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: #444;
+}
+.nr-support-links li {
+  margin: 8px 0;
+  padding: 4px 0;
+}
+.nr-support-links a {
+  text-decoration: none;
+  color: #444;
+  transition: color 0.3s ease;
+}
+.nr-support-links a:hover {
+  color: #b78f5c;
 }
 
 /* ==========================
    Main Content
 ========================== */
 .nr-main {
-  grid-area:main;
+  grid-area:nr-main;
   background:#ffffff;
   padding:40px 60px;
   min-height:calc(100vh - 72px);
@@ -232,94 +406,140 @@ body {
 .apply-btn:hover { background:#a89b90; }
 .apply-btn:active { transform:scale(0.98); }
 
+/* Responsive */
 @media (max-width:900px){
-  .nr-page{grid-template-columns:1fr; grid-template-areas:"top" "main";}
-  .nr-sidebar{display:none;}
-  .nr-main{padding:20px;}
+  .nr-page { grid-template-columns: 1fr; grid-template-areas: "nr-top" "nr-main"; }
+  .nr-sidebar { display:none; }
+  .nr-topbar .nr-logo { font-size:22px; }
+  .nr-topbar .nr-subtitle { font-size:10px; }
+  .nr-topbar input[type="search"] { width:60%; }
+  .nr-main { padding: 20px; }
+  .nr-user-info { width:200px; }
+  .nr-dropdown {
+    right: -20px;
+    min-width: 180px;
+  }
 }
 </style>
 </head>
 <body>
-<div class="nr-page">
 
-  <!-- Topbar -->
-  <header class="nr-topbar">
-    <div class="nr-logo-container">
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- Topbar (Updated to match profile.html) -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
         <div class="nr-logo">NeuroReads</div>
         <div class="nr-subtitle">Pages & Peace</div>
       </div>
-    <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
-    <div class="nr-user-info">
-      <button class="nr-notification-btn" style="background:none;border:0;font-size:20px;cursor:pointer;">🔔</button>
-      <div class="nr-user-profile">
-        <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
-        <span class="nr-username">User XYZ...</span>
+      <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="icons/top-user.png" alt="User" class="nr-user-avatar">
+          <span class="nr-username">User XYZ</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="profile.html"><img src="icons/settings.png" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- Sidebar -->
-  <aside class="nr-sidebar">
-    
-    <nav class="nr-side-nav">
-      <ul>
-        <li><a href="profile.html"><img src="icons/home.png" alt="">Home</a></li>
-        <li><a href="explore.html"><img src="icons/explore.png" alt="">Explore</a></li>
-        <li><a href="mybooks.html"><img src="icons/books.png" alt="">My Books</a></li>
-        <li><a href="search.html" class="active"><img src="icons/search.png" alt="">Search</a></li>
-        <li><a href="#"><img src="icons/settings.png" alt="">Settings</a></li>
-      </ul>
-    </nav>
-    <div class="nr-side-bottom">© Devcrafters Inc.</div>
-  </aside>
-
-  <!-- Main -->
-  <main class="nr-main">
-    <h2>Advanced Search</h2>
-
-    <!-- Language Section -->
-    <div class="section">
-      <div class="section-title">Language</div>
-      <div class="checkbox-group" id="languageGroup">
-        <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-en"><label for="lang-en">English</label></div>
-        <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-cn"><label for="lang-cn">Chinese</label></div>
-        <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-bn"><label for="lang-bn">Bangla</label></div>
-        <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-es"><label for="lang-es">Spanish</label></div>
-        <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-fr"><label for="lang-fr">French</label></div>
+    <!-- Sidebar (Updated to match profile.html) -->
+    <aside class="nr-sidebar">
+      
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="index.html"><img src="icons/home.png" alt=""> <span>Home</span></a></li>
+          <li><a href="explore.html"><img src="icons/explore.png" alt=""> <span>Explore</span></a></li>
+          <li><a href="mybooks.html"><img src="icons/books.png" alt=""> <span>My Books</span></a></li>
+          <li><a href="search.html" class="active"><img src="icons/search.png" alt=""> <span>Search</span></a></li>
+          <li><a href="#"><img src="icons/settings.png" alt=""> <span>Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div class="nr-side-card">
+          <h4>Connect With Us</h4>
+          <div class="icons">
+            <a href="#" title="Email Us">
+              <img src="icons/gmail_icon.png" alt="Email">
+            </a>
+            <a href="#"  title="Follow on Instagram">
+              <img src="icons/instagram_icon.png" alt="Instagram">
+            </a>
+            <a href="#" s title="Follow on Twitter">
+              <img src="icons/x_icon.png" alt="Twitter">
+            </a>
+          </div>
+        </div>
+        <div class="nr-side-card">
+          <h4>Support</h4>
+          <ul class="nr-support-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li>Help</li>
+            <li>Terms</li>
+          </ul>
+        </div>
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
       </div>
-    </div>
+    </aside>
 
-    <!-- Genre Section -->
-    <div class="section">
-      <div class="section-title">Genre</div>
-      <div class="checkbox-group" id="genreGroup">
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g1"><label for="g1">Fiction</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g2"><label for="g2">Non-Fiction</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g3"><label for="g3">Science</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g4"><label for="g4">Romance</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g5"><label for="g5">Fantasy</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g6"><label for="g6">Mystery</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g7"><label for="g7">Thriller</label></div>
-        <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g8"><label for="g8">History</label></div>
-      </div>
-    </div>
+    <!-- Main -->
+    <main class="nr-main">
+      <h2>Advanced Search</h2>
 
-    <div class="section">
-      <div class="section-title">Sort Results By...</div>
-      <div class="sort-section">
-        <select id="sortBy">
-          <option value="ratings">Ratings</option>
-          <option value="popularity">Popularity</option>
-          <option value="year">Year</option>
-        </select>
-        <select id="orderBy">
-          <option value="desc">Descending</option>
-          <option value="asc">Ascending</option>
-        </select>
+      <!-- Language Section -->
+      <div class="section">
+        <div class="section-title">Language</div>
+        <div class="checkbox-group" id="languageGroup">
+          <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-en"><label for="lang-en">English</label></div>
+          <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-cn"><label for="lang-cn">Chinese</label></div>
+          <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-bn"><label for="lang-bn">Bangla</label></div>
+          <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-es"><label for="lang-es">Spanish</label></div>
+          <div class="checkbox-item lang-neutral" data-state="neutral"><input type="checkbox" id="lang-fr"><label for="lang-fr">French</label></div>
+        </div>
       </div>
-      <button class="apply-btn" id="applyBtn">Apply Filters</button>
-    </div>
-  </main>
+
+      <!-- Genre Section -->
+      <div class="section">
+        <div class="section-title">Genre</div>
+        <div class="checkbox-group" id="genreGroup">
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g1"><label for="g1">Fiction</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g2"><label for="g2">Non-Fiction</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g3"><label for="g3">Science</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g4"><label for="g4">Romance</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g5"><label for="g5">Fantasy</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g6"><label for="g6">Mystery</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g7"><label for="g7">Thriller</label></div>
+          <div class="checkbox-item genre-neutral" data-state="neutral"><input type="checkbox" id="g8"><label for="g8">History</label></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sort Results By...</div>
+        <div class="sort-section">
+          <select id="sortBy">
+            <option value="ratings">Ratings</option>
+            <option value="popularity">Popularity</option>
+            <option value="year">Year</option>
+          </select>
+          <select id="orderBy">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+          </select>
+        </div>
+        <button class="apply-btn" id="applyBtn">Apply Filters</button>
+      </div>
+    </main>
+  </div>
 </div>
 
 <script>
@@ -362,6 +582,40 @@ document.querySelectorAll('#genreGroup .checkbox-item').forEach(item => {
       item.querySelector('input').checked = false;
     }
   });
+});
+
+// ==========================
+// Dropdown Menu Functionality
+// ==========================
+const userProfile = document.getElementById('userProfile');
+const userDropdown = document.getElementById('userDropdown');
+const logoutBtn = document.getElementById('logoutBtn');
+
+// Dropdown menu functionality
+userProfile.addEventListener('click', (e) => {
+  e.stopPropagation();
+  userDropdown.classList.toggle('active');
+  userProfile.classList.toggle('dropdown-active');
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', () => {
+  userDropdown.classList.remove('active');
+  userProfile.classList.remove('dropdown-active');
+});
+
+// Logout functionality
+logoutBtn.addEventListener('click', () => {
+  if (confirm('Are you sure you want to log out?')) {
+    alert('Logging out...');
+    // Add your logout logic here
+    // window.location.href = 'login.html';
+  }
+});
+
+// Close dropdown when clicking on dropdown items
+userDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
 });
 </script>
 </body>
