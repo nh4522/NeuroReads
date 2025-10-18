@@ -361,6 +361,97 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, 5000);
   }
+  // Add to the DOMContentLoaded event in admin_books.js
+
+// View Toggle Functionality
+function initViewToggle() {
+  const tableViewBtn = document.getElementById('tableViewBtn');
+  const cardViewBtn = document.getElementById('cardViewBtn');
+  const tableView = document.getElementById('tableView');
+  const cardView = document.getElementById('cardView');
+
+  if (tableViewBtn && cardViewBtn) {
+    tableViewBtn.addEventListener('click', () => {
+      tableViewBtn.classList.add('active');
+      cardViewBtn.classList.remove('active');
+      tableView.classList.remove('d-none');
+      cardView.classList.add('d-none');
+    });
+
+    cardViewBtn.addEventListener('click', () => {
+      cardViewBtn.classList.add('active');
+      tableViewBtn.classList.remove('active');
+      cardView.classList.remove('d-none');
+      tableView.classList.add('d-none');
+    });
+  }
+}
+
+// Card View Button Functionality
+function initCardViewButtons() {
+  // View buttons in cards
+  const viewBookBtns = document.querySelectorAll('.view-book-btn');
+  viewBookBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.book-card');
+      const title = card.querySelector('.card-title').textContent;
+      const author = card.querySelector('.card-subtitle').textContent;
+      showBootstrapBookDetailsModal(title, author);
+    });
+  });
+
+  // Edit buttons in cards
+  const editBookBtns = document.querySelectorAll('.edit-book-btn');
+  editBookBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.book-card');
+      const title = card.querySelector('.card-title').textContent;
+      showBootstrapAlert(`Edit Book: ${title}\n\nEdit form would open here.`, 'info');
+    });
+  });
+
+  // Delete buttons in cards
+  const deleteBookBtns = document.querySelectorAll('.delete-book-btn');
+  deleteBookBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.book-card');
+      const title = card.querySelector('.card-title').textContent;
+      showBootstrapDeleteCardConfirmation(title, card);
+    });
+  });
+
+  // Card click for quick view
+  const bookCards = document.querySelectorAll('.book-card');
+  bookCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (!e.target.closest('.btn') && !e.target.closest('.badge')) {
+        const title = card.querySelector('.card-title').textContent;
+        const author = card.querySelector('.card-subtitle').textContent;
+        showBootstrapBookDetailsModal(title, author);
+      }
+    });
+  });
+}
+
+function showBootstrapDeleteCardConfirmation(title, cardElement) {
+  if (confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
+    // Show loading state
+    cardElement.style.opacity = '0.5';
+    
+    setTimeout(() => {
+      cardElement.remove();
+      showBootstrapAlert(`Book "${title}" has been deleted successfully.`, 'success');
+      updateBookCount(-1);
+    }, 1000);
+  }
+}
+
+// Initialize the new functionality
+initViewToggle();
+initCardViewButtons();
 
   // Initialize filters
   applyFilters();

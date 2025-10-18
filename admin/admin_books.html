@@ -18,6 +18,9 @@
 <!-- CHART.JS FRAMEWORK -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <script defer src="admin_common.js"></script>
 <script defer src="admin_books.js"></script>
 
@@ -246,198 +249,330 @@
         </div>
       </div>
 
-      <!-- Books Table - YOUR ORIGINAL STRUCTURE -->
-      <div class="nr-books-table-container">
-        <div class="nr-table-header">
-          <div class="nr-table-title">Book Collection (1,247 books)</div>
-          <div class="nr-table-actions">
-            <button class="nr-table-action-btn" id="exportBooksBtn">
-              <img src="../icons/export.png" alt="Export" style="width:14px;height:14px;">
-              Export
-            </button>
-            <button class="nr-table-action-btn" id="printBooksBtn">
-              <img src="../icons/print.png" alt="Print" style="width:14px;height:14px;">
-              Print
-            </button>
-            <button class="nr-table-action-btn" id="refreshBooksBtn">
-              <img src="../icons/refresh.png" alt="Refresh" style="width:14px;height:14px;">
-              Refresh
-            </button>
+      <!-- NEW: View Toggle Buttons -->
+      <div class="container-fluid mb-4">
+        <div class="row">
+          <div class="col-12">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-outline-primary active" id="tableViewBtn">
+                <i class="fas fa-table me-2"></i>Table View
+              </button>
+              <button type="button" class="btn btn-outline-primary" id="cardViewBtn">
+                <i class="fas fa-th me-2"></i>Card View
+              </button>
+            </div>
           </div>
         </div>
-        
-        <table class="nr-books-table">
-          <thead>
-            <tr>
-              <th style="width: 60px;">Cover</th>
-              <th>Book Details</th>
-              <th style="width: 140px;">ISBN</th>
-              <th style="width: 120px;">Category</th>
-              <th style="width: 120px;">Status</th>
-              <th style="width: 120px;">Added Date</th>
-              <th style="width: 100px;">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="nr-book-cover">
-                  <img src="../images/bookCover/the_great_gatesby.jpg" alt="The Great Gatsby" onerror="this.src='../icons/book-placeholder.png'">
-                </div>
-              </td>
-              <td>
-                <div class="nr-book-title">The Great Gatsby</div>
-                <div class="nr-book-author">F. Scott Fitzgerald</div>
-                <div class="nr-book-meta">Published: 1925 • Pages: 218</div>
-              </td>
-              <td>978-0-7432-7356-5</td>
-              <td><span class="nr-category-badge fiction">Fiction</span></td>
-              <td><span class="nr-status-badge available">Available</span></td>
-              <td>2024-01-15</td>
-              <td>
-                <div class="nr-action-buttons">
-                  <button class="nr-action-btn view" title="View Details">
-                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn edit" title="Edit Book">
-                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn delete" title="Delete Book">
-                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="nr-book-cover">
-                  <img src="../images\bookCover\a_brief_history_of_time_stephen_hawking.jpg" alt="A Brief History of Time" onerror="this.src='../icons/book-placeholder.png'">
-                </div>
-              </td>
-              <td>
-                <div class="nr-book-title">A Brief History of Time</div>
-                <div class="nr-book-author">Stephen Hawking</div>
-                <div class="nr-book-meta">Published: 1988 • Pages: 256</div>
-              </td>
-              <td>978-0-553-10953-5</td>
-              <td><span class="nr-category-badge science">Science</span></td>
-              <td><span class="nr-status-badge checked-out">Checked Out</span></td>
-              <td>2024-01-10</td>
-              <td>
-                <div class="nr-action-buttons">
-                  <button class="nr-action-btn view" title="View Details">
-                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn edit" title="Edit Book">
-                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn delete" title="Delete Book">
-                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="nr-book-cover">
-                  <img src="../images\bookCover\clean_code_robert_martin.jpg" alt="Clean Code" onerror="this.src='../icons/book-placeholder.png'">
-                </div>
-              </td>
-              <td>
-                <div class="nr-book-title">Clean Code</div>
-                <div class="nr-book-author">Robert C. Martin</div>
-                <div class="nr-book-meta">Published: 2008 • Pages: 464</div>
-              </td>
-              <td>978-0-13-235088-4</td>
-              <td><span class="nr-category-badge technology">Technology</span></td>
-              <td><span class="nr-status-badge available">Available</span></td>
-              <td>2024-01-08</td>
-              <td>
-                <div class="nr-action-buttons">
-                  <button class="nr-action-btn view" title="View Details">
-                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn edit" title="Edit Book">
-                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn delete" title="Delete Book">
-                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="nr-book-cover">
-                  <img src="../images\bookCover\sapiens_yuval_noah_harari.jpg" alt="Sapiens" onerror="this.src='../icons/book-placeholder.png'">
-                </div>
-              </td>
-              <td>
-                <div class="nr-book-title">Sapiens: A Brief History</div>
-                <div class="nr-book-author">Yuval Noah Harari</div>
-                <div class="nr-book-meta">Published: 2014 • Pages: 443</div>
-              </td>
-              <td>978-0-06-231609-7</td>
-              <td><span class="nr-category-badge history">History</span></td>
-              <td><span class="nr-status-badge maintenance">Maintenance</span></td>
-              <td>2024-01-05</td>
-              <td>
-                <div class="nr-action-buttons">
-                  <button class="nr-action-btn view" title="View Details">
-                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn edit" title="Edit Book">
-                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn delete" title="Delete Book">
-                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="nr-book-cover">
-                  <img src="../images\bookCover\dracula_bram_stroker.jpg" alt="Dracula" onerror="this.src='../icons/book-placeholder.png'">
-                </div>
-              </td>
-              <td>
-                <div class="nr-book-title">Dracula</div>
-                <div class="nr-book-author">Bram Stoker</div>
-                <div class="nr-book-meta">Published: 1897 • Pages: 488</div>
-              </td>
-              <td>978-0-393-97012-8</td>
-              <td><span class="nr-category-badge psychology">Horror</span></td>
-              <td><span class="nr-status-badge available">Available</span></td>
-              <td>2024-01-03</td>
-              <td>
-                <div class="nr-action-buttons">
-                  <button class="nr-action-btn view" title="View Details">
-                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn edit" title="Edit Book">
-                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
-                  </button>
-                  <button class="nr-action-btn delete" title="Delete Book">
-                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      </div>
 
-        <!-- Pagination -->
-        <div class="nr-pagination">
-          <div class="nr-pagination-info">Showing 1-5 of 1,247 books</div>
-          <div class="nr-pagination-controls">
-            <button class="nr-pagination-btn" disabled>Previous</button>
-            <button class="nr-pagination-btn active">1</button>
-            <button class="nr-pagination-btn">2</button>
-            <button class="nr-pagination-btn">3</button>
-            <button class="nr-pagination-btn">4</button>
-            <button class="nr-pagination-btn">5</button>
-            <button class="nr-pagination-btn">Next</button>
+      <!-- Table View Section -->
+      <div id="tableView" class="view-section">
+        <div class="nr-books-table-container">
+          <div class="nr-table-header">
+            <div class="nr-table-title">Book Collection (1,247 books)</div>
+            <div class="nr-table-actions">
+              <button class="nr-table-action-btn" id="exportBooksBtn">
+                <img src="../icons/export.png" alt="Export" style="width:14px;height:14px;">
+                Export
+              </button>
+              <button class="nr-table-action-btn" id="printBooksBtn">
+                <img src="../icons/print.png" alt="Print" style="width:14px;height:14px;">
+                Print
+              </button>
+              <button class="nr-table-action-btn" id="refreshBooksBtn">
+                <img src="../icons/refresh.png" alt="Refresh" style="width:14px;height:14px;">
+                Refresh
+              </button>
+            </div>
+          </div>
+          
+          <table class="nr-books-table">
+            <thead>
+              <tr>
+                <th style="width: 60px;">Cover</th>
+                <th>Book Details</th>
+                <th style="width: 140px;">ISBN</th>
+                <th style="width: 120px;">Category</th>
+                <th style="width: 120px;">Status</th>
+                <th style="width: 120px;">Added Date</th>
+                <th style="width: 100px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="nr-book-cover">
+                    <img src="../images/bookCover/the_great_gatesby.jpg" alt="The Great Gatsby" onerror="this.src='../icons/book-placeholder.png'">
+                  </div>
+                </td>
+                <td>
+                  <div class="nr-book-title">The Great Gatsby</div>
+                  <div class="nr-book-author">F. Scott Fitzgerald</div>
+                  <div class="nr-book-meta">Published: 1925 • Pages: 218</div>
+                </td>
+                <td>978-0-7432-7356-5</td>
+                <td><span class="nr-category-badge fiction">Fiction</span></td>
+                <td><span class="nr-status-badge available">Available</span></td>
+                <td>2024-01-15</td>
+                <td>
+                  <div class="nr-action-buttons">
+                    <button class="nr-action-btn view" title="View Details">
+                      <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                    </button>
+                    <button class="nr-action-btn edit" title="Edit Book">
+                      <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                    </button>
+                    <button class="nr-action-btn delete" title="Delete Book">
+                      <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- More table rows... -->
+            </tbody>
+          </table>
+
+          <!-- Pagination -->
+          <div class="nr-pagination">
+            <div class="nr-pagination-info">Showing 1-5 of 1,247 books</div>
+            <div class="nr-pagination-controls">
+              <button class="nr-pagination-btn" disabled>Previous</button>
+              <button class="nr-pagination-btn active">1</button>
+              <button class="nr-pagination-btn">2</button>
+              <button class="nr-pagination-btn">3</button>
+              <button class="nr-pagination-btn">4</button>
+              <button class="nr-pagination-btn">5</button>
+              <button class="nr-pagination-btn">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW: Card View Section -->
+      <div id="cardView" class="view-section d-none">
+        <div class="container-fluid">
+          <div class="row g-4">
+            
+            <!-- Book Card 1 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card h-100 book-card">
+                <div class="card-img-container">
+                  <img src="../images/bookCover/the_great_gatesby.jpg" 
+                       class="card-img-top" 
+                       alt="The Great Gatsby"
+                       onerror="this.src='../icons/book-placeholder.png'">
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">The Great Gatsby</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">F. Scott Fitzgerald</h6>
+                  <p class="card-text flex-grow-1">A classic novel about the American Dream set in the Jazz Age.</p>
+                  <div class="book-meta mb-2">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Published: 1925</small><br>
+                    <small class="text-muted"><i class="fas fa-file me-1"></i>Pages: 218</small><br>
+                    <small class="text-muted"><i class="fas fa-barcode me-1"></i>978-0-7432-7356-5</small>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="badge bg-primary">Fiction</span>
+                    <span class="badge bg-success">Available</span>
+                  </div>
+                  <div class="mt-3 d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm view-book-btn">
+                      <i class="fas fa-eye me-1"></i>View Details
+                    </button>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-secondary btn-sm edit-book-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm delete-book-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Book Card 2 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card h-100 book-card">
+                <div class="card-img-container">
+                  <img src="../images/bookCover/a_brief_history_of_time_stephen_hawking.jpg" 
+                       class="card-img-top" 
+                       alt="A Brief History of Time"
+                       onerror="this.src='../icons/book-placeholder.png'">
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">A Brief History of Time</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Stephen Hawking</h6>
+                  <p class="card-text flex-grow-1">From the Big Bang to black holes, explores the nature of time and the universe.</p>
+                  <div class="book-meta mb-2">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Published: 1988</small><br>
+                    <small class="text-muted"><i class="fas fa-file me-1"></i>Pages: 256</small><br>
+                    <small class="text-muted"><i class="fas fa-barcode me-1"></i>978-0-553-10953-5</small>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="badge bg-info">Science</span>
+                    <span class="badge bg-warning">Checked Out</span>
+                  </div>
+                  <div class="mt-3 d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm view-book-btn">
+                      <i class="fas fa-eye me-1"></i>View Details
+                    </button>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-secondary btn-sm edit-book-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm delete-book-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Book Card 3 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card h-100 book-card">
+                <div class="card-img-container">
+                  <img src="../images/bookCover/clean_code_robert_martin.jpg" 
+                       class="card-img-top" 
+                       alt="Clean Code"
+                       onerror="this.src='../icons/book-placeholder.png'">
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Clean Code</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Robert C. Martin</h6>
+                  <p class="card-text flex-grow-1">A handbook of agile software craftsmanship with practical advice for better coding.</p>
+                  <div class="book-meta mb-2">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Published: 2008</small><br>
+                    <small class="text-muted"><i class="fas fa-file me-1"></i>Pages: 464</small><br>
+                    <small class="text-muted"><i class="fas fa-barcode me-1"></i>978-0-13-235088-4</small>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="badge bg-success">Technology</span>
+                    <span class="badge bg-success">Available</span>
+                  </div>
+                  <div class="mt-3 d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm view-book-btn">
+                      <i class="fas fa-eye me-1"></i>View Details
+                    </button>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-secondary btn-sm edit-book-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm delete-book-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Book Card 4 -->
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card h-100 book-card">
+                <div class="card-img-container">
+                  <img src="../images/bookCover/sapiens_yuval_noah_harari.jpg" 
+                       class="card-img-top" 
+                       alt="Sapiens"
+                       onerror="this.src='../icons/book-placeholder.png'">
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Sapiens: A Brief History</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Yuval Noah Harari</h6>
+                  <p class="card-text flex-grow-1">Explores the history of humankind from the evolution of archaic human species in the Stone Age.</p>
+                  <div class="book-meta mb-2">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Published: 2014</small><br>
+                    <small class="text-muted"><i class="fas fa-file me-1"></i>Pages: 443</small><br>
+                    <small class="text-muted"><i class="fas fa-barcode me-1"></i>978-0-06-231609-7</small>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="badge bg-warning">History</span>
+                    <span class="badge bg-info">Maintenance</span>
+                  </div>
+                  <div class="mt-3 d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm view-book-btn">
+                      <i class="fas fa-eye me-1"></i>View Details
+                    </button>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-secondary btn-sm edit-book-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm delete-book-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            <!-- Book Card 5 -->
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+              <div class="card h-100 book-card">
+                <div class="card-img-container">
+                  <img src="../images\bookCover\crime_and_punishment.jpeg" 
+                       class="card-img-top" 
+                       alt="Crime and Punishment"
+                       onerror="this.src='../icons/book-placeholder.png'">
+                </div>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Crime and Punishment</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Fyodor Dostoevsky</h6>
+                  <p class="card-text flex-grow-1">Crime and Punishment follows 
+                    the mental anguish and moral dilemmas of Rodion Raskolnikov, 
+                    an impoverished former law student in Saint Petersburg who plans to kill an 
+                    unscrupulous pawnbroker, an old woman who stores money and valuable objects in her flat.</p>
+                  <div class="book-meta mb-2">
+                    <small class="text-muted"><i class="fas fa-calendar me-1"></i>Published: 1866</small><br>
+                    <small class="text-muted"><i class="fas fa-file me-1"></i>Pages: 1050</small><br>
+                    <small class="text-muted"><i class="fas fa-barcode me-1"></i>978-0-679-42029-3</small>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-auto">
+                    <span class="badge bg-warning">Fiction</span>
+                    <span class="badge bg-info">Maintenance</span>
+                  </div>
+                  <div class="mt-3 d-grid gap-2">
+                    <button class="btn btn-outline-primary btn-sm view-book-btn">
+                      <i class="fas fa-eye me-1"></i>View Details
+                    </button>
+                    <div class="btn-group" role="group">
+                      <button class="btn btn-outline-secondary btn-sm edit-book-btn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-outline-danger btn-sm delete-book-btn">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Card View Pagination -->
+          <div class="row mt-4">
+            <div class="col-12">
+              <nav aria-label="Books pagination">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">4</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
