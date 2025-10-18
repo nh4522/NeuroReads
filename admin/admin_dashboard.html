@@ -54,10 +54,10 @@
         <ul>
           <li><a href="admin_dashboard.html" class="active"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
           <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
-          <li><a href="#"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
-          <li><a href="#"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
-          <li><a href="#"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
-          <li><a href="#"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
+          <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="admin_reports.html"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="admin_sysSet.html"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
         </ul>
       </nav>
       <div class="nr-side-bottom">
@@ -74,8 +74,14 @@
           <p>Welcome back! Here's what's happening with your library today.</p>
         </div>
         <div class="nr-dashboard-actions">
-          <button class="nr-dashboard-btn">Generate Report</button>
-          <button class="nr-dashboard-btn">Export Data</button>
+        <button class="nr-dashboard-btn" id="generateReportBtn">
+        <img src="../icons/generate-report.png" alt="Generate" style="width:16px;height:16px;">
+         Generate Report
+        </button>
+        <button class="nr-dashboard-btn secondary" id="exportDataBtn">
+        <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
+         Export Data
+        </button>
         </div>
       </div>
 

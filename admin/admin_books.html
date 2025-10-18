@@ -8,11 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="admin_common.css">
-
 <link rel="stylesheet" href="admin_books.css">
 
 <script defer src="admin_common.js"></script>
-
 <script defer src="admin_books.js"></script>
 
 </head>
@@ -31,7 +29,7 @@
       <div class="nr-user-info">
         <button title="notification" class="nr-notification-btn">🔔</button>
         <div class="nr-user-profile" id="userProfile">
-          <img src="../icons/top-user.png" alt="mini" class="nr-user-avatar">
+          <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
           <span class="nr-username">Admin User</span>
         </div>
         
@@ -54,8 +52,8 @@
         <ul>
           <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
           <li><a href="admin_books.html" class="active"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
-          <li><a href="#"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
-          <li><a href="#"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
           <li><a href="#"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
           <li><a href="#"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
         </ul>
@@ -74,8 +72,14 @@
           <p>Manage your library's book collection, inventory, and availability</p>
         </div>
         <div class="nr-books-actions">
-          <button class="nr-books-btn secondary">📥 Import Books</button>
-          <button class="nr-books-btn">➕ Add New Book</button>
+          <button class="nr-books-btn secondary" id="importBooksBtn">
+            <img src="../icons/import.png" alt="Import" style="width:16px;height:16px;">
+            Import Books
+          </button>
+          <button class="nr-books-btn" id="addBookBtn">
+            <img src="../icons/add-book.png" alt="Add" style="width:16px;height:16px;">
+            Add New Book
+          </button>
         </div>
       </div>
 
@@ -83,30 +87,42 @@
       <div class="nr-books-filters">
         <div class="nr-filters-header">
           <div class="nr-filters-title">Filter Books</div>
+          <button class="nr-filter-reset" id="resetFilters">Reset Filters</button>
         </div>
         <div class="nr-filters-grid">
           <div class="nr-filter-group">
             <label class="nr-filter-label">Category</label>
-            <select class="nr-filter-select">
-              <option>All Categories</option>
-              <option>Fiction</option>
-              <option>Non-Fiction</option>
-              <option>Science</option>
-              <option>Technology</option>
-              <option>Literature</option>
+            <select class="nr-filter-select" id="categoryFilter">
+              <option value="">All Categories</option>
+              <option value="fiction">Fiction</option>
+              <option value="non-fiction">Non-Fiction</option>
+              <option value="science">Science</option>
+              <option value="technology">Technology</option>
+              <option value="literature">Literature</option>
+            </select>
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Status</label>
+            <select class="nr-filter-select" id="statusFilter">
+              <option value="">All Status</option>
+              <option value="available">Available</option>
+              <option value="checked-out">Checked Out</option>
+              <option value="maintenance">Maintenance</option>
+              <option value="archived">Archived</option>
             </select>
           </div>
           <div class="nr-filter-group">
             <label class="nr-filter-label">Search</label>
-            <input type="text" class="nr-filter-input" placeholder="Title, author, or ISBN...">
+            <input type="text" class="nr-filter-input" id="searchBooks" placeholder="Title, author, or ISBN...">
           </div>
           <div class="nr-filter-group">
             <label class="nr-filter-label">Sort By</label>
-            <select class="nr-filter-select">
-              <option>Newest First</option>
-              <option>Oldest First</option>
-              <option>Title A-Z</option>
-              <option>Title Z-A</option>
+            <select class="nr-filter-select" id="sortBooks">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="title-asc">Title A-Z</option>
+              <option value="title-desc">Title Z-A</option>
+              <option value="popular">Most Popular</option>
             </select>
           </div>
         </div>
@@ -117,110 +133,176 @@
         <div class="nr-table-header">
           <div class="nr-table-title">Book Collection (1,247 books)</div>
           <div class="nr-table-actions">
-            <button class="nr-table-action-btn">📋 Export</button>
-            <button class="nr-table-action-btn">🖨️ Print</button>
+            <button class="nr-table-action-btn" id="exportBooksBtn">
+              <img src="../icons/export.png" alt="Export" style="width:14px;height:14px;">
+              Export
+            </button>
+            <button class="nr-table-action-btn" id="printBooksBtn">
+              <img src="../icons/print.png" alt="Print" style="width:14px;height:14px;">
+              Print
+            </button>
+            <button class="nr-table-action-btn" id="refreshBooksBtn">
+              <img src="../icons/refresh.png" alt="Refresh" style="width:14px;height:14px;">
+              Refresh
+            </button>
           </div>
         </div>
         
         <table class="nr-books-table">
           <thead>
             <tr>
-              <th>Cover</th>
+              <th style="width: 60px;">Cover</th>
               <th>Book Details</th>
-              <th>ISBN</th>
-              <th>Category</th>
-              <th>Added Date</th>
-              <th>Actions</th>
+              <th style="width: 140px;">ISBN</th>
+              <th style="width: 120px;">Category</th>
+              <th style="width: 120px;">Status</th>
+              <th style="width: 120px;">Added Date</th>
+              <th style="width: 100px;">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <div class="nr-book-cover">📘</div>
+                <div class="nr-book-cover">
+                  <img src="../images/bookCover/the_great_gatesby.jpg" alt="The Great Gatsby" onerror="this.src='../icons/book-placeholder.png'">
+                </div>
               </td>
               <td>
                 <div class="nr-book-title">The Great Gatsby</div>
                 <div class="nr-book-author">F. Scott Fitzgerald</div>
+                <div class="nr-book-meta">Published: 1925 • Pages: 218</div>
               </td>
               <td>978-0-7432-7356-5</td>
-              <td>Fiction</td>
+              <td><span class="nr-category-badge fiction">Fiction</span></td>
+              <td><span class="nr-status-badge available">Available</span></td>
               <td>2024-01-15</td>
               <td>
                 <div class="nr-action-buttons">
-                  <button class="nr-action-btn edit" title="Edit">✏️</button>
-                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                  <button class="nr-action-btn view" title="View Details">
+                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn edit" title="Edit Book">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete Book">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="nr-book-cover">🔬</div>
+                <div class="nr-book-cover">
+                  <img src="../images/book-covers/brief-history-time.jpg" alt="A Brief History of Time" onerror="this.src='../icons/book-placeholder.png'">
+                </div>
               </td>
               <td>
                 <div class="nr-book-title">A Brief History of Time</div>
                 <div class="nr-book-author">Stephen Hawking</div>
+                <div class="nr-book-meta">Published: 1988 • Pages: 256</div>
               </td>
               <td>978-0-553-10953-5</td>
-              <td>Science</td>
+              <td><span class="nr-category-badge science">Science</span></td>
+              <td><span class="nr-status-badge checked-out">Checked Out</span></td>
               <td>2024-01-10</td>
               <td>
                 <div class="nr-action-buttons">
-                  <button class="nr-action-btn edit" title="Edit">✏️</button>
-                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                  <button class="nr-action-btn view" title="View Details">
+                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn edit" title="Edit Book">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete Book">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="nr-book-cover">💻</div>
+                <div class="nr-book-cover">
+                  <img src="../images/book-covers/clean-code.jpg" alt="Clean Code" onerror="this.src='../icons/book-placeholder.png'">
+                </div>
               </td>
               <td>
                 <div class="nr-book-title">Clean Code</div>
                 <div class="nr-book-author">Robert C. Martin</div>
+                <div class="nr-book-meta">Published: 2008 • Pages: 464</div>
               </td>
               <td>978-0-13-235088-4</td>
-              <td>Technology</td>
+              <td><span class="nr-category-badge technology">Technology</span></td>
+              <td><span class="nr-status-badge available">Available</span></td>
               <td>2024-01-08</td>
               <td>
                 <div class="nr-action-buttons">
-                  <button class="nr-action-btn edit" title="Edit">✏️</button>
-                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                  <button class="nr-action-btn view" title="View Details">
+                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn edit" title="Edit Book">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete Book">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="nr-book-cover">🌍</div>
+                <div class="nr-book-cover">
+                  <img src="../images/book-covers/sapiens.jpg" alt="Sapiens" onerror="this.src='../icons/book-placeholder.png'">
+                </div>
               </td>
               <td>
                 <div class="nr-book-title">Sapiens: A Brief History</div>
                 <div class="nr-book-author">Yuval Noah Harari</div>
+                <div class="nr-book-meta">Published: 2014 • Pages: 443</div>
               </td>
               <td>978-0-06-231609-7</td>
-              <td>History</td>
+              <td><span class="nr-category-badge history">History</span></td>
+              <td><span class="nr-status-badge maintenance">Maintenance</span></td>
               <td>2024-01-05</td>
               <td>
                 <div class="nr-action-buttons">
-                  <button class="nr-action-btn edit" title="Edit">✏️</button>
-                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                  <button class="nr-action-btn view" title="View Details">
+                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn edit" title="Edit Book">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete Book">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
                 </div>
               </td>
             </tr>
             <tr>
               <td>
-                <div class="nr-book-cover">🧠</div>
+                <div class="nr-book-cover">
+                  <img src="../images/book-covers/thinking-fast-slow.jpg" alt="Thinking, Fast and Slow" onerror="this.src='../icons/book-placeholder.png'">
+                </div>
               </td>
               <td>
                 <div class="nr-book-title">Thinking, Fast and Slow</div>
                 <div class="nr-book-author">Daniel Kahneman</div>
+                <div class="nr-book-meta">Published: 2011 • Pages: 499</div>
               </td>
               <td>978-0-374-27563-1</td>
-              <td>Psychology</td>
+              <td><span class="nr-category-badge psychology">Psychology</span></td>
+              <td><span class="nr-status-badge available">Available</span></td>
               <td>2024-01-03</td>
               <td>
                 <div class="nr-action-buttons">
-                  <button class="nr-action-btn edit" title="Edit">✏️</button>
-                  <button class="nr-action-btn delete" title="Delete">🗑️</button>
+                  <button class="nr-action-btn view" title="View Details">
+                    <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn edit" title="Edit Book">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete Book">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
                 </div>
               </td>
             </tr>
@@ -231,13 +313,13 @@
         <div class="nr-pagination">
           <div class="nr-pagination-info">Showing 1-5 of 1,247 books</div>
           <div class="nr-pagination-controls">
-            <button class="nr-pagination-btn">« Previous</button>
+            <button class="nr-pagination-btn" disabled>Previous</button>
             <button class="nr-pagination-btn active">1</button>
             <button class="nr-pagination-btn">2</button>
             <button class="nr-pagination-btn">3</button>
-            <button class="nr-pagination-btn">...</button>
-            <button class="nr-pagination-btn">250</button>
-            <button class="nr-pagination-btn">Next »</button>
+            <button class="nr-pagination-btn">4</button>
+            <button class="nr-pagination-btn">5</button>
+            <button class="nr-pagination-btn">Next</button>
           </div>
         </div>
       </div>
@@ -245,7 +327,6 @@
 
   </div>
 </div>
-
 
 </body>
 </html>

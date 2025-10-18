@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NeuroReads — User Management</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- COMMON CSS FIRST -->
+<link rel="stylesheet" href="admin_common.css">
+<!-- THEN PAGE-SPECIFIC CSS -->
+<link rel="stylesheet" href="admin_user.css">
+
+<!-- COMMON JS FIRST -->
+<script src="admin_common.js"></script>
+<!-- THEN USER-SPECIFIC JS -->
+<script src="admin_user.js"></script>
+
+</head>
+<body>
+
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Search users, emails, IDs..."></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
+          <span class="nr-username">Admin User</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="admin_profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="#"><img src="../icons/books.png" alt=""> Account Settings</a></li>
+            <li><a href="#"><img src="../icons/explore.png" alt=""> Preferences</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
+          <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
+          <li><a href="admin_user.html" class="active"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="admin_reports.html"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="admin_sysSet.html"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <!-- Users Header -->
+      <div class="nr-users-header">
+        <div class="nr-users-title">
+          <h1>User Management</h1>
+          <p>Manage users, permissions, and access controls</p>
+        </div>
+        <div class="nr-users-actions">
+          <button class="nr-users-btn" id="addUserBtn">
+            <img src="../icons/add-user.png" alt="Add" style="width:16px;height:16px;">
+            Add User
+          </button>
+          <button class="nr-users-btn secondary" id="exportUsersBtn">
+            <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
+            Export
+          </button>
+        </div>
+      </div>
+
+      <!-- Users Stats -->
+      <div class="nr-users-stats">
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">👥</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">8,742</div>
+            <div class="nr-stat-label">Total Users</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">✅</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">7,891</div>
+            <div class="nr-stat-label">Active Users</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">🔒</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">851</div>
+            <div class="nr-stat-label">Suspended</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">🆕</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">124</div>
+            <div class="nr-stat-label">New This Week</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Filters -->
+      <div class="nr-users-filters">
+        <div class="nr-filters-header">
+          <div class="nr-filters-title">Filters & Search</div>
+          <button class="nr-filter-reset" id="resetFilters">Reset</button>
+        </div>
+        <div class="nr-filters-grid">
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Status</label>
+            <select class="nr-filter-select" id="statusFilter">
+              <option value="">All Status</option>
+              <option value="active">Active</option>
+              <option value="suspended">Suspended</option>
+              <option value="inactive">Inactive</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Role</label>
+            <select class="nr-filter-select" id="roleFilter">
+              <option value="">All Roles</option>
+              <option value="user">Regular User</option>
+              <option value="premium">Premium User</option>
+              <option value="moderator">Moderator</option>
+              <option value="admin">Administrator</option>
+            </select>
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Registration Date</label>
+            <select class="nr-filter-select" id="dateFilter">
+              <option value="">All Time</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="year">This Year</option>
+            </select>
+          </div>
+          <div class="nr-filter-group">
+            <label class="nr-filter-label">Search Users</label>
+            <input type="text" class="nr-filter-input" id="searchUsers" placeholder="Name, email, or user ID...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="nr-users-table-container">
+        <div class="nr-table-header">
+          <div class="nr-table-title">Users List</div>
+          <div class="nr-table-actions">
+            <button class="nr-table-action-btn" id="refreshUsers">
+              <img src="../icons/refresh.png" alt="Refresh" style="width:14px;height:14px;">
+              Refresh
+            </button>
+            <button class="nr-table-action-btn" id="bulkActions">
+              <img src="../icons/bulk-actions.png" alt="Bulk" style="width:14px;height:14px;">
+              Bulk Actions
+            </button>
+          </div>
+        </div>
+        
+        <table class="nr-users-table">
+          <thead>
+            <tr>
+              <th style="width: 40px;">
+                <input type="checkbox" id="selectAllUsers">
+              </th>
+              <th>User</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Registration</th>
+              <th>Last Active</th>
+              <th>Books Read</th>
+              <th style="width: 120px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" class="user-checkbox"></td>
+              <td>
+                <div class="nr-user-info-cell">
+                  <img src="../icons/avatar-placeholder.png" alt="User" class="nr-user-avatar-small">
+                  <div class="nr-user-details">
+                    <div class="nr-user-name">Sarah Johnson</div>
+                    <div class="nr-user-email">sarah.j@example.com</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="nr-role-badge premium">Premium</span></td>
+              <td><span class="nr-status-badge active">Active</span></td>
+              <td>2024-01-15</td>
+              <td>2 hours ago</td>
+              <td>47</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit User">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn suspend" title="Suspend User">
+                    <img src="../icons/suspend.png" alt="Suspend" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete User">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="user-checkbox"></td>
+              <td>
+                <div class="nr-user-info-cell">
+                  <img src="../icons/avatar-placeholder.png" alt="User" class="nr-user-avatar-small">
+                  <div class="nr-user-details">
+                    <div class="nr-user-name">Mike Chen</div>
+                    <div class="nr-user-email">mike.chen@example.com</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="nr-role-badge user">User</span></td>
+              <td><span class="nr-status-badge active">Active</span></td>
+              <td>2024-02-03</td>
+              <td>1 day ago</td>
+              <td>12</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit User">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn suspend" title="Suspend User">
+                    <img src="../icons/suspend.png" alt="Suspend" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete User">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="user-checkbox"></td>
+              <td>
+                <div class="nr-user-info-cell">
+                  <img src="../icons/avatar-placeholder.png" alt="User" class="nr-user-avatar-small">
+                  <div class="nr-user-details">
+                    <div class="nr-user-name">Emma Davis</div>
+                    <div class="nr-user-email">emma.davis@example.com</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="nr-role-badge moderator">Moderator</span></td>
+              <td><span class="nr-status-badge active">Active</span></td>
+              <td>2023-11-20</td>
+              <td>5 minutes ago</td>
+              <td>156</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit User">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn suspend" title="Suspend User">
+                    <img src="../icons/suspend.png" alt="Suspend" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete User">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="user-checkbox"></td>
+              <td>
+                <div class="nr-user-info-cell">
+                  <img src="../icons/avatar-placeholder.png" alt="User" class="nr-user-avatar-small">
+                  <div class="nr-user-details">
+                    <div class="nr-user-name">Alex Rodriguez</div>
+                    <div class="nr-user-email">alex.r@example.com</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="nr-role-badge user">User</span></td>
+              <td><span class="nr-status-badge suspended">Suspended</span></td>
+              <td>2024-01-08</td>
+              <td>3 days ago</td>
+              <td>8</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit User">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn activate" title="Activate User">
+                    <img src="../icons/activate.png" alt="Activate" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete User">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" class="user-checkbox"></td>
+              <td>
+                <div class="nr-user-info-cell">
+                  <img src="../icons/avatar-placeholder.png" alt="User" class="nr-user-avatar-small">
+                  <div class="nr-user-details">
+                    <div class="nr-user-name">Lisa Wang</div>
+                    <div class="nr-user-email">lisa.wang@example.com</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="nr-role-badge premium">Premium</span></td>
+              <td><span class="nr-status-badge inactive">Inactive</span></td>
+              <td>2023-12-15</td>
+              <td>2 weeks ago</td>
+              <td>23</td>
+              <td>
+                <div class="nr-action-buttons">
+                  <button class="nr-action-btn edit" title="Edit User">
+                    <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn activate" title="Activate User">
+                    <img src="../icons/activate.png" alt="Activate" style="width:14px;height:14px;">
+                  </button>
+                  <button class="nr-action-btn delete" title="Delete User">
+                    <img src="../icons/delete.png" alt="Delete" style="width:14px;height:14px;">
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="nr-pagination">
+          <div class="nr-pagination-info">Showing 1-5 of 8,742 users</div>
+          <div class="nr-pagination-controls">
+            <button class="nr-pagination-btn" disabled>Previous</button>
+            <button class="nr-pagination-btn active">1</button>
+            <button class="nr-pagination-btn">2</button>
+            <button class="nr-pagination-btn">3</button>
+            <button class="nr-pagination-btn">...</button>
+            <button class="nr-pagination-btn">874</button>
+            <button class="nr-pagination-btn">Next</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+
+
+</body>
+</html>

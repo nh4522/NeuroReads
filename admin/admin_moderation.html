@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NeuroReads — Content Moderation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- COMMON CSS FIRST -->
+<link rel="stylesheet" href="admin_common.css">
+<!-- THEN PAGE-SPECIFIC CSS -->
+<link rel="stylesheet" href="admin_moderation.css">
+
+<!-- COMMON JS FIRST -->
+<script src="admin_common.js"></script>
+<!-- THEN MODERATION-SPECIFIC JS -->
+<script src="admin_moderation.js"></script>
+
+
+</head>
+<body>
+
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Search reports, users, content..."></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
+          <span class="nr-username">Admin User</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="admin_profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="#"><img src="../icons/books.png" alt=""> Account Settings</a></li>
+            <li><a href="#"><img src="../icons/explore.png" alt=""> Preferences</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
+          <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
+          <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="admin_moderation.html" class="active"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="#"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="#"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <!-- Moderation Header -->
+      <div class="nr-moderation-header">
+        <div class="nr-moderation-title">
+          <h1>Content Moderation</h1>
+          <p>Review and manage reported content, user flags, and community guidelines</p>
+        </div>
+        <div class="nr-moderation-actions">
+          <button class="nr-moderation-btn" id="autoModSettings">
+            <img src="../icons/settings.png" alt="Settings" style="width:16px;height:16px;">
+            Auto-Mod Settings
+          </button>
+          <button class="nr-moderation-btn secondary" id="moderationLogs">
+            <img src="../icons/history.png" alt="History" style="width:16px;height:16px;">
+            Moderation Logs
+          </button>
+        </div>
+      </div>
+
+      <!-- Moderation Stats -->
+      <div class="nr-moderation-stats">
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">🚩</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">47</div>
+            <div class="nr-stat-label">Pending Reports</div>
+            <div class="nr-stat-change">↑ 12% from yesterday</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">⏱️</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">2.3h</div>
+            <div class="nr-stat-label">Avg. Response Time</div>
+            <div class="nr-stat-change">↓ 0.5h from last week</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">✅</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">89%</div>
+            <div class="nr-stat-label">Action Accuracy</div>
+            <div class="nr-stat-change">↑ 3% from last month</div>
+          </div>
+        </div>
+        <div class="nr-stat-card">
+          <div class="nr-stat-icon">🔍</div>
+          <div class="nr-stat-content">
+            <div class="nr-stat-value">1,247</div>
+            <div class="nr-stat-label">Reviewed Today</div>
+            <div class="nr-stat-change">↑ 156 from yesterday</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="nr-quick-actions">
+        <h3>Quick Actions</h3>
+        <div class="nr-actions-grid">
+          <button class="nr-quick-action-btn" data-action="review-comments">
+            <img src="../icons/comment.png" alt="Comments" style="width:20px;height:20px;">
+            Review Comments
+            <span class="nr-badge">23 new</span>
+          </button>
+          <button class="nr-quick-action-btn" data-action="review-reviews">
+            <img src="../icons/review.png" alt="Reviews" style="width:20px;height:20px;">
+            Book Reviews
+            <span class="nr-badge">15 new</span>
+          </button>
+          <button class="nr-quick-action-btn" data-action="user-reports">
+            <img src="../icons/user-report.png" alt="Users" style="width:20px;height:20px;">
+            User Reports
+            <span class="nr-badge">8 new</span>
+          </button>
+          <button class="nr-quick-action-btn" data-action="content-flags">
+            <img src="../icons/flag.png" alt="Flags" style="width:20px;height:20px;">
+            Content Flags
+            <span class="nr-badge">31 new</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Moderation Queue -->
+      <div class="nr-moderation-queue">
+        <div class="nr-queue-header">
+          <div class="nr-queue-title">
+            <h3>Moderation Queue</h3>
+            <div class="nr-queue-filters">
+              <select class="nr-filter-select" id="queueFilter">
+                <option value="all">All Items</option>
+                <option value="comments">Comments</option>
+                <option value="reviews">Reviews</option>
+                <option value="users">User Reports</option>
+                <option value="content">Content Flags</option>
+                <option value="urgent">Urgent Priority</option>
+              </select>
+              <button class="nr-refresh-btn" id="refreshQueue">
+                <img src="../icons/refresh.png" alt="Refresh" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+          <div class="nr-queue-actions">
+            <button class="nr-moderation-btn small" id="approveSelected">
+              <img src="../icons/approve.png" alt="Approve" style="width:14px;height:14px;">
+              Approve Selected
+            </button>
+            <button class="nr-moderation-btn small secondary" id="rejectSelected">
+              <img src="../icons/reject.png" alt="Reject" style="width:14px;height:14px;">
+              Reject Selected
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-queue-items">
+          <!-- Queue Item 1 -->
+          <div class="nr-queue-item" data-priority="high" data-type="comment">
+            <div class="nr-queue-select">
+              <input type="checkbox" class="queue-checkbox">
+            </div>
+            <div class="nr-queue-content">
+              <div class="nr-queue-meta">
+                <span class="nr-queue-type">Comment</span>
+                <span class="nr-queue-priority high">High Priority</span>
+                <span class="nr-queue-time">5 min ago</span>
+              </div>
+              <div class="nr-queue-text">
+                "This book is absolute garbage and the author should be ashamed..."
+              </div>
+              <div class="nr-queue-details">
+                <span class="nr-queue-user">Reported by: Sarah M.</span>
+                <span class="nr-queue-reason">Reason: Harassment</span>
+                <span class="nr-queue-location">On: "The Midnight Library" review</span>
+              </div>
+            </div>
+            <div class="nr-queue-actions">
+              <button class="nr-action-btn approve" title="Approve">
+                <img src="../icons/check.png" alt="Approve" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn reject" title="Reject">
+                <img src="../icons/cross.png" alt="Reject" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn view" title="View Context">
+                <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+
+          <!-- Queue Item 2 -->
+          <div class="nr-queue-item" data-priority="medium" data-type="review">
+            <div class="nr-queue-select">
+              <input type="checkbox" class="queue-checkbox">
+            </div>
+            <div class="nr-queue-content">
+              <div class="nr-queue-meta">
+                <span class="nr-queue-type">Book Review</span>
+                <span class="nr-queue-priority medium">Medium Priority</span>
+                <span class="nr-queue-time">15 min ago</span>
+              </div>
+              <div class="nr-queue-text">
+                "I hated this book so much I burned my copy. The characters are flat and the plot makes no sense..."
+              </div>
+              <div class="nr-queue-details">
+                <span class="nr-queue-user">Reported by: Alex K.</span>
+                <span class="nr-queue-reason">Reason: Inappropriate Content</span>
+                <span class="nr-queue-location">On: "Pride and Prejudice"</span>
+              </div>
+            </div>
+            <div class="nr-queue-actions">
+              <button class="nr-action-btn approve" title="Approve">
+                <img src="../icons/check.png" alt="Approve" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn reject" title="Reject">
+                <img src="../icons/cross.png" alt="Reject" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn view" title="View Context">
+                <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+
+          <!-- Queue Item 3 -->
+          <div class="nr-queue-item" data-priority="high" data-type="user">
+            <div class="nr-queue-select">
+              <input type="checkbox" class="queue-checkbox">
+            </div>
+            <div class="nr-queue-content">
+              <div class="nr-queue-meta">
+                <span class="nr-queue-type">User Report</span>
+                <span class="nr-queue-priority high">High Priority</span>
+                <span class="nr-queue-time">25 min ago</span>
+              </div>
+              <div class="nr-queue-text">
+                User "BookLover42" has been reported for spamming multiple book discussions with promotional links.
+              </div>
+              <div class="nr-queue-details">
+                <span class="nr-queue-user">Reported by: 3 users</span>
+                <span class="nr-queue-reason">Reason: Spam</span>
+                <span class="nr-queue-location">User: BookLover42</span>
+              </div>
+            </div>
+            <div class="nr-queue-actions">
+              <button class="nr-action-btn warn" title="Warn User">
+                <img src="../icons/warning.png" alt="Warn" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn suspend" title="Suspend User">
+                <img src="../icons/suspend.png" alt="Suspend" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn view" title="View Profile">
+                <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+
+          <!-- Queue Item 4 -->
+          <div class="nr-queue-item" data-priority="low" data-type="content">
+            <div class="nr-queue-select">
+              <input type="checkbox" class="queue-checkbox">
+            </div>
+            <div class="nr-queue-content">
+              <div class="nr-queue-meta">
+                <span class="nr-queue-type">Content Flag</span>
+                <span class="nr-queue-priority low">Low Priority</span>
+                <span class="nr-queue-time">1 hour ago</span>
+              </div>
+              <div class="nr-queue-text">
+                Book description contains potentially misleading information about the author's credentials.
+              </div>
+              <div class="nr-queue-details">
+                <span class="nr-queue-user">Flagged by: Community</span>
+                <span class="nr-queue-reason">Reason: Accuracy</span>
+                <span class="nr-queue-location">Book: "Science Made Simple"</span>
+              </div>
+            </div>
+            <div class="nr-queue-actions">
+              <button class="nr-action-btn approve" title="Approve">
+                <img src="../icons/check.png" alt="Approve" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn edit" title="Edit Content">
+                <img src="../icons/edit.png" alt="Edit" style="width:14px;height:14px;">
+              </button>
+              <button class="nr-action-btn view" title="View Content">
+                <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Queue Pagination -->
+        <div class="nr-queue-pagination">
+          <div class="nr-pagination-info">Showing 1-4 of 47 items</div>
+          <div class="nr-pagination-controls">
+            <button class="nr-pagination-btn" disabled>Previous</button>
+            <button class="nr-pagination-btn active">1</button>
+            <button class="nr-pagination-btn">2</button>
+            <button class="nr-pagination-btn">3</button>
+            <button class="nr-pagination-btn">...</button>
+            <button class="nr-pagination-btn">12</button>
+            <button class="nr-pagination-btn">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Moderation Actions -->
+      <div class="nr-recent-actions">
+        <div class="nr-recent-header">
+          <h3>Recent Moderation Actions</h3>
+          <button class="nr-moderation-btn small" id="viewAllActions">
+            View All
+          </button>
+        </div>
+        <div class="nr-recent-list">
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon approved">✅</div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-text">Approved comment by John Doe</div>
+              <div class="nr-recent-time">2 minutes ago</div>
+            </div>
+          </div>
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon rejected">❌</div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-text">Rejected review for containing spoilers</div>
+              <div class="nr-recent-time">15 minutes ago</div>
+            </div>
+          </div>
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon suspended">🔒</div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-text">Suspended user "SpamBot2024" for 7 days</div>
+              <div class="nr-recent-time">1 hour ago</div>
+            </div>
+          </div>
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon edited">✏️</div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-text">Edited book description for accuracy</div>
+              <div class="nr-recent-time">2 hours ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+
+
+</body>
+</html>

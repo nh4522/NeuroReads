@@ -26,9 +26,66 @@ body {
   font-size: 14px;
 }
 
+/* Dashboard Action Buttons */
 .nr-dashboard-actions {
   display: flex;
   gap: 15px;
+}
+
+.nr-dashboard-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nr-dashboard-btn:hover {
+  background: var(--primary-dark);
+}
+
+.nr-dashboard-btn.secondary {
+  background: #6c757d;
+}
+
+.nr-dashboard-btn.secondary:hover {
+  background: #5a6268;
+}
+
+/* Action Buttons */
+.nr-action-buttons {
+  display: flex;
+  gap: 8px;
+}
+.nr-action-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nr-action-btn.edit:hover {
+  background: #e3f2fd;
+}
+.nr-action-btn.suspend:hover {
+  background: #fff3e0;
+}
+.nr-action-btn.activate:hover {
+  background: #e8f5e8;
+}
+.nr-action-btn.delete:hover {
+  background: #ffebee;
 }
 
 /* Stats Grid */
@@ -246,5 +303,14 @@ body {
     flex-direction: column;
     gap: 15px;
     align-items: flex-start;
+  }
+  
+  .nr-dashboard-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .nr-dashboard-btn {
+    justify-content: center;
   }
 }
