@@ -1,17 +1,38 @@
-// admin_user.js - USER MANAGEMENT SPECIFIC FUNCTIONALITY ONLY
+// admin_user.js - USER MANAGEMENT SPECIFIC FUNCTIONALITY ONLY WITH BOOTSTRAP
 document.addEventListener('DOMContentLoaded', () => {
   // Only user management specific functionality here
   // NO DROPDOWN CODE - that's in admin_common.js
 
   console.log('User Management initialized');
 
+  // Bootstrap Modal instance
+  let addUserModal = null;
+  if (document.getElementById('addUserModal')) {
+    addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+  }
+
   // Add User Button
   const addUserBtn = document.getElementById('addUserBtn');
   if (addUserBtn) {
     addUserBtn.addEventListener('click', () => {
       console.log('Add User clicked');
-      // In real implementation, open a modal or navigate to add user page
-      alert('Add User functionality would open here');
+      // Modal will open automatically via data-bs-toggle
+    });
+  }
+
+  // Save User in Modal
+  const saveUserBtn = document.getElementById('saveUserBtn');
+  if (saveUserBtn) {
+    saveUserBtn.addEventListener('click', () => {
+      const form = document.getElementById('addUserForm');
+      if (form.checkValidity()) {
+        console.log('Saving new user...');
+        showToast('User added successfully!', 'success');
+        addUserModal.hide();
+        form.reset();
+      } else {
+        form.classList.add('was-validated');
+      }
     });
   }
 
@@ -20,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (exportUsersBtn) {
     exportUsersBtn.addEventListener('click', () => {
       console.log('Export Users clicked');
-      alert('Exporting user data...');
+      showToast('Exporting user data...', 'info');
       // Add export logic here
     });
   }
@@ -34,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('dateFilter').value = '';
       document.getElementById('searchUsers').value = '';
       console.log('Filters reset');
+      showToast('Filters reset successfully', 'info');
       // Add filter reset logic here
     });
   }
@@ -43,23 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (refreshUsers) {
     refreshUsers.addEventListener('click', () => {
       console.log('Refreshing users list...');
+      showToast('Refreshing user data...', 'info');
       // Add refresh logic here
-      location.reload(); // Simple refresh for demo
+      setTimeout(() => location.reload(), 1000); // Simulate refresh
     });
   }
 
-  // Bulk Actions
+  // Bulk Actions Dropdown
   const bulkActions = document.getElementById('bulkActions');
   if (bulkActions) {
-    bulkActions.addEventListener('click', () => {
-      const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
-      if (selectedUsers.length === 0) {
-        alert('Please select users to perform bulk actions');
-        return;
-      }
-      console.log(`Bulk actions for ${selectedUsers.length} users`);
-      // Add bulk actions logic here
-    });
+    // Bootstrap dropdown handles the toggle automatically
   }
 
   // Select All Users
@@ -71,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.checked = e.target.checked;
       });
       console.log(`${e.target.checked ? 'Selected' : 'Deselected'} all users`);
+      showToast(`${e.target.checked ? 'All users selected' : 'Selection cleared'}`, 'info');
     });
   }
 
@@ -110,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const search = document.getElementById('searchUsers').value.toLowerCase();
     
     console.log('Applying filters:', { status, role, date, search });
+    showToast('Applying filters...', 'info');
     // Add actual filter logic here
   }
 
@@ -120,8 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.stopPropagation();
       const userName = btn.closest('tr').querySelector('.nr-user-name').textContent;
       console.log(`Editing user: ${userName}`);
+      showToast(`Editing user: ${userName}`, 'info');
       // Add edit user logic here
-      alert(`Edit user: ${userName}`);
     });
   });
 
@@ -132,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const userName = btn.closest('tr').querySelector('.nr-user-name').textContent;
       if (confirm(`Are you sure you want to suspend ${userName}?`)) {
         console.log(`Suspended user: ${userName}`);
+        showToast(`User ${userName} suspended`, 'warning');
         // Add suspend logic here
-        alert(`User ${userName} suspended`);
       }
     });
   });
@@ -145,8 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const userName = btn.closest('tr').querySelector('.nr-user-name').textContent;
       if (confirm(`Are you sure you want to activate ${userName}?`)) {
         console.log(`Activated user: ${userName}`);
+        showToast(`User ${userName} activated`, 'success');
         // Add activate logic here
-        alert(`User ${userName} activated`);
       }
     });
   });
@@ -158,8 +175,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const userName = btn.closest('tr').querySelector('.nr-user-name').textContent;
       if (confirm(`Are you sure you want to delete ${userName}? This action cannot be undone.`)) {
         console.log(`Deleted user: ${userName}`);
+        showToast(`User ${userName} deleted`, 'danger');
         // Add delete logic here
-        alert(`User ${userName} deleted`);
       }
     });
   });
@@ -168,25 +185,58 @@ document.addEventListener('DOMContentLoaded', () => {
   const tableRows = document.querySelectorAll('.nr-users-table tbody tr');
   tableRows.forEach(row => {
     row.addEventListener('click', (e) => {
-      if (!e.target.closest('.nr-action-buttons') && !e.target.type === 'checkbox') {
+      if (!e.target.closest('.nr-action-buttons') && e.target.type !== 'checkbox') {
         const userName = row.querySelector('.nr-user-name').textContent;
         console.log(`Viewing details for user: ${userName}`);
+        showToast(`Viewing details for: ${userName}`, 'info');
         // In real implementation, open user details modal or page
-        alert(`Viewing details for: ${userName}`);
       }
     });
   });
 
   // Pagination
-  const paginationButtons = document.querySelectorAll('.nr-pagination-btn:not(:disabled)');
+  const paginationButtons = document.querySelectorAll('.page-item:not(.disabled) .page-link');
   paginationButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!btn.classList.contains('active')) {
-        console.log('Changing page to:', btn.textContent);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pageText = btn.textContent.trim();
+      if (!btn.closest('.page-item').classList.contains('active')) {
+        console.log('Changing page to:', pageText);
+        showToast(`Loading page ${pageText}...`, 'info');
         // Add pagination logic here
       }
     });
   });
+
+  // Toast notification function
+  function showToast(message, type = 'info') {
+    const toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+    toastContainer.style.zIndex = '9999';
+    
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    document.body.appendChild(toastContainer);
+    
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+      toastContainer.remove();
+    });
+  }
 
   // Initialize filters state
   applyFilters();
