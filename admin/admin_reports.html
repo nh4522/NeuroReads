@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>NeuroReads — Reports & Analytics</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="admin_common.css">
+<link rel="stylesheet" href="admin_reports.css">
+
+<script defer src="admin_common.js"></script>
+<script defer src="admin_reports.js"></script>
+
+</head>
+<body>
+
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search"><input type="search" placeholder="🔎  Search reports, metrics..."></div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
+          <span class="nr-username">Admin User</span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="admin_profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
+            <li><a href="#"><img src="../icons/books.png" alt=""> Account Settings</a></li>
+            <li><a href="#"><img src="../icons/explore.png" alt=""> Preferences</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
+          <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
+          <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+          <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+          <li><a href="admin_reports.html" class="active"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
+          <li><a href="admin_sysSet.html"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <!-- Reports Header -->
+      <div class="nr-reports-header">
+        <div class="nr-reports-title">
+          <h1>Reports & Analytics</h1>
+          <p>Comprehensive insights and analytics for your library management</p>
+        </div>
+        <div class="nr-reports-actions">
+          <button class="nr-reports-btn" id="generateReportBtn">
+            <img src="../icons/generate-report.png" alt="Generate" style="width:16px;height:16px;">
+            Generate Report
+          </button>
+          <button class="nr-reports-btn secondary" id="scheduleReportBtn">
+            <img src="../icons/schedule.png" alt="Schedule" style="width:16px;height:16px;">
+            Schedule Report
+          </button>
+        </div>
+      </div>
+
+      <!-- Date Range Selector -->
+      <div class="nr-date-range">
+        <div class="nr-date-header">
+          <h3>Report Period</h3>
+          <div class="nr-date-presets">
+            <button class="nr-date-preset active" data-days="7">Last 7 Days</button>
+            <button class="nr-date-preset" data-days="30">Last 30 Days</button>
+            <button class="nr-date-preset" data-days="90">Last 90 Days</button>
+            <button class="nr-date-preset" data-days="365">Last Year</button>
+            <button class="nr-date-preset" data-days="custom">Custom Range</button>
+          </div>
+        </div>
+        <div class="nr-date-custom" id="customDateRange" style="display: none;">
+          <div class="nr-date-inputs">
+            <div class="nr-date-group">
+              <label>From Date</label>
+              <input type="date" id="startDate" class="nr-date-input">
+            </div>
+            <div class="nr-date-group">
+              <label>To Date</label>
+              <input type="date" id="endDate" class="nr-date-input">
+            </div>
+            <button class="nr-date-apply" id="applyDateRange">Apply</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="nr-metrics-grid">
+        <div class="nr-metric-card">
+          <div class="nr-metric-header">
+            <div class="nr-metric-icon">
+              <img src="../icons/active_users.png" alt="Users" style="width:24px;height:24px;">
+            </div>
+            <div class="nr-metric-trend up">+12.5%</div>
+          </div>
+          <div class="nr-metric-value">8,742</div>
+          <div class="nr-metric-label">Active Users</div>
+          <div class="nr-metric-change">↑ 974 from last period</div>
+        </div>
+
+        <div class="nr-metric-card">
+          <div class="nr-metric-header">
+            <div class="nr-metric-icon">
+              <img src="../icons/books_total.png" alt="Books" style="width:24px;height:24px;">
+            </div>
+            <div class="nr-metric-trend up">+5.2%</div>
+          </div>
+          <div class="nr-metric-value">12,458</div>
+          <div class="nr-metric-label">Total Books</div>
+          <div class="nr-metric-change">↑ 612 from last period</div>
+        </div>
+
+        <div class="nr-metric-card">
+          <div class="nr-metric-header">
+            <div class="nr-metric-icon">
+              <img src="../icons/reading.png" alt="Reading" style="width:24px;height:24px;">
+            </div>
+            <div class="nr-metric-trend up">+8.3%</div>
+          </div>
+          <div class="nr-metric-value">3,215</div>
+          <div class="nr-metric-label">Books Read</div>
+          <div class="nr-metric-change">↑ 247 from last period</div>
+        </div>
+
+        <div class="nr-metric-card">
+          <div class="nr-metric-header">
+            <div class="nr-metric-icon">
+              <img src="../icons/user-engagement.png" alt="Engagement" style="width:24px;height:24px;">
+            </div>
+            <div class="nr-metric-trend up">+18.7%</div>
+          </div>
+          <div class="nr-metric-value">64.2%</div>
+          <div class="nr-metric-label">User Engagement</div>
+          <div class="nr-metric-change">↑ 8.9% from last period</div>
+        </div>
+      </div>
+
+      <!-- Report Types Grid -->
+      <div class="nr-reports-grid">
+        <div class="nr-report-card" data-report="user-activity">
+          <div class="nr-report-icon">
+            <img src="../icons/user-activity.png" alt="User Activity" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>User Activity Report</h3>
+            <p>Detailed analysis of user engagement, reading patterns, and platform usage</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Updated: 2 hours ago</span>
+              <span class="nr-report-size">PDF, Excel, CSV</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action view" title="View Report">
+              <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action download" title="Download">
+              <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action schedule" title="Schedule">
+              <img src="../icons/schedule.png" alt="Schedule" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-report-card" data-report="book-performance">
+          <div class="nr-report-icon">
+            <img src="../icons/book-performance.png" alt="Book Performance" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>Book Performance</h3>
+            <p>Analysis of book popularity, reading completion rates, and user ratings</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Updated: 4 hours ago</span>
+              <span class="nr-report-size">PDF, Excel, CSV</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action view" title="View Report">
+              <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action download" title="Download">
+              <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action schedule" title="Schedule">
+              <img src="../icons/schedule.png" alt="Schedule" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-report-card" data-report="engagement">
+          <div class="nr-report-icon">
+            <img src="../icons/engagement-report.png" alt="Engagement" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>Engagement Analytics</h3>
+            <p>User engagement metrics, session duration, and feature adoption rates</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Updated: 1 day ago</span>
+              <span class="nr-report-size">PDF, Excel</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action view" title="View Report">
+              <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action download" title="Download">
+              <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action schedule" title="Schedule">
+              <img src="../icons/schedule.png" alt="Schedule" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-report-card" data-report="moderation">
+          <div class="nr-report-icon">
+            <img src="../icons/moderation-report.png" alt="Moderation" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>Moderation Activity</h3>
+            <p>Content moderation statistics, user reports, and community health metrics</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Updated: 6 hours ago</span>
+              <span class="nr-report-size">PDF, CSV</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action view" title="View Report">
+              <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action download" title="Download">
+              <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action schedule" title="Schedule">
+              <img src="../icons/schedule.png" alt="Schedule" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-report-card" data-report="system">
+          <div class="nr-report-icon">
+            <img src="../icons/system-report.png" alt="System" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>System Performance</h3>
+            <p>Server performance, uptime statistics, and technical health metrics</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Updated: 1 hour ago</span>
+              <span class="nr-report-size">PDF, JSON</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action view" title="View Report">
+              <img src="../icons/eye.png" alt="View" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action download" title="Download">
+              <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action schedule" title="Schedule">
+              <img src="../icons/schedule.png" alt="Schedule" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+
+        <div class="nr-report-card" data-report="custom">
+          <div class="nr-report-icon">
+            <img src="../icons/custom-report.png" alt="Custom" style="width:32px;height:32px;">
+          </div>
+          <div class="nr-report-content">
+            <h3>Custom Report Builder</h3>
+            <p>Create custom reports with specific metrics and data visualizations</p>
+            <div class="nr-report-meta">
+              <span class="nr-report-updated">Always available</span>
+              <span class="nr-report-size">Multiple formats</span>
+            </div>
+          </div>
+          <div class="nr-report-actions">
+            <button class="nr-report-action create" title="Create Report">
+              <img src="../icons/generate-report.png" alt="Create" style="width:14px;height:14px;">
+            </button>
+            <button class="nr-report-action template" title="Templates">
+              <img src="../icons/template.png" alt="Templates" style="width:14px;height:14px;">
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduled Reports -->
+      <div class="nr-scheduled-reports">
+        <div class="nr-scheduled-header">
+          <h3>Scheduled Reports</h3>
+          <button class="nr-reports-btn small" id="addScheduleBtn">
+            <img src="../icons/schedule.png" alt="Add" style="width:14px;height:14px;">
+            New Schedule
+          </button>
+        </div>
+        
+        <div class="nr-scheduled-list">
+          <div class="nr-scheduled-item">
+            <div class="nr-scheduled-info">
+              <div class="nr-scheduled-title">Weekly User Activity</div>
+              <div class="nr-scheduled-details">
+                <span class="nr-scheduled-frequency">Every Monday</span>
+                <span class="nr-scheduled-recipients">3 recipients</span>
+                <span class="nr-scheduled-format">PDF, Excel</span>
+              </div>
+            </div>
+            <div class="nr-scheduled-status active">Active</div>
+            <div class="nr-scheduled-actions">
+              <button class="nr-scheduled-action edit" title="Edit Schedule">
+                <img src="../icons/edit.png" alt="Edit" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action pause" title="Pause">
+                <img src="../icons/pause.png" alt="Pause" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action delete" title="Delete">
+                <img src="../icons/delete.png" alt="Delete" style="width:12px;height:12px;">
+              </button>
+            </div>
+          </div>
+
+          <div class="nr-scheduled-item">
+            <div class="nr-scheduled-info">
+              <div class="nr-scheduled-title">Monthly Engagement Summary</div>
+              <div class="nr-scheduled-details">
+                <span class="nr-scheduled-frequency">1st of every month</span>
+                <span class="nr-scheduled-recipients">5 recipients</span>
+                <span class="nr-scheduled-format">PDF</span>
+              </div>
+            </div>
+            <div class="nr-scheduled-status active">Active</div>
+            <div class="nr-scheduled-actions">
+              <button class="nr-scheduled-action edit" title="Edit Schedule">
+                <img src="../icons/edit.png" alt="Edit" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action pause" title="Pause">
+                <img src="../icons/pause.png" alt="Pause" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action delete" title="Delete">
+                <img src="../icons/delete.png" alt="Delete" style="width:12px;height:12px;">
+              </button>
+            </div>
+          </div>
+
+          <div class="nr-scheduled-item">
+            <div class="nr-scheduled-info">
+              <div class="nr-scheduled-title">Daily System Health</div>
+              <div class="nr-scheduled-details">
+                <span class="nr-scheduled-frequency">Daily at 9:00 AM</span>
+                <span class="nr-scheduled-recipients">2 recipients</span>
+                <span class="nr-scheduled-format">PDF</span>
+              </div>
+            </div>
+            <div class="nr-scheduled-status paused">Paused</div>
+            <div class="nr-scheduled-actions">
+              <button class="nr-scheduled-action edit" title="Edit Schedule">
+                <img src="../icons/edit.png" alt="Edit" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action resume" title="Resume">
+                <img src="../icons/resume.png" alt="Resume" style="width:12px;height:12px;">
+              </button>
+              <button class="nr-scheduled-action delete" title="Delete">
+                <img src="../icons/delete.png" alt="Delete" style="width:12px;height:12px;">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Report Runs -->
+      <div class="nr-recent-reports">
+        <div class="nr-recent-header">
+          <h3>Recent Report Runs</h3>
+          <button class="nr-reports-btn small secondary" id="viewAllReports">
+            View All History
+          </button>
+        </div>
+        
+        <div class="nr-recent-list">
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon success">
+              <img src="../icons/user-activity.png" alt="Success" style="width:16px;height:16px;">
+            </div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-title">User Activity Report</div>
+              <div class="nr-recent-details">
+                <span class="nr-recent-date">Today, 10:30 AM</span>
+                <span class="nr-recent-size">PDF • 2.4 MB</span>
+                <span class="nr-recent-duration">Generated in 45s</span>
+              </div>
+            </div>
+            <div class="nr-recent-actions">
+              <button class="nr-recent-action download" title="Download">
+                <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon success">
+              <img src="../icons/engagement-report.png" alt="Success" style="width:16px;height:16px;">
+            </div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-title">Engagement Analytics</div>
+              <div class="nr-recent-details">
+                <span class="nr-recent-date">Yesterday, 3:15 PM</span>
+                <span class="nr-recent-size">Excel • 1.8 MB</span>
+                <span class="nr-recent-duration">Generated in 1m 12s</span>
+              </div>
+            </div>
+            <div class="nr-recent-actions">
+              <button class="nr-recent-action download" title="Download">
+                <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+
+          <div class="nr-recent-item">
+            <div class="nr-recent-icon warning">
+              <img src="../icons/warning.png" alt="Warning" style="width:16px;height:16px;">
+            </div>
+            <div class="nr-recent-content">
+              <div class="nr-recent-title">Book Performance Report</div>
+              <div class="nr-recent-details">
+                <span class="nr-recent-date">Dec 12, 2:45 PM</span>
+                <span class="nr-recent-size">Partial data • 1.2 MB</span>
+                <span class="nr-recent-duration">Completed with warnings</span>
+              </div>
+            </div>
+            <div class="nr-recent-actions">
+              <button class="nr-recent-action download" title="Download">
+                <img src="../icons/download.png" alt="Download" style="width:14px;height:14px;">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+</body>
+</html>
