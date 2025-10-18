@@ -464,6 +464,69 @@ body {
 .nr-recent-action.download:hover {
   background: #e8f5e8;
 }
+/* Add to admin_reports.css */
+
+/* Charts Container */
+.nr-charts-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.nr-charts-header h3 {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.nr-charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.nr-chart-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.nr-chart-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+/* Bootstrap alert styles (in case you want to customize) */
+.alert {
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  background: #e8f5e8;
+  color: #388e3c;
+}
+
+.alert-warning {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.alert-info {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+@media (max-width: 768px) {
+  .nr-charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Reports specific responsive */
 @media (max-width: 900px) {

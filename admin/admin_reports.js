@@ -1,29 +1,30 @@
-// admin_reports.js - REPORTS & ANALYTICS SPECIFIC FUNCTIONALITY ONLY
+// admin_reports.js - ENHANCED WITH FRAMEWORK FUNCTIONALITY
 document.addEventListener('DOMContentLoaded', () => {
-  // Only reports-specific functionality here
-  // NO DROPDOWN CODE - that's in admin_common.js
+  console.log('Reports & Analytics system initialized with frameworks');
 
-  console.log('Reports & Analytics system initialized');
-
-  // Generate Report Button
+  // Initialize frameworks
+  initCharts();
+  
+  // YOUR EXISTING FUNCTIONALITY - KEEP ALL OF THIS
   const generateReportBtn = document.getElementById('generateReportBtn');
   if (generateReportBtn) {
     generateReportBtn.addEventListener('click', () => {
       console.log('Generate Report clicked');
-      showReportModal('generate');
+      // ENHANCED: Use Bootstrap modal instead of alert
+      showBootstrapModal('generate');
     });
   }
 
-  // Schedule Report Button
   const scheduleReportBtn = document.getElementById('scheduleReportBtn');
   if (scheduleReportBtn) {
     scheduleReportBtn.addEventListener('click', () => {
       console.log('Schedule Report clicked');
-      showReportModal('schedule');
+      // ENHANCED: Use Bootstrap modal instead of alert
+      showBootstrapModal('schedule');
     });
   }
 
-  // Date Range Presets
+  // Date Range Presets - YOUR EXISTING CODE
   const datePresets = document.querySelectorAll('.nr-date-preset');
   datePresets.forEach(preset => {
     preset.addEventListener('click', () => {
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Apply Custom Date Range
+  // Apply Custom Date Range - YOUR EXISTING CODE
   const applyDateRangeBtn = document.getElementById('applyDateRange');
   if (applyDateRangeBtn) {
     applyDateRangeBtn.addEventListener('click', () => {
@@ -50,12 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const endDate = document.getElementById('endDate').value;
       
       if (!startDate || !endDate) {
-        alert('Please select both start and end dates');
+        // ENHANCED: Use Bootstrap alert instead of basic alert
+        showBootstrapAlert('Please select both start and end dates', 'warning');
         return;
       }
       
       if (new Date(startDate) > new Date(endDate)) {
-        alert('Start date cannot be after end date');
+        showBootstrapAlert('Start date cannot be after end date', 'warning');
         return;
       }
       
@@ -64,65 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Set default dates for custom range
-  function setDefaultDates() {
-    const today = new Date();
-    const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
-    
-    document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
-    document.getElementById('endDate').value = today.toISOString().split('T')[0];
-  }
-
-  // Apply date range
-  function applyDateRange(days) {
-    const endDate = new Date();
-    const startDate = new Date(endDate.getTime() - days * 24 * 60 * 60 * 1000);
-    
-    console.log(`Loading data for last ${days} days`);
-    loadReportsData(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
-  }
-
-  // Load reports data (simulated)
-  function loadReportsData(startDate, endDate) {
-    console.log('Loading reports data from', startDate, 'to', endDate);
-    
-    // Simulate API call
-    setTimeout(() => {
-      updateMetrics();
-      console.log('Reports data loaded successfully');
-    }, 1000);
-  }
-
-  // Update metrics with new data
-  function updateMetrics() {
-    const metrics = document.querySelectorAll('.nr-metric-value');
-    metrics.forEach(metric => {
-      // Simulate data update with small random variation
-      const currentText = metric.textContent;
-      
-      if (currentText.includes('%')) {
-        // Handle percentage metrics
-        const currentValue = parseFloat(currentText);
-        const variation = (Math.random() * 4) - 2; // -2% to +2%
-        const newValue = Math.max(0, currentValue + variation);
-        metric.textContent = newValue.toFixed(1) + '%';
-      } else {
-        // Handle count metrics
-        const currentValue = parseInt(currentText.replace(/[^0-9]/g, ''));
-        const variation = Math.floor(Math.random() * 201) - 100; // -100 to +100
-        const newValue = Math.max(1000, currentValue + variation);
-        
-        if (currentValue < 100) {
-          // For percentage-like values under 100
-          metric.textContent = newValue.toFixed(1) + '%';
-        } else {
-          metric.textContent = newValue.toLocaleString();
-        }
-      }
-    });
-  }
-
-  // Report Card Actions
+  // Report Card Actions - YOUR EXISTING CODE
   const reportCards = document.querySelectorAll('.nr-report-card');
   reportCards.forEach(card => {
     const reportType = card.dataset.report;
@@ -175,66 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // View Report
-  function viewReport(reportType) {
-    console.log(`Viewing ${reportType} report`);
-    alert(`Opening ${getReportName(reportType)} report viewer...`);
-    // In real implementation, this would open a detailed report view
-  }
-
-  // Download Report
-  function downloadReport(reportType) {
-    console.log(`Downloading ${reportType} report`);
-    
-    // Simulate download process
-    const downloadBtn = event.target.closest('.nr-report-action');
-    const originalHTML = downloadBtn.innerHTML;
-    
-    downloadBtn.innerHTML = '<img src="../icons/loading.png" alt="Loading" style="width:14px;height:14px;">';
-    downloadBtn.disabled = true;
-    
-    setTimeout(() => {
-      alert(`Downloading ${getReportName(reportType)} report...`);
-      downloadBtn.innerHTML = originalHTML;
-      downloadBtn.disabled = false;
-      
-      // Add to recent reports
-      addRecentReport(reportType, 'success');
-    }, 2000);
-  }
-
-  // Schedule Report
-  function scheduleReport(reportType) {
-    console.log(`Scheduling ${reportType} report`);
-    showScheduleModal(reportType);
-  }
-
-  // Create Custom Report
-  function createCustomReport() {
-    console.log('Opening custom report builder');
-    alert('Opening Custom Report Builder...');
-  }
-
-  // Show Report Templates
-  function showReportTemplates() {
-    console.log('Showing report templates');
-    alert('Opening Report Templates Gallery...');
-  }
-
-  // Get report display name
-  function getReportName(reportType) {
-    const names = {
-      'user-activity': 'User Activity',
-      'book-performance': 'Book Performance',
-      'engagement': 'Engagement Analytics',
-      'moderation': 'Moderation Activity',
-      'system': 'System Performance',
-      'custom': 'Custom'
-    };
-    return names[reportType] || reportType;
-  }
-
-  // Scheduled Reports Actions
+  // Scheduled Reports Actions - YOUR EXISTING CODE
   const scheduledItems = document.querySelectorAll('.nr-scheduled-item');
   scheduledItems.forEach(item => {
     const editBtn = item.querySelector('.nr-scheduled-action.edit');
@@ -275,47 +160,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Add New Schedule
+  // Add New Schedule - YOUR EXISTING CODE
   const addScheduleBtn = document.getElementById('addScheduleBtn');
   if (addScheduleBtn) {
     addScheduleBtn.addEventListener('click', () => {
       console.log('Adding new schedule');
-      showScheduleModal();
+      showBootstrapModal('schedule');
     });
   }
 
-  // Schedule Management Functions
-  function editSchedule(title) {
-    console.log(`Editing schedule: ${title}`);
-    alert(`Editing schedule: ${title}`);
-  }
-
-  function pauseSchedule(title, item) {
-    console.log(`Pausing schedule: ${title}`);
-    const status = item.querySelector('.nr-scheduled-status');
-    status.textContent = 'Paused';
-    status.className = 'nr-scheduled-status paused';
-    alert(`Schedule "${title}" has been paused`);
-  }
-
-  function resumeSchedule(title, item) {
-    console.log(`Resuming schedule: ${title}`);
-    const status = item.querySelector('.nr-scheduled-status');
-    status.textContent = 'Active';
-    status.className = 'nr-scheduled-status active';
-    alert(`Schedule "${title}" has been resumed`);
-  }
-
-  function deleteSchedule(title, item) {
-    if (confirm(`Are you sure you want to delete the schedule "${title}"?`)) {
-      console.log(`Deleting schedule: ${title}`);
-      item.style.opacity = '0.5';
-      setTimeout(() => item.remove(), 300);
-      alert(`Schedule "${title}" has been deleted`);
-    }
-  }
-
-  // Recent Reports Actions
+  // Recent Reports Actions - YOUR EXISTING CODE
   const recentItems = document.querySelectorAll('.nr-recent-item');
   recentItems.forEach(item => {
     const downloadBtn = item.querySelector('.nr-recent-action.download');
@@ -328,12 +182,295 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function downloadRecentReport(title) {
-    console.log(`Downloading recent report: ${title}`);
-    alert(`Downloading ${title}...`);
+  // View All Reports History - YOUR EXISTING CODE
+  const viewAllReports = document.getElementById('viewAllReports');
+  if (viewAllReports) {
+    viewAllReports.addEventListener('click', () => {
+      console.log('Viewing all report history');
+      showBootstrapAlert('Opening Complete Report History...', 'info');
+    });
   }
 
-  // Add to recent reports
+  // FRAMEWORK FUNCTIONS
+
+  function initCharts() {
+    // Engagement Line Chart
+    const engagementCtx = document.getElementById('engagementChart');
+    if (engagementCtx) {
+      new Chart(engagementCtx.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'Active Users',
+            data: [6500, 7200, 8000, 7800, 8500, 8200, 8742],
+            borderColor: '#297a79',
+            backgroundColor: 'rgba(41, 122, 121, 0.1)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: false,
+              min: 6000
+            }
+          }
+        }
+      });
+    }
+
+    // Category Doughnut Chart
+    const categoryCtx = document.getElementById('categoryChart');
+    if (categoryCtx) {
+      new Chart(categoryCtx.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Fiction', 'Non-Fiction', 'Science', 'Technology', 'History'],
+          datasets: [{
+            data: [30, 25, 15, 20, 10],
+            backgroundColor: [
+              '#297a79',
+              '#34b4a9',
+              '#5cd6cd',
+              '#8ae3dc',
+              '#b8f0eb'
+            ],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          },
+          cutout: '60%'
+        }
+      });
+    }
+  }
+
+  function showBootstrapModal(type) {
+    const modalElement = document.getElementById('reportModal');
+    const modalTitle = document.getElementById('reportModalTitle');
+    
+    if (type === 'generate') {
+      modalTitle.textContent = 'Generate Report';
+      document.getElementById('confirmGenerate').textContent = 'Generate Report';
+    } else {
+      modalTitle.textContent = 'Schedule Report';
+      document.getElementById('confirmGenerate').textContent = 'Schedule Report';
+    }
+    
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+
+  function showBootstrapAlert(message, type = 'info') {
+    // Create and show Bootstrap alert
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.querySelector('.nr-main').insertBefore(alertDiv, document.querySelector('.nr-main').firstChild);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+      if (alertDiv.parentNode) {
+        alertDiv.remove();
+      }
+    }, 5000);
+  }
+
+  // Modal confirmation
+  const confirmGenerate = document.getElementById('confirmGenerate');
+  if (confirmGenerate) {
+    confirmGenerate.addEventListener('click', () => {
+      const reportType = document.getElementById('reportTypeSelect').value;
+      const format = document.querySelector('input[name="format"]:checked').value;
+      
+      generateReportWithFramework(reportType, format);
+    });
+  }
+
+  function generateReportWithFramework(reportType, format) {
+    const reportName = getReportName(reportType);
+    
+    // Show loading state
+    const generateBtn = document.getElementById('confirmGenerate');
+    const originalText = generateBtn.innerHTML;
+    generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Generating...';
+    generateBtn.disabled = true;
+
+    // Simulate API call
+    setTimeout(() => {
+      // Hide modal
+      const modal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
+      modal.hide();
+      
+      // Reset button
+      generateBtn.innerHTML = originalText;
+      generateBtn.disabled = false;
+      
+      // Show success message
+      showBootstrapAlert(`Successfully generated ${reportName} report in ${format.toUpperCase()} format`, 'success');
+      
+      // Add to recent reports
+      addRecentReport(reportType, 'success');
+      
+    }, 2000);
+  }
+
+  // YOUR EXISTING HELPER FUNCTIONS - KEEP ALL OF THESE
+  function setDefaultDates() {
+    const today = new Date();
+    const oneWeekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+    document.getElementById('startDate').value = oneWeekAgo.toISOString().split('T')[0];
+    document.getElementById('endDate').value = today.toISOString().split('T')[0];
+  }
+
+  function applyDateRange(days) {
+    const endDate = new Date();
+    const startDate = new Date(endDate.getTime() - days * 24 * 60 * 60 * 1000);
+    console.log(`Loading data for last ${days} days`);
+    loadReportsData(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
+  }
+
+  function loadReportsData(startDate, endDate) {
+    console.log('Loading reports data from', startDate, 'to', endDate);
+    // Simulate API call
+    setTimeout(() => {
+      updateMetrics();
+      console.log('Reports data loaded successfully');
+    }, 1000);
+  }
+
+  function updateMetrics() {
+    const metrics = document.querySelectorAll('.nr-metric-value');
+    metrics.forEach(metric => {
+      // Simulate data update with small random variation
+      const currentText = metric.textContent;
+      
+      if (currentText.includes('%')) {
+        // Handle percentage metrics
+        const currentValue = parseFloat(currentText);
+        const variation = (Math.random() * 4) - 2; // -2% to +2%
+        const newValue = Math.max(0, currentValue + variation);
+        metric.textContent = newValue.toFixed(1) + '%';
+      } else {
+        // Handle count metrics
+        const currentValue = parseInt(currentText.replace(/[^0-9]/g, ''));
+        const variation = Math.floor(Math.random() * 201) - 100; // -100 to +100
+        const newValue = Math.max(1000, currentValue + variation);
+        metric.textContent = newValue.toLocaleString();
+      }
+    });
+  }
+
+  function viewReport(reportType) {
+    console.log(`Viewing ${reportType} report`);
+    showBootstrapAlert(`Opening ${getReportName(reportType)} report viewer...`, 'info');
+  }
+
+  function downloadReport(reportType) {
+    console.log(`Downloading ${reportType} report`);
+    
+    // Simulate download process
+    const downloadBtn = event.target.closest('.nr-report-action');
+    const originalHTML = downloadBtn.innerHTML;
+    
+    // ENHANCED: Use Bootstrap spinner
+    downloadBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+    downloadBtn.disabled = true;
+    
+    setTimeout(() => {
+      showBootstrapAlert(`Downloading ${getReportName(reportType)} report...`, 'success');
+      downloadBtn.innerHTML = originalHTML;
+      downloadBtn.disabled = false;
+      addRecentReport(reportType, 'success');
+    }, 2000);
+  }
+
+  function scheduleReport(reportType) {
+    console.log(`Scheduling ${reportType} report`);
+    showBootstrapModal('schedule');
+  }
+
+  function createCustomReport() {
+    console.log('Opening custom report builder');
+    showBootstrapAlert('Opening Custom Report Builder...', 'info');
+  }
+
+  function showReportTemplates() {
+    console.log('Showing report templates');
+    showBootstrapAlert('Opening Report Templates Gallery...', 'info');
+  }
+
+  function getReportName(reportType) {
+    const names = {
+      'user-activity': 'User Activity',
+      'book-performance': 'Book Performance',
+      'engagement': 'Engagement Analytics',
+      'moderation': 'Moderation Activity',
+      'system': 'System Performance',
+      'custom': 'Custom'
+    };
+    return names[reportType] || reportType;
+  }
+
+  // Schedule Management Functions - YOUR EXISTING CODE
+  function editSchedule(title) {
+    console.log(`Editing schedule: ${title}`);
+    showBootstrapAlert(`Editing schedule: ${title}`, 'info');
+  }
+
+  function pauseSchedule(title, item) {
+    console.log(`Pausing schedule: ${title}`);
+    const status = item.querySelector('.nr-scheduled-status');
+    status.textContent = 'Paused';
+    status.className = 'nr-scheduled-status paused';
+    showBootstrapAlert(`Schedule "${title}" has been paused`, 'warning');
+  }
+
+  function resumeSchedule(title, item) {
+    console.log(`Resuming schedule: ${title}`);
+    const status = item.querySelector('.nr-scheduled-status');
+    status.textContent = 'Active';
+    status.className = 'nr-scheduled-status active';
+    showBootstrapAlert(`Schedule "${title}" has been resumed`, 'success');
+  }
+
+  function deleteSchedule(title, item) {
+    if (confirm(`Are you sure you want to delete the schedule "${title}"?`)) {
+      console.log(`Deleting schedule: ${title}`);
+      item.style.opacity = '0.5';
+      setTimeout(() => item.remove(), 300);
+      showBootstrapAlert(`Schedule "${title}" has been deleted`, 'info');
+    }
+  }
+
+  function downloadRecentReport(title) {
+    console.log(`Downloading recent report: ${title}`);
+    showBootstrapAlert(`Downloading ${title}...`, 'info');
+  }
+
   function addRecentReport(reportType, status) {
     const recentList = document.querySelector('.nr-recent-list');
     if (!recentList) return;
@@ -376,29 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // View All Reports History
-  const viewAllReports = document.getElementById('viewAllReports');
-  if (viewAllReports) {
-    viewAllReports.addEventListener('click', () => {
-      console.log('Viewing all report history');
-      alert('Opening Complete Report History...');
-    });
-  }
-
-  // Modal functions (would be implemented in a real application)
-  function showReportModal(type) {
-    alert(`${type === 'generate' ? 'Generate' : 'Schedule'} Report modal would open here`);
-  }
-
-  function showScheduleModal(reportType) {
-    if (reportType) {
-      alert(`Scheduling ${getReportName(reportType)} Report...`);
-    } else {
-      alert('New Schedule modal would open here');
-    }
-  }
-
   // Initialize
   setDefaultDates();
-  applyDateRange(7); // Load data for last 7 days by default
+  applyDateRange(7);
 });

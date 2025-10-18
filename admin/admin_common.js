@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (confirm('Are you sure you want to log out?')) {
         alert('Logging out...');
         // Add your logout logic here
-        // window.location.href = 'login.html';
+        window.location.href = '../login.html';
       }
     });
   }
