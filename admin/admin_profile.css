@@ -1,5 +1,5 @@
-/* admin_profile.css */
-/* Profile Specific Styles Only */
+/* admin_profile.css - ALL TEXT IN FREDOKA */
+/* Profile Specific Styles Only with Bootstrap Integration */
 
 /* Body Background */
 body {
@@ -10,14 +10,11 @@ body {
 .nr-profile {
   max-width: 1100px;
   margin: 6px auto;
-  display: flex;
-  gap: 48px;
-  align-items: flex-start;
+  font-family: 'Fredoka', sans-serif;
 }
 
 /* avatar left */
 .nr-avatar-col {
-  width: 360px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,16 +42,15 @@ body {
 }
 
 .nr-change-photo {
-  display: inline-block;
   padding: 12px 34px;
   border-radius: 18px;
-  background: var(--primary-color);
-  color: white;
-  cursor: pointer;
   font-weight: 600;
   transition: background 0.3s ease;
+  font-family: 'Fredoka', sans-serif;
   border: none;
-  font-family: "Poppins", sans-serif;
+  background: var(--primary-color);
+  color: white;
+  letter-spacing: 0.5px;
 }
 
 .nr-change-photo:hover {
@@ -63,7 +59,6 @@ body {
 
 /* right col */
 .nr-info-col {
-  flex: 1;
   position: relative;
   padding-top: 6px;
 }
@@ -78,6 +73,8 @@ body {
   font-size: 36px;
   color: #297a79;
   margin: 0 0 6px 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .nr-profile-head .subtitle {
@@ -85,13 +82,12 @@ body {
   color: #0e1313;
   font-size: 14px;
   margin-top: 2px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 400;
 }
 
 /* Save button */
 .nr-save-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
   background: var(--primary-color);
   color: white;
   border: 0;
@@ -100,7 +96,8 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: background 0.3s ease;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Fredoka', sans-serif;
+  letter-spacing: 0.5px;
 }
 
 .nr-save-btn:hover {
@@ -113,19 +110,16 @@ body {
   max-width: 560px;
 }
 
-.nr-field {
-  margin-bottom: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
 .nr-field label {
   font-weight: 700;
   color: #3a2c17;
   margin-bottom: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.3px;
 }
 
-.nr-field input {
+.nr-field .form-control {
   padding: 12px 18px;
   border-radius: 26px;
   border: 2px solid #e0e0e0;
@@ -134,23 +128,46 @@ body {
   font-size: 1rem;
   color: #333;
   transition: border-color 0.3s ease;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Fredoka', sans-serif;
 }
 
-.nr-field input:focus {
+.nr-field .form-control:focus {
   border-color: var(--primary-color);
+  box-shadow: none;
 }
 
 /* Profile specific responsive */
 @media (max-width: 900px) {
-  .nr-profile {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
   .nr-avatar-card {
     width: 260px;
     height: 260px;
+  }
+  
+  .nr-profile-head h2 {
+    font-size: 28px;
+  }
+  
+  .nr-field label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .nr-profile-head h2 {
+    font-size: 24px;
+  }
+  
+  .nr-profile-head .subtitle {
+    font-size: 12px;
+  }
+  
+  .nr-save-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .nr-field .form-control {
+    font-size: 14px;
+    padding: 10px 16px;
   }
 }
