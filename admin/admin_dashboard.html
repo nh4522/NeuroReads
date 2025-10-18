@@ -5,14 +5,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>NeuroReads — Admin Dashboard</title>
 
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="admin_common.css">
-
 <link rel="stylesheet" href="admin_dashboard.css">
 
 <script defer src="admin_common.js"></script>
-
 <script defer src="admin_dashboard.js"></script>
 
 </head>
@@ -74,118 +77,164 @@
           <p>Welcome back! Here's what's happening with your library today.</p>
         </div>
         <div class="nr-dashboard-actions">
-        <button class="nr-dashboard-btn" id="generateReportBtn">
-        <img src="../icons/generate-report.png" alt="Generate" style="width:16px;height:16px;">
-         Generate Report
-        </button>
-        <button class="nr-dashboard-btn secondary" id="exportDataBtn">
-        <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
-         Export Data
-        </button>
+          <button class="nr-dashboard-btn btn btn-primary" id="generateReportBtn">
+            <img src="../icons/generate-report.png" alt="Generate" style="width:16px;height:16px;">
+            Generate Report
+          </button>
+          <button class="nr-dashboard-btn btn btn-outline-secondary" id="exportDataBtn">
+            <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
+            Export Data
+          </button>
         </div>
       </div>
 
       <!-- Stats Grid -->
-      <div class="nr-stats-grid">
-        <div class="nr-stat-card">
-          <div class="nr-stat-header">
-            <div class="nr-stat-icon">📚</div>
+      <div class="nr-stats-grid row g-4">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">📚</div>
+                <span class="badge bg-success">+5.2%</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Total Books</div>
+              <div class="nr-stat-value h3 text-primary">12,458</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> 5.2% from last month
+              </div>
+            </div>
           </div>
-          <div class="nr-stat-title">Total Books</div>
-          <div class="nr-stat-value">12,458</div>
-          <div class="nr-stat-change">↑ 5.2% from last month</div>
         </div>
         
-        <div class="nr-stat-card">
-          <div class="nr-stat-header">
-            <div class="nr-stat-icon">👥</div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">👥</div>
+                <span class="badge bg-success">+12.8%</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Active Users</div>
+              <div class="nr-stat-value h3 text-primary">8,742</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> 12.8% from last month
+              </div>
+            </div>
           </div>
-          <div class="nr-stat-title">Active Users</div>
-          <div class="nr-stat-value">8,742</div>
-          <div class="nr-stat-change">↑ 12.8% from last month</div>
         </div>
         
-        <div class="nr-stat-card">
-          <div class="nr-stat-header">
-            <div class="nr-stat-icon">📖</div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">📖</div>
+                <span class="badge bg-success">+8.3%</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Books Read</div>
+              <div class="nr-stat-value h3 text-primary">3,215</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> 8.3% from last month
+              </div>
+            </div>
           </div>
-          <div class="nr-stat-title">Books Read</div>
-          <div class="nr-stat-value">3,215</div>
-          <div class="nr-stat-change">↑ 8.3% from last month</div>
         </div>
         
-        <div class="nr-stat-card">
-          <div class="nr-stat-header">
-            <div class="nr-stat-icon">⚠️</div>
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">⚠️</div>
+                <span class="badge bg-danger">-15.2%</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Pending Reviews</div>
+              <div class="nr-stat-value h3 text-primary">47</div>
+              <div class="nr-stat-change text-danger small">
+                <i class="bi bi-arrow-down"></i> 15.2% from last month
+              </div>
+            </div>
           </div>
-          <div class="nr-stat-title">Pending Reviews</div>
-          <div class="nr-stat-value">47</div>
-          <div class="nr-stat-change">↓ 15.2% from last month</div>
         </div>
       </div>
 
       <!-- Charts Section -->
-      <div class="nr-charts-section">
-        <div class="nr-chart-card">
-          <div class="nr-chart-header">
-            <div class="nr-chart-title">Reading Activity Overview</div>
-            <div class="nr-chart-actions">
-              <button class="nr-chart-btn">Week</button>
-              <button class="nr-chart-btn">Month</button>
-              <button class="nr-chart-btn">Year</button>
+      <div class="nr-charts-section row g-4">
+        <div class="col-xl-8 col-lg-7">
+          <div class="nr-chart-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-chart-header d-flex justify-content-between align-items-center mb-4">
+                <div class="nr-chart-title h5 mb-0">Reading Activity Overview</div>
+                <div class="nr-chart-actions btn-group">
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm active">Week</button>
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm">Month</button>
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm">Year</button>
+                </div>
+              </div>
+              <div class="nr-chart-container">
+                <canvas id="readingActivityChart" height="250"></canvas>
+              </div>
             </div>
-          </div>
-          <div class="nr-chart-placeholder">
-            Reading Activity Chart - Would display here
           </div>
         </div>
         
-        <div class="nr-chart-card">
-          <div class="nr-chart-header">
-            <div class="nr-chart-title">User Distribution</div>
-          </div>
-          <div class="nr-chart-placeholder">
-            User Distribution Chart - Would display here
+        <div class="col-xl-4 col-lg-5">
+          <div class="nr-chart-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-chart-header d-flex justify-content-between align-items-center mb-4">
+                <div class="nr-chart-title h5 mb-0">User Distribution</div>
+              </div>
+              <div class="nr-chart-container">
+                <canvas id="userDistributionChart" height="250"></canvas>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Recent Activity -->
-      <div class="nr-recent-activity">
-        <div class="nr-activity-header">
-          <div class="nr-activity-title">Recent Activity</div>
-          <button class="nr-dashboard-btn">View All</button>
-        </div>
-        <div class="nr-activity-list">
-          <div class="nr-activity-item">
-            <div class="nr-activity-icon user">👤</div>
-            <div class="nr-activity-content">
-              <div class="nr-activity-text">New user registration: John Doe</div>
-              <div class="nr-activity-time">2 minutes ago</div>
-            </div>
+      <div class="nr-recent-activity card border-0 shadow-sm mt-4">
+        <div class="card-body">
+          <div class="nr-activity-header d-flex justify-content-between align-items-center mb-4">
+            <div class="nr-activity-title h5 mb-0">Recent Activity</div>
+            <button class="nr-dashboard-btn btn btn-outline-primary btn-sm">View All</button>
           </div>
-          
-          <div class="nr-activity-item">
-            <div class="nr-activity-icon book">📘</div>
-            <div class="nr-activity-content">
-              <div class="nr-activity-text">Book "The Great Gatsby" was added to library</div>
-              <div class="nr-activity-time">15 minutes ago</div>
+          <div class="nr-activity-list">
+            <div class="nr-activity-item d-flex align-items-center">
+              <div class="nr-activity-icon user rounded-circle d-flex align-items-center justify-content-center me-3">
+                <i class="bi bi-person-plus text-white"></i>
+              </div>
+              <div class="nr-activity-content flex-grow-1">
+                <div class="nr-activity-text fw-medium">New user registration: John Doe</div>
+                <div class="nr-activity-time text-muted small">2 minutes ago</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="nr-activity-item">
-            <div class="nr-activity-icon report">📊</div>
-            <div class="nr-activity-content">
-              <div class="nr-activity-text">Monthly reading report generated</div>
-              <div class="nr-activity-time">1 hour ago</div>
+            
+            <div class="nr-activity-item d-flex align-items-center mt-3">
+              <div class="nr-activity-icon book rounded-circle d-flex align-items-center justify-content-center me-3">
+                <i class="bi bi-book text-white"></i>
+              </div>
+              <div class="nr-activity-content flex-grow-1">
+                <div class="nr-activity-text fw-medium">Book "The Great Gatsby" was added to library</div>
+                <div class="nr-activity-time text-muted small">15 minutes ago</div>
+              </div>
             </div>
-          </div>
-          
-          <div class="nr-activity-item">
-            <div class="nr-activity-icon system">⚙️</div>
-            <div class="nr-activity-content">
-              <div class="nr-activity-text">System backup completed successfully</div>
-              <div class="nr-activity-time">2 hours ago</div>
+            
+            <div class="nr-activity-item d-flex align-items-center mt-3">
+              <div class="nr-activity-icon report rounded-circle d-flex align-items-center justify-content-center me-3">
+                <i class="bi bi-graph-up text-white"></i>
+              </div>
+              <div class="nr-activity-content flex-grow-1">
+                <div class="nr-activity-text fw-medium">Monthly reading report generated</div>
+                <div class="nr-activity-time text-muted small">1 hour ago</div>
+              </div>
+            </div>
+            
+            <div class="nr-activity-item d-flex align-items-center mt-3">
+              <div class="nr-activity-icon system rounded-circle d-flex align-items-center justify-content-center me-3">
+                <i class="bi bi-gear text-white"></i>
+              </div>
+              <div class="nr-activity-content flex-grow-1">
+                <div class="nr-activity-text fw-medium">System backup completed successfully</div>
+                <div class="nr-activity-time text-muted small">2 hours ago</div>
+              </div>
             </div>
           </div>
         </div>
@@ -195,6 +244,10 @@
   </div>
 </div>
 
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
 </body>
 </html>
