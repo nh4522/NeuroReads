@@ -1,34 +1,7 @@
+// admin_dashboard.js - DASHBOARD-SPECIFIC FUNCTIONALITY ONLY
 document.addEventListener('DOMContentLoaded', () => {
-  const userProfile = document.getElementById('userProfile');
-  const userDropdown = document.getElementById('userDropdown');
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  // Dropdown menu functionality
-  userProfile.addEventListener('click', (e) => {
-    e.stopPropagation();
-    userDropdown.classList.toggle('active');
-    userProfile.classList.toggle('dropdown-active');
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', () => {
-    userDropdown.classList.remove('active');
-    userProfile.classList.remove('dropdown-active');
-  });
-
-  // Logout functionality
-  logoutBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to log out?')) {
-      alert('Logging out...');
-      // Add your logout logic here
-      // window.location.href = 'login.html';
-    }
-  });
-
-  // Close dropdown when clicking on dropdown items
-  userDropdown.addEventListener('click', (e) => {
-    e.stopPropagation();
-  });
+  // Only dashboard-specific functionality here
+  // NO DROPDOWN CODE - that's in admin_common.js
 
   // Update current time for activity items
   function updateActivityTimes() {
@@ -38,9 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
       if (text.includes('minutes ago') || text.includes('hour ago') || text.includes('hours ago')) {
         // In a real app, you would calculate actual times
         // This is just for demonstration
+        console.log('Updating activity times for dashboard');
       }
     });
   }
   
   updateActivityTimes();
+
+  // Add any other dashboard-specific functionality here
+  // For example: chart interactions, stat updates, etc.
+  
+  // Example: Add click handlers for dashboard buttons
+  const dashboardButtons = document.querySelectorAll('.nr-dashboard-btn');
+  dashboardButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      console.log('Dashboard button clicked:', button.textContent);
+      // Add dashboard-specific button handling
+    });
+  });
+
+  // Example: Add chart period switching
+  const chartButtons = document.querySelectorAll('.nr-chart-btn');
+  chartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      console.log('Chart period changed to:', button.textContent);
+      // Add chart update logic here
+    });
+  });
 });

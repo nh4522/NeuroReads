@@ -1,12 +1,15 @@
+// admin_profile.js - ONLY PROFILE-SPECIFIC FUNCTIONALITY
 document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
   const avatarPreview = document.getElementById('avatarPreview');
   const saveBtn = document.getElementById('saveBtn');
   const nameInput = document.getElementById('name');
   const emailInput = document.getElementById('email');
-  const userProfile = document.getElementById('userProfile');
-  const userDropdown = document.getElementById('userDropdown');
-  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Only run if we're on a profile page (check for profile-specific elements)
+  if (!fileInput || !avatarPreview || !saveBtn) {
+    return; // Exit if not on profile page
+  }
 
   // Load saved data from localStorage
   const img = localStorage.getItem('nr_demo_avatar');
@@ -34,32 +37,5 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('nr_demo_email', emailInput.value.trim());
     saveBtn.textContent = 'saved ✓';
     setTimeout(() => saveBtn.textContent = 'save', 1200);
-  });
-
-  // Dropdown menu functionality
-  userProfile.addEventListener('click', (e) => {
-    e.stopPropagation();
-    userDropdown.classList.toggle('active');
-    userProfile.classList.toggle('dropdown-active');
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', () => {
-    userDropdown.classList.remove('active');
-    userProfile.classList.remove('dropdown-active');
-  });
-
-  // Logout functionality
-  logoutBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to log out?')) {
-      alert('Logging out...');
-      // Add your logout logic here
-      // window.location.href = 'login.html';
-    }
-  });
-
-  // Close dropdown when clicking on dropdown items
-  userDropdown.addEventListener('click', (e) => {
-    e.stopPropagation();
   });
 });
