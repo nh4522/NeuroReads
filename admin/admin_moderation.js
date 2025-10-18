@@ -1,16 +1,22 @@
-// admin_moderation.js - MODERATION SPECIFIC FUNCTIONALITY ONLY
+// admin_moderation.js - MODERATION SPECIFIC FUNCTIONALITY ONLY WITH BOOTSTRAP
 document.addEventListener('DOMContentLoaded', () => {
   // Only moderation specific functionality here
   // NO DROPDOWN CODE - that's in admin_common.js
 
   console.log('Moderation system initialized');
 
+  // Bootstrap Modal instance
+  let autoModModal = null;
+  if (document.getElementById('autoModModal')) {
+    autoModModal = new bootstrap.Modal(document.getElementById('autoModModal'));
+  }
+
   // Auto-Mod Settings
   const autoModSettings = document.getElementById('autoModSettings');
   if (autoModSettings) {
     autoModSettings.addEventListener('click', () => {
       console.log('Auto-Mod settings clicked');
-      alert('Auto-Moderation settings would open here');
+      // Modal will open automatically via data-bs-toggle
     });
   }
 
@@ -19,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (moderationLogs) {
     moderationLogs.addEventListener('click', () => {
       console.log('Moderation logs clicked');
-      alert('Moderation logs would open here');
+      showToast('Opening moderation logs...', 'info');
     });
   }
 
@@ -29,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       const action = btn.dataset.action;
       console.log(`Quick action: ${action}`);
+      showToast(`Loading ${action.replace('-', ' ')}...`, 'info');
       
       switch(action) {
         case 'review-comments':
@@ -76,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     console.log(`Applied queue filter: ${filterValue}`);
+    showToast(`Filtered to: ${filterValue}`, 'info');
   }
 
   // Refresh Queue
@@ -83,24 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (refreshQueue) {
     refreshQueue.addEventListener('click', () => {
       console.log('Refreshing moderation queue...');
+      showToast('Refreshing queue...', 'info');
       // Add actual refresh logic here
-      location.reload(); // Simple refresh for demo
+      setTimeout(() => location.reload(), 1000); // Simulate refresh
     });
   }
 
   // Select All in Queue
   const queueCheckboxes = document.querySelectorAll('.queue-checkbox');
-  const selectAllQueue = document.querySelector('.nr-queue-select input[type="checkbox"]');
   
-  if (selectAllQueue) {
-    selectAllQueue.addEventListener('change', (e) => {
-      queueCheckboxes.forEach(checkbox => {
-        checkbox.checked = e.target.checked;
-      });
-      console.log(`${e.target.checked ? 'Selected' : 'Deselected'} all queue items`);
-    });
-  }
-
   // Individual queue checkboxes
   queueCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', updateQueueSelectAll);
@@ -110,9 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkedCount = document.querySelectorAll('.queue-checkbox:checked').length;
     const totalCount = queueCheckboxes.length;
     
-    if (selectAllQueue) {
-      selectAllQueue.checked = checkedCount === totalCount;
-      selectAllQueue.indeterminate = checkedCount > 0 && checkedCount < totalCount;
+    // Update bulk action buttons state
+    const approveSelected = document.getElementById('approveSelected');
+    const rejectSelected = document.getElementById('rejectSelected');
+    
+    if (checkedCount > 0) {
+      approveSelected.disabled = false;
+      rejectSelected.disabled = false;
+    } else {
+      approveSelected.disabled = true;
+      rejectSelected.disabled = true;
     }
   }
 
@@ -122,12 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
     approveSelected.addEventListener('click', () => {
       const selectedItems = document.querySelectorAll('.queue-checkbox:checked');
       if (selectedItems.length === 0) {
-        alert('Please select items to approve');
+        showToast('Please select items to approve', 'warning');
         return;
       }
       
       if (confirm(`Approve ${selectedItems.length} selected items?`)) {
         console.log(`Approved ${selectedItems.length} items`);
+        showToast(`Approved ${selectedItems.length} items`, 'success');
         // Add bulk approve logic here
         selectedItems.forEach(checkbox => {
           const item = checkbox.closest('.nr-queue-item');
@@ -143,12 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
     rejectSelected.addEventListener('click', () => {
       const selectedItems = document.querySelectorAll('.queue-checkbox:checked');
       if (selectedItems.length === 0) {
-        alert('Please select items to reject');
+        showToast('Please select items to reject', 'warning');
         return;
       }
       
       if (confirm(`Reject ${selectedItems.length} selected items?`)) {
         console.log(`Rejected ${selectedItems.length} items`);
+        showToast(`Rejected ${selectedItems.length} items`, 'danger');
         // Add bulk reject logic here
         selectedItems.forEach(checkbox => {
           const item = checkbox.closest('.nr-queue-item');
@@ -169,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (confirm('Approve this content?')) {
         console.log('Approved item:', itemText);
+        showToast('Content approved', 'success');
         // Add approve logic here
         item.style.opacity = '0.5';
         setTimeout(() => item.remove(), 300);
@@ -186,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (confirm('Reject this content?')) {
         console.log('Rejected item:', itemText);
+        showToast('Content rejected', 'danger');
         // Add reject logic here
         item.style.opacity = '0.5';
         setTimeout(() => item.remove(), 300);
@@ -202,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (confirm(`Send warning to ${user}?`)) {
         console.log('Warning sent to:', user);
+        showToast('Warning sent to user', 'warning');
         // Add warn logic here
         addRecentAction('suspended', `Warned user: ${user}`);
       }
@@ -216,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (confirm(`Suspend ${user}?`)) {
         console.log('Suspended user:', user);
+        showToast('User suspended', 'danger');
         // Add suspend logic here
         addRecentAction('suspended', `Suspended user: ${user}`);
       }
@@ -230,7 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const itemText = item.querySelector('.nr-queue-text').textContent;
       
       console.log('Viewing context for:', itemText);
-      alert(`Viewing full context for: ${itemText}`);
+      showToast('Opening content context...', 'info');
+      // In real implementation, open a modal with full content
     });
   });
 
@@ -239,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (viewAllActions) {
     viewAllActions.addEventListener('click', () => {
       console.log('Viewing all moderation actions');
-      alert('Full moderation history would open here');
+      showToast('Opening full moderation history...', 'info');
     });
   }
 
@@ -257,18 +270,18 @@ document.addEventListener('DOMContentLoaded', () => {
       'edited': 'edited'
     }[type] || 'approved';
 
-    const iconText = {
-      'approved': '✅',
-      'rejected': '❌',
-      'suspended': '🔒',
-      'edited': '✏️'
-    }[type] || '✅';
+    const iconHtml = {
+      'approved': '<i class="bi bi-check-circle"></i>',
+      'rejected': '<i class="bi bi-x-circle"></i>',
+      'suspended': '<i class="bi bi-lock"></i>',
+      'edited': '<i class="bi bi-pencil"></i>'
+    }[type] || '<i class="bi bi-check-circle"></i>';
 
     newItem.innerHTML = `
-      <div class="nr-recent-icon ${iconClass}">${iconText}</div>
+      <div class="nr-recent-icon ${iconClass}">${iconHtml}</div>
       <div class="nr-recent-content">
         <div class="nr-recent-text">${text}</div>
-        <div class="nr-recent-time">Just now</div>
+        <div class="nr-recent-time text-muted small">Just now</div>
       </div>
     `;
 
@@ -285,25 +298,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const queueItems = document.querySelectorAll('.nr-queue-item');
   queueItems.forEach(item => {
     item.addEventListener('click', (e) => {
-      if (!e.target.closest('.nr-queue-actions') && !e.target.type === 'checkbox') {
+      if (!e.target.closest('.nr-queue-actions') && e.target.type !== 'checkbox') {
         const itemText = item.querySelector('.nr-queue-text').textContent;
         console.log('Viewing details for:', itemText);
-        alert(`Detailed view for: ${itemText}`);
+        showToast('Opening detailed view...', 'info');
       }
     });
   });
 
   // Pagination
-  const paginationButtons = document.querySelectorAll('.nr-pagination-btn:not(:disabled)');
+  const paginationButtons = document.querySelectorAll('.page-item:not(.disabled) .page-link');
   paginationButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!btn.classList.contains('active')) {
-        console.log('Changing page to:', btn.textContent);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const pageText = btn.textContent.trim();
+      if (!btn.closest('.page-item').classList.contains('active')) {
+        console.log('Changing page to:', pageText);
+        showToast(`Loading page ${pageText}...`, 'info');
         // Add pagination logic here
       }
     });
   });
 
+  // Toast notification function
+  function showToast(message, type = 'info') {
+    const toastContainer = document.createElement('div');
+    toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+    toastContainer.style.zIndex = '9999';
+    
+    const toast = document.createElement('div');
+    toast.className = `toast align-items-center text-white bg-${type} border-0`;
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+    
+    toastContainer.appendChild(toast);
+    document.body.appendChild(toastContainer);
+    
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+      toastContainer.remove();
+    });
+  }
+
   // Initialize
   applyQueueFilter();
+  updateQueueSelectAll(); // Set initial state for bulk actions
 });
