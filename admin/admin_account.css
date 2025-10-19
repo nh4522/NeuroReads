@@ -1,0 +1,290 @@
+/* admin_account.css - ACCOUNT SETTINGS SPECIFIC STYLES */
+
+/* Body Background */
+body {
+  background: #f8f9fa;
+}
+
+/* Main content adjustments */
+
+
+/* Fix for when sidebar is removed */
+.nr-page {
+    display: block !important;
+}
+
+.nr-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 20px !important;
+    background: #ffffff;
+}
+
+/* Container adjustments */
+.container-fluid {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+/* Header adjustments */
+.nr-account-header {
+    margin-top: 0 !important;
+    padding-top: 20px !important;
+}
+/* Account Header */
+.nr-account-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.nr-account-header h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px;
+  color: #297a79;
+  margin-bottom: 5px;
+}
+
+.nr-account-header .text-muted {
+  color: #666 !important;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.card-header {
+  border-bottom: 1px solid #e9ecef;
+  padding: 20px;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+/* Form Styles */
+.form-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+  font-family: 'Fredoka', sans-serif;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #297a79;
+  box-shadow: 0 0 0 0.2rem rgba(41, 122, 121, 0.25);
+}
+
+/* Account Status */
+.account-status-list .status-item {
+  padding: 8px 0;
+}
+
+.status-item:not(:last-child) {
+  border-bottom: 1px solid #f1f3f4;
+}
+
+/* Activity Stats */
+.activity-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.stat-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.stat-item:hover {
+  background: #e9ecef;
+}
+
+.stat-value {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Session Management */
+.session-item {
+  transition: background-color 0.3s ease;
+}
+
+.session-item:hover {
+  background-color: #f8f9fa;
+}
+
+.session-device {
+  color: #333;
+  font-size: 14px;
+}
+
+.session-details {
+  font-size: 12px;
+}
+
+/* Danger Zone */
+.card.border-danger {
+  border-width: 2px;
+}
+
+.card.border-danger .card-header {
+  background: #dc3545 !important;
+  border-bottom: none;
+}
+
+/* Buttons */
+.btn {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #297a79;
+  border-color: #297a79;
+}
+
+.btn-primary:hover {
+  background-color: #1f5e5d;
+  border-color: #1f5e5d;
+}
+
+.btn-outline-primary {
+  color: #297a79;
+  border-color: #297a79;
+}
+
+.btn-outline-primary:hover {
+  background-color: #297a79;
+  border-color: #297a79;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+/* Badges */
+.badge {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+  border-bottom: 1px solid #e9ecef;
+  padding: 20px;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.modal-footer {
+  border-top: 1px solid #e9ecef;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nr-account-header .row {
+    text-align: center;
+  }
+  
+  .nr-account-header .col-md-4 {
+    margin-top: 15px;
+  }
+  
+  .activity-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .session-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .session-actions {
+    align-self: flex-end;
+  }
+  
+  .card-body .row.align-items-center {
+    text-align: center;
+  }
+  
+  .card-body .text-end {
+    text-align: center !important;
+    margin-top: 15px;
+  }
+}
+
+
+.session-item {
+    border-color: var(--border-color) !important;
+    background: var(--bg-secondary) !important;
+}
+
+.activity-stats .stat-item {
+    background: var(--bg-secondary) !important;
+}
+@media (max-width: 576px) {
+  .card-body {
+    padding: 15px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  .stat-item {
+    padding: 15px;
+  }
+}
