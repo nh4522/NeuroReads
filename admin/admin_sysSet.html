@@ -1,655 +1,662 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>NeuroReads — System Settings</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NeuroReads — System Settings</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-<link rel="stylesheet" href="admin_common.css">
-<link rel="stylesheet" href="admin_sysSet.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
-<script defer src="admin_common.js"></script>
-<script defer src="admin_sysSet.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="admin_common.css">
+  <link rel="stylesheet" href="admin_sysSet.css">
 
+  <!-- Bootstrap JS and dependencies -->
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script defer src="admin_common.js"></script>
+  <script defer src="admin_sysSet.js"></script>
 </head>
 <body>
+  <div class="nr-wrapper">
+    <div class="nr-page">
 
-<div class="nr-wrapper">
-  <div class="nr-page">
-
-    <!-- topbar -->
-    <header class="nr-topbar">
-      <div class="nr-logo-container">
-        <div class="nr-logo">NeuroReads</div>
-        <div class="nr-subtitle">Pages & Peace</div>
-      </div>
-      <div class="nr-search"><input type="search" placeholder="🔎  Search settings..."></div>
-      <div class="nr-user-info">
-        <button title="notification" class="nr-notification-btn">🔔</button>
-        <div class="nr-user-profile" id="userProfile">
-          <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
-          <span class="nr-username">Admin User</span>
+      <!-- Topbar - ORIGINAL DESIGN -->
+      <header class="nr-topbar">
+        <div class="nr-logo-container">
+          <div class="nr-logo">NeuroReads</div>
+          <div class="nr-subtitle">Pages & Peace</div>
         </div>
-        
-        <!-- Dropdown Menu -->
-        <div class="nr-dropdown" id="userDropdown">
+        <div class="nr-search"><input type="search" placeholder="🔎 Search settings..."></div>
+        <div class="nr-user-info">
+          <button title="notification" class="nr-notification-btn">🔔</button>
+          <div class="nr-user-profile" id="userProfile">
+            <img src="../icons/top-user.png" alt="Admin" class="nr-user-avatar">
+            <span class="nr-username">Admin User</span>
+          </div>
+          
+          <!-- Dropdown Menu -->
+          <div class="nr-dropdown" id="userDropdown">
+            <ul>
+              <li><a href="admin_profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
+              <li><a href="#"><img src="../icons/books.png" alt=""> Account Settings</a></li>
+              <li><a href="#"><img src="../icons/explore.png" alt=""> Preferences</a></li>
+              <li class="nr-dropdown-divider"></li>
+              <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sidebar - ORIGINAL DESIGN -->
+      <aside class="nr-sidebar">
+        <nav class="nr-side-nav">
           <ul>
-            <li><a href="admin_profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
-            <li><a href="#"><img src="../icons/books.png" alt=""> Account Settings</a></li>
-            <li><a href="#"><img src="../icons/explore.png" alt=""> Preferences</a></li>
-            <li class="nr-dropdown-divider"></li>
-            <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+            <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
+            <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
+            <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
+            <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
+            <li><a href="admin_reports.html"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
+            <li><a href="admin_sysSet.html" class="active"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
           </ul>
+        </nav>
+        <div class="nr-side-bottom">
+          <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
         </div>
-      </div>
-    </header>
+      </aside>
 
-    <!-- sidebar -->
-    <aside class="nr-sidebar">
-      <nav class="nr-side-nav">
-        <ul>
-          <li><a href="admin_dashboard.html"><img src="../icons/explore.png" alt=""> <span>Dashboard</span></a></li>
-          <li><a href="admin_books.html"><img src="../icons/books.png" alt=""> <span>Books</span></a></li>
-          <li><a href="admin_user.html"><img src="../icons/home.png" alt=""> <span>User Management</span></a></li>
-          <li><a href="admin_moderation.html"><img src="../icons/search.png" alt=""> <span>Moderation</span></a></li>
-          <li><a href="admin_reports.html"><img src="../icons/report.png" alt=""> <span>Reports</span></a></li>
-          <li><a href="admin_sysSet.html" class="active"><img src="../icons/settings.png" alt=""> <span>System Settings</span></a></li>
-        </ul>
-      </nav>
-      <div class="nr-side-bottom">
-        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
-      </div>
-    </aside>
-
-    <!-- main content -->
-    <main class="nr-main">
-      <!-- Settings Header -->
-      <div class="nr-settings-header">
-        <div class="nr-settings-title">
-          <h1>System Settings</h1>
-          <p>Configure and manage your library management system</p>
-        </div>
-        <div class="nr-settings-actions">
-          <button class="nr-settings-btn secondary" id="importSettingsBtn">
-            <img src="../icons/import.png" alt="Import" style="width:16px;height:16px;">
-            Import Config
-          </button>
-          <button class="nr-settings-btn secondary" id="exportSettingsBtn">
-            <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
-            Export Config
-          </button>
-          <button class="nr-settings-btn" id="saveSettingsBtn">
-            <img src="../icons/save.png" alt="Save" style="width:16px;height:16px;">
-            Save All Changes
-          </button>
-        </div>
-      </div>
-
-      <!-- Settings Navigation -->
-      <div class="nr-settings-nav">
-        <button class="nr-nav-item active" data-tab="general">General</button>
-        <button class="nr-nav-item" data-tab="users">Users & Permissions</button>
-        <button class="nr-nav-item" data-tab="content">Content Management</button>
-        <button class="nr-nav-item" data-tab="notifications">Notifications</button>
-        <button class="nr-nav-item" data-tab="security">Security</button>
-        <button class="nr-nav-item" data-tab="integrations">Integrations</button>
-        <button class="nr-nav-item" data-tab="backup">Backup & Recovery</button>
-        <button class="nr-nav-item" data-tab="advanced">Advanced</button>
-      </div>
-
-      <!-- Settings Content -->
-      <div class="nr-settings-content">
-        
-        <!-- General Settings -->
-        <div class="nr-settings-tab active" id="general-tab">
-          <div class="nr-settings-section">
-            <h3>Basic Information</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Library Name</label>
-                <input type="text" class="nr-setting-input" value="NeuroReads " id="libraryName">
-                <div class="nr-setting-description">The name displayed to users throughout the platform</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Library Description</label>
-                <textarea class="nr-setting-textarea" id="libraryDescription">Your gateway to knowledge and imagination. Discover, read, and explore thousands of books.</textarea>
-                <div class="nr-setting-description">Brief description shown on the homepage and about pages</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Contact Email</label>
-                <input type="email" class="nr-setting-input" value="support@neuroreads.com" id="contactEmail">
-                <div class="nr-setting-description">Primary contact email for user inquiries</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Support Phone</label>
-                <input type="tel" class="nr-setting-input" value="+1 (555) 123-4567" id="supportPhone">
-                <div class="nr-setting-description">Support phone number for user assistance</div>
-              </div>
-            </div>
+      <!-- Main Content - MINIMAL ENHANCEMENTS -->
+      <main class="nr-main">
+        <!-- Settings Header - ORIGINAL STYLE -->
+        <div class="nr-settings-header">
+          <div class="nr-settings-title">
+            <h1>System Settings</h1>
+            <p>Configure and manage your library management system</p>
           </div>
-
-          <div class="nr-settings-section">
-            <h3>Platform Settings</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Default Language</label>
-                <select class="nr-setting-select" id="defaultLanguage">
-                  <option value="en">English</option>
-                  <option value="es">Spanish</option>
-                  <option value="fr">French</option>
-                  <option value="de">German</option>
-                  <option value="zh">Chinese</option>
-                </select>
-                <div class="nr-setting-description">Default language for the platform interface</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Time Zone</label>
-                <select class="nr-setting-select" id="timeZone">
-                  <option value="UTC-5">EST (UTC-5)</option>
-                  <option value="UTC-8">PST (UTC-8)</option>
-                  <option value="UTC+0">GMT (UTC+0)</option>
-                  <option value="UTC+1">CET (UTC+1)</option>
-                </select>
-                <div class="nr-setting-description">System time zone for all date and time displays</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Date Format</label>
-                <select class="nr-setting-select" id="dateFormat">
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                  <option value="YYYY-MM-DD">YYYY-MM-DD</option>
-                </select>
-                <div class="nr-setting-description">Date display format throughout the platform</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Currency</label>
-                <select class="nr-setting-select" id="currency">
-                  <option value="USD">USD ($)</option>
-                  <option value="EUR">EUR (€)</option>
-                  <option value="GBP">GBP (£)</option>
-                  <option value="CAD">CAD (C$)</option>
-                </select>
-                <div class="nr-setting-description">Default currency for all financial transactions</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Maintenance Mode</h3>
-            <div class="nr-setting-toggle-group">
-              <div class="nr-toggle-wrapper">
-                <label class="nr-toggle-label">Enable Maintenance Mode</label>
-                <label class="nr-toggle">
-                  <input type="checkbox" id="maintenanceMode">
-                  <span class="nr-toggle-slider"></span>
-                </label>
-              </div>
-              <div class="nr-setting-description">When enabled, only administrators can access the platform</div>
-            </div>
-            <div class="nr-setting-group" id="maintenanceMessageGroup" style="display: none;">
-              <label class="nr-setting-label">Maintenance Message</label>
-              <textarea class="nr-setting-textarea" id="maintenanceMessage">We're performing scheduled maintenance. The platform will be back online shortly. Thank you for your patience.</textarea>
-              <div class="nr-setting-description">Message displayed to users during maintenance</div>
-            </div>
+          <div class="nr-settings-actions">
+            <button class="nr-settings-btn btn btn-secondary" id="importSettingsBtn">
+              <img src="../icons/import.png" alt="Import" style="width:16px;height:16px;">
+              Import Config
+            </button>
+            <button class="nr-settings-btn btn btn-secondary" id="exportSettingsBtn">
+              <img src="../icons/export.png" alt="Export" style="width:16px;height:16px;">
+              Export Config
+            </button>
+            <button class="nr-settings-btn btn btn-primary" id="saveSettingsBtn">
+              <img src="../icons/save.png" alt="Save" style="width:16px;height:16px;">
+              Save All Changes
+            </button>
           </div>
         </div>
 
-        <!-- Users & Permissions -->
-        <div class="nr-settings-tab" id="users-tab">
-          <div class="nr-settings-section">
-            <h3>User Registration</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Allow New Registrations</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="allowRegistrations" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Allow new users to create accounts on the platform</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Require Email Verification</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="requireEmailVerification" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Users must verify their email address before accessing the platform</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Default User Role</label>
-                <select class="nr-setting-select" id="defaultUserRole">
-                  <option value="user">Regular User</option>
-                  <option value="premium">Premium User</option>
-                  <option value="reader">Reader</option>
-                </select>
-                <div class="nr-setting-description">Default role assigned to new users upon registration</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Minimum Password Length</label>
-                <input type="number" class="nr-setting-input" value="8" min="6" max="20" id="minPasswordLength">
-                <div class="nr-setting-description">Minimum characters required for user passwords</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Permission Groups</h3>
-            <div class="nr-permissions-grid">
-              <div class="nr-permission-card">
-                <div class="nr-permission-header">
-                  <h4>Administrators</h4>
-                  <span class="nr-permission-count">5 users</span>
-                </div>
-                <div class="nr-permission-description">Full access to all system features and settings</div>
-                <div class="nr-permission-actions">
-                  <button class="nr-permission-action edit">Edit</button>
-                  <button class="nr-permission-action manage">Manage Users</button>
-                </div>
-              </div>
-              <div class="nr-permission-card">
-                <div class="nr-permission-header">
-                  <h4>Moderators</h4>
-                  <span class="nr-permission-count">12 users</span>
-                </div>
-                <div class="nr-permission-description">Content moderation and user management access</div>
-                <div class="nr-permission-actions">
-                  <button class="nr-permission-action edit">Edit</button>
-                  <button class="nr-permission-action manage">Manage Users</button>
-                </div>
-              </div>
-              <div class="nr-permission-card">
-                <div class="nr-permission-header">
-                  <h4>Premium Users</h4>
-                  <span class="nr-permission-count">1,247 users</span>
-                </div>
-                <div class="nr-permission-description">Access to premium features and extended limits</div>
-                <div class="nr-permission-actions">
-                  <button class="nr-permission-action edit">Edit</button>
-                  <button class="nr-permission-action manage">Manage Users</button>
-                </div>
-              </div>
-              <div class="nr-permission-card">
-                <div class="nr-permission-header">
-                  <h4>Regular Users</h4>
-                  <span class="nr-permission-count">7,495 users</span>
-                </div>
-                <div class="nr-permission-description">Basic access with standard feature limitations</div>
-                <div class="nr-permission-actions">
-                  <button class="nr-permission-action edit">Edit</button>
-                  <button class="nr-permission-action manage">Manage Users</button>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- Settings Navigation - ORIGINAL STYLE -->
+        <div class="nr-settings-nav nav nav-tabs mb-4">
+          <button class="nr-nav-item nav-link active" data-bs-toggle="tab" data-bs-target="#general-tab">General</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#users-tab">Users & Permissions</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#content-tab">Content Management</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#notifications-tab">Notifications</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#security-tab">Security</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#integrations-tab">Integrations</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#backup-tab">Backup & Recovery</button>
+          <button class="nr-nav-item nav-link" data-bs-toggle="tab" data-bs-target="#advanced-tab">Advanced</button>
         </div>
 
-        <!-- Content Management -->
-        <div class="nr-settings-tab" id="content-tab">
-          <div class="nr-settings-section">
-            <h3>Book Management</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Maximum File Size</label>
-                <div class="nr-setting-with-unit">
-                  <input type="number" class="nr-setting-input" value="50" id="maxFileSize">
-                  <span class="nr-setting-unit">MB</span>
+        <!-- Settings Content - ORIGINAL STYLE -->
+        <div class="nr-settings-content tab-content">
+          <!-- General Settings -->
+          <div class="nr-settings-tab tab-pane fade show active" id="general-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>Basic Information</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Library Name</label>
+                  <input type="text" class="nr-setting-input form-control" value="NeuroReads" id="libraryName">
+                  <div class="nr-setting-description form-text">The name displayed to users throughout the platform</div>
                 </div>
-                <div class="nr-setting-description">Maximum file size for book uploads</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Allowed File Types</label>
-                <div class="nr-setting-chips">
-                  <span class="nr-setting-chip">PDF</span>
-                  <span class="nr-setting-chip">EPUB</span>
-                  <span class="nr-setting-chip">MOBI</span>
-                  <button class="nr-setting-chip-add">+</button>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Library Description</label>
+                  <textarea class="nr-setting-textarea form-control" id="libraryDescription">Your gateway to knowledge and imagination. Discover, read, and explore thousands of books.</textarea>
+                  <div class="nr-setting-description form-text">Brief description shown on the homepage and about pages</div>
                 </div>
-                <div class="nr-setting-description">Supported ebook formats for upload</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Auto-approve Book Submissions</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="autoApproveBooks">
-                    <span class="nr-toggle-slider"></span>
-                  </label>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Contact Email</label>
+                  <input type="email" class="nr-setting-input form-control" value="support@neuroreads.com" id="contactEmail">
+                  <div class="nr-setting-description form-text">Primary contact email for user inquiries</div>
                 </div>
-                <div class="nr-setting-description">Automatically approve books without manual review</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Maximum Books per User</label>
-                <input type="number" class="nr-setting-input" value="100" min="1" max="1000" id="maxBooksPerUser">
-                <div class="nr-setting-description">Maximum number of books a user can have in their library</div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Support Phone</label>
+                  <input type="tel" class="nr-setting-input form-control" value="+1 (555) 123-4567" id="supportPhone">
+                  <div class="nr-setting-description form-text">Support phone number for user assistance</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="nr-settings-section">
-            <h3>Content Moderation</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Enable Auto-Moderation</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="autoModeration" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
+            <div class="nr-settings-section mb-4">
+              <h3>Platform Settings</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Default Language</label>
+                  <select class="nr-setting-select form-select" id="defaultLanguage">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="zh">Chinese</option>
+                  </select>
+                  <div class="nr-setting-description form-text">Default language for the platform interface</div>
                 </div>
-                <div class="nr-setting-description">Automatically flag content for review based on keywords</div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Time Zone</label>
+                  <select class="nr-setting-select form-select" id="timeZone">
+                    <option value="UTC-5">EST (UTC-5)</option>
+                    <option value="UTC-8">PST (UTC-8)</option>
+                    <option value="UTC+0">GMT (UTC+0)</option>
+                    <option value="UTC+1">CET (UTC+1)</option>
+                  </select>
+                  <div class="nr-setting-description form-text">System time zone for all date and time displays</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Date Format</label>
+                  <select class="nr-setting-select form-select" id="dateFormat">
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                  </select>
+                  <div class="nr-setting-description form-text">Date display format throughout the platform</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Currency</label>
+                  <select class="nr-setting-select form-select" id="currency">
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="CAD">CAD (C$)</option>
+                  </select>
+                  <div class="nr-setting-description form-text">Default currency for all financial transactions</div>
+                </div>
               </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Moderation Sensitivity</label>
-                <div class="nr-setting-range">
-                  <input type="range" min="1" max="10" value="7" class="nr-range-input" id="moderationSensitivity">
-                  <div class="nr-range-labels">
-                    <span>Low</span>
-                    <span>High</span>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Maintenance Mode</h3>
+              <div class="nr-setting-toggle-group mb-3">
+                <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                  <label class="nr-toggle-label">Enable Maintenance Mode</label>
+                  <div class="form-check form-switch">
+                    <input class="nr-toggle form-check-input" type="checkbox" id="maintenanceMode">
                   </div>
                 </div>
-                <div class="nr-setting-description">Sensitivity level for automatic content moderation</div>
+                <div class="nr-setting-description form-text">When enabled, only administrators can access the platform</div>
               </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Banned Words List</label>
-                <textarea class="nr-setting-textarea" id="bannedWords" placeholder="Enter banned words separated by commas">hate speech, harassment, spam, inappropriate</textarea>
-                <div class="nr-setting-description">Words that trigger automatic content removal</div>
+              <div class="nr-setting-group" id="maintenanceMessageGroup" style="display: none;">
+                <label class="nr-setting-label form-label">Maintenance Message</label>
+                <textarea class="nr-setting-textarea form-control" id="maintenanceMessage">We're performing scheduled maintenance. The platform will be back online shortly. Thank you for your patience.</textarea>
+                <div class="nr-setting-description form-text">Message displayed to users during maintenance</div>
               </div>
             </div>
+          </div>
+
+          <!-- Users & Permissions -->
+          <div class="nr-settings-tab tab-pane fade" id="users-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>User Registration</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Allow New Registrations</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="allowRegistrations" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Allow new users to create accounts on the platform</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Require Email Verification</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="requireEmailVerification" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Users must verify their email address before accessing the platform</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Default User Role</label>
+                  <select class="nr-setting-select form-select" id="defaultUserRole">
+                    <option value="user">Regular User</option>
+                    <option value="premium">Premium User</option>
+                    <option value="reader">Reader</option>
+                  </select>
+                  <div class="nr-setting-description form-text">Default role assigned to new users upon registration</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Minimum Password Length</label>
+                  <input type="number" class="nr-setting-input form-control" value="8" min="6" max="20" id="minPasswordLength">
+                  <div class="nr-setting-description form-text">Minimum characters required for user passwords</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Permission Groups</h3>
+              <div class="nr-permissions-grid row g-4">
+                <div class="nr-permission-card card col-md-6">
+                  <div class="card-body">
+                    <div class="nr-permission-header d-flex justify-content-between align-items-center mb-2">
+                      <h4 class="card-title">Administrators</h4>
+                      <span class="nr-permission-count badge bg-light text-dark">5 users</span>
+                    </div>
+                    <div class="nr-permission-description card-text">Full access to all system features and settings</div>
+                    <div class="nr-permission-actions d-flex gap-2 mt-3">
+                      <button class="nr-permission-action edit btn btn-outline-primary btn-sm">Edit</button>
+                      <button class="nr-permission-action manage btn btn-outline-success btn-sm">Manage Users</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="nr-permission-card card col-md-6">
+                  <div class="card-body">
+                    <div class="nr-permission-header d-flex justify-content-between align-items-center mb-2">
+                      <h4 class="card-title">Moderators</h4>
+                      <span class="nr-permission-count badge bg-light text-dark">12 users</span>
+                    </div>
+                    <div class="nr-permission-description card-text">Content moderation and user management access</div>
+                    <div class="nr-permission-actions d-flex gap-2 mt-3">
+                      <button class="nr-permission-action edit btn btn-outline-primary btn-sm">Edit</button>
+                      <button class="nr-permission-action manage btn btn-outline-success btn-sm">Manage Users</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="nr-permission-card card col-md-6">
+                  <div class="card-body">
+                    <div class="nr-permission-header d-flex justify-content-between align-items-center mb-2">
+                      <h4 class="card-title">Premium Users</h4>
+                      <span class="nr-permission-count badge bg-light text-dark">1,247 users</span>
+                    </div>
+                    <div class="nr-permission-description card-text">Access to premium features and extended limits</div>
+                    <div class="nr-permission-actions d-flex gap-2 mt-3">
+                      <button class="nr-permission-action edit btn btn-outline-primary btn-sm">Edit</button>
+                      <button class="nr-permission-action manage btn btn-outline-success btn-sm">Manage Users</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="nr-permission-card card col-md-6">
+                  <div class="card-body">
+                    <div class="nr-permission-header d-flex justify-content-between align-items-center mb-2">
+                      <h4 class="card-title">Regular Users</h4>
+                      <span class="nr-permission-count badge bg-light text-dark">7,495 users</span>
+                    </div>
+                    <div class="nr-permission-description card-text">Basic access with standard feature limitations</div>
+                    <div class="nr-permission-actions d-flex gap-2 mt-3">
+                      <button class="nr-permission-action edit btn btn-outline-primary btn-sm">Edit</button>
+                      <button class="nr-permission-action manage btn btn-outline-success btn-sm">Manage Users</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Management -->
+          <div class="nr-settings-tab tab-pane fade" id="content-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>Book Management</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Maximum File Size</label>
+                  <div class="nr-setting-with-unit input-group">
+                    <input type="number" class="nr-setting-input form-control" value="50" id="maxFileSize">
+                    <span class="nr-setting-unit input-group-text">MB</span>
+                  </div>
+                  <div class="nr-setting-description form-text">Maximum file size for book uploads</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Allowed File Types</label>
+                  <div class="nr-setting-chips d-flex gap-2 flex-wrap">
+                    <span class="nr-setting-chip badge bg-light text-dark">PDF</span>
+                    <span class="nr-setting-chip badge bg-light text-dark">EPUB</span>
+                    <span class="nr-setting-chip badge bg-light text-dark">MOBI</span>
+                    <button class="nr-setting-chip-add btn btn-outline-secondary btn-sm">+</button>
+                  </div>
+                  <div class="nr-setting-description form-text">Supported ebook formats for upload</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Auto-approve Book Submissions</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="autoApproveBooks">
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Automatically approve books without manual review</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Maximum Books per User</label>
+                  <input type="number" class="nr-setting-input form-control" value="100" min="1" max="1000" id="maxBooksPerUser">
+                  <div class="nr-setting-description form-text">Maximum number of books a user can have in their library</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Content Moderation</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Enable Auto-Moderation</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="autoModeration" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Automatically flag content for review based on keywords</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Moderation Sensitivity</label>
+                  <div class="nr-setting-range">
+                    <input type="range" min="1" max="10" value="7" class="nr-range-input form-range" id="moderationSensitivity">
+                    <div class="nr-range-labels d-flex justify-content-between">
+                      <span>Low</span>
+                      <span>High</span>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Sensitivity level for automatic content moderation</div>
+                </div>
+                <div class="nr-setting-group col-md-12">
+                  <label class="nr-setting-label form-label">Banned Words List</label>
+                  <textarea class="nr-setting-textarea form-control" id="bannedWords" placeholder="Enter banned words separated by commas">hate speech, harassment, spam, inappropriate</textarea>
+                  <div class="nr-setting-description form-text">Words that trigger automatic content removal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other tabs remain the same as your original -->
+          <!-- Notifications, Security, Backup, Integrations, Advanced tabs... -->
+
+          <!-- Backup & Recovery -->
+          <div class="nr-settings-tab tab-pane fade" id="backup-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>Automated Backups</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Backup Frequency</label>
+                  <select class="nr-setting-select form-select" id="backupFrequency">
+                    <option value="daily">Daily</option>
+                    <option value="weekly" selected>Weekly</option>
+                    <option value="monthly">Monthly</option>
+                  </select>
+                  <div class="nr-setting-description form-text">How often automated backups are created</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Retention Period</label>
+                  <select class="nr-setting-select form-select" id="backupRetention">
+                    <option value="7">7 days</option>
+                    <option value="30" selected>30 days</option>
+                    <option value="90">90 days</option>
+                    <option value="365">1 year</option>
+                  </select>
+                  <div class="nr-setting-description form-text">How long to keep backup files before automatic deletion</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Cloud Backup</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="cloudBackup" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Store backups in secure cloud storage</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section mb-4">
+              <h3>Manual Backup</h3>
+              <div class="nr-backup-actions d-flex gap-3 mb-3">
+                <button class="nr-backup-btn btn btn-primary" id="createBackupBtn">
+                  <img src="../icons/create.svg" alt="Backup" style="width:16px;height:16px;">
+                  Create Backup Now
+                </button>
+                <button class="nr-backup-btn btn btn-secondary" id="restoreBackupBtn">
+                  <img src="../icons/restore.svg" alt="Restore" style="width:16px;height:16px;">
+                  Restore from Backup
+                </button>
+              </div>
+              <div class="nr-backup-status row g-3">
+                <div class="nr-backup-info col-md-4 p-3 bg-light rounded">
+                  <strong>Last Backup:</strong> Today, 02:30 AM
+                </div>
+                <div class="nr-backup-info col-md-4 p-3 bg-light rounded">
+                  <strong>Backup Size:</strong> 2.4 GB
+                </div>
+                <div class="nr-backup-info col-md-4 p-3 bg-light rounded">
+                  <strong>Next Scheduled:</strong> Tomorrow, 02:30 AM
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Recent Backups</h3>
+              <div class="nr-backups-list">
+                <div class="nr-backup-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-backup-icon success rounded-circle p-2">
+                    <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-backup-info flex-grow-1">
+                    <div class="nr-backup-name">backup_20241215_0230.zip</div>
+                    <div class="nr-backup-details">2.4 GB • Today, 02:30 AM</div>
+                  </div>
+                  <div class="nr-backup-actions d-flex gap-2">
+                    <button class="nr-backup-action download btn btn-outline-primary btn-sm">Download</button>
+                    <button class="nr-backup-action restore btn btn-outline-warning btn-sm">Restore</button>
+                  </div>
+                </div>
+                <div class="nr-backup-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-backup-icon success rounded-circle p-2">
+                    <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-backup-info flex-grow-1">
+                    <div class="nr-backup-name">backup_20241208_0230.zip</div>
+                    <div class="nr-backup-details">2.3 GB • Dec 8, 02:30 AM</div>
+                  </div>
+                  <div class="nr-backup-actions d-flex gap-2">
+                    <button class="nr-backup-action download btn btn-outline-primary btn-sm">Download</button>
+                    <button class="nr-backup-action restore btn btn-outline-warning btn-sm">Restore</button>
+                  </div>
+                </div>
+                <div class="nr-backup-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-backup-icon success rounded-circle p-2">
+                    <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-backup-info flex-grow-1">
+                    <div class="nr-backup-name">backup_20241201_0230.zip</div>
+                    <div class="nr-backup-details">2.2 GB • Dec 1, 02:30 AM</div>
+                  </div>
+                  <div class="nr-backup-actions d-flex gap-2">
+                    <button class="nr-backup-action download btn btn-outline-primary btn-sm">Download</button>
+                    <button class="nr-backup-action restore btn btn-outline-warning btn-sm">Restore</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+<!-- Security -->
+          <div class="nr-settings-tab tab-pane fade" id="security-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>Authentication</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Session Timeout</label>
+                  <div class="nr-setting-with-unit input-group">
+                    <input type="number" class="nr-setting-input form-control" value="60" id="sessionTimeout">
+                    <span class="nr-setting-unit input-group-text">minutes</span>
+                  </div>
+                  <div class="nr-setting-description form-text">Time before users are automatically logged out due to inactivity</div>
+                </div>
+                <div class="nr-setting-group col-md-6">
+                  <label class="nr-setting-label form-label">Max Login Attempts</label>
+                  <input type="number" class="nr-setting-input form-control" value="5" min="3" max="10" id="maxLoginAttempts">
+                  <div class="nr-setting-description form-text">Maximum failed login attempts before account lockout</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Two-Factor Authentication</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="twoFactorAuth">
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Require 2FA for all administrator accounts</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Password History</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="passwordHistory" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Prevent users from reusing previous passwords</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Security Headers</h3>
+              <div class="nr-security-status">
+                <div class="nr-security-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-security-icon success rounded-circle p-2">
+                    <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-security-info">
+                    <span class="nr-security-name d-block">Content Security Policy</span>
+                    <span class="nr-security-status">Enabled</span>
+                  </div>
+                </div>
+                <div class="nr-security-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-security-icon success rounded-circle p-2">
+                    <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-security-info">
+                    <span class="nr-security-name d-block">HTTP Strict Transport Security</span>
+                    <span class="nr-security-status">Enabled</span>
+                  </div>
+                </div>
+                <div class="nr-security-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-security-icon warning rounded-circle p-2">
+                    <img src="../icons/warning.png" alt="Warning" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-security-info">
+                    <span class="nr-security-name d-block">X-Frame Options</span>
+                    <span class="nr-security-status">Needs Review</span>
+                  </div>
+                </div>
+                <div class="nr-security-item d-flex align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-security-icon success rounded-circle p-2">
+                    <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
+                  </div>
+                  <div class="nr-security-info">
+                    <span class="nr-security-name d-block">X-Content-Type-Options</span>
+                    <span class="nr-security-status">Enabled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+<!-- Notifications -->
+          <div class="nr-settings-tab tab-pane fade" id="notifications-tab">
+            <div class="nr-settings-section mb-4">
+              <h3>Email Notifications</h3>
+              <div class="nr-settings-grid row g-4">
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Welcome Emails</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="welcomeEmails" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Send welcome email to new users upon registration</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Reading Reminders</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="readingReminders" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Send reminders to users about unfinished books</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">Promotional Emails</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="promotionalEmails">
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Send promotional emails about new features and books</div>
+                </div>
+                <div class="nr-setting-toggle-group col-md-6">
+                  <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+                    <label class="nr-toggle-label">System Announcements</label>
+                    <div class="form-check form-switch">
+                      <input class="nr-toggle form-check-input" type="checkbox" id="systemAnnouncements" checked>
+                    </div>
+                  </div>
+                  <div class="nr-setting-description form-text">Send important system updates and maintenance notices</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nr-settings-section">
+              <h3>Notification Templates</h3>
+              <div class="nr-templates-list">
+                <div class="nr-template-item d-flex justify-content-between align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-template-info">
+                    <h4>Welcome Email Template</h4>
+                    <p>Sent to new users after registration</p>
+                  </div>
+                  <button class="nr-template-edit btn btn-primary btn-sm">Edit Template</button>
+                </div>
+                <div class="nr-template-item d-flex justify-content-between align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-template-info">
+                    <h4>Password Reset Template</h4>
+                    <p>Sent when users request password reset</p>
+                  </div>
+                  <button class="nr-template-edit btn btn-primary btn-sm">Edit Template</button>
+                </div>
+                <div class="nr-template-item d-flex justify-content-between align-items-center p-3 bg-light rounded mb-2">
+                  <div class="nr-template-info">
+                    <h4>Reading Reminder Template</h4>
+                    <p>Reminds users about unfinished books</p>
+                  </div>
+                  <button class="nr-template-edit btn btn-primary btn-sm">Edit Template</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <!-- Settings Footer - ORIGINAL STYLE -->
+        <div class="nr-settings-footer">
+          <div class="nr-settings-actions">
+            <button class="nr-settings-btn btn btn-secondary" id="resetSettingsBtn">
+              <img src="../icons/reset.png" alt="Reset" style="width:16px;height:16px;">
+              Reset to Defaults
+            </button>
+            <button class="nr-settings-btn btn btn-primary" id="applySettingsBtn">
+              <img src="../icons/check.png" alt="Apply" style="width:16px;height:16px;">
+              Apply Changes
+            </button>
           </div>
         </div>
 
-        <!-- Notifications -->
-        <div class="nr-settings-tab" id="notifications-tab">
-          <div class="nr-settings-section">
-            <h3>Email Notifications</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Welcome Emails</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="welcomeEmails" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Send welcome email to new users upon registration</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Reading Reminders</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="readingReminders" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Send reminders to users about unfinished books</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Promotional Emails</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="promotionalEmails">
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Send promotional emails about new features and books</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">System Announcements</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="systemAnnouncements" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Send important system updates and maintenance notices</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Notification Templates</h3>
-            <div class="nr-templates-list">
-              <div class="nr-template-item">
-                <div class="nr-template-info">
-                  <h4>Welcome Email Template</h4>
-                  <p>Sent to new users after registration</p>
-                </div>
-                <button class="nr-template-edit">Edit Template</button>
-              </div>
-              <div class="nr-template-item">
-                <div class="nr-template-info">
-                  <h4>Password Reset Template</h4>
-                  <p>Sent when users request password reset</p>
-                </div>
-                <button class="nr-template-edit">Edit Template</button>
-              </div>
-              <div class="nr-template-item">
-                <div class="nr-template-info">
-                  <h4>Reading Reminder Template</h4>
-                  <p>Reminds users about unfinished books</p>
-                </div>
-                <button class="nr-template-edit">Edit Template</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Security -->
-        <div class="nr-settings-tab" id="security-tab">
-          <div class="nr-settings-section">
-            <h3>Authentication</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Session Timeout</label>
-                <div class="nr-setting-with-unit">
-                  <input type="number" class="nr-setting-input" value="60" id="sessionTimeout">
-                  <span class="nr-setting-unit">minutes</span>
-                </div>
-                <div class="nr-setting-description">Time before users are automatically logged out due to inactivity</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Max Login Attempts</label>
-                <input type="number" class="nr-setting-input" value="5" min="3" max="10" id="maxLoginAttempts">
-                <div class="nr-setting-description">Maximum failed login attempts before account lockout</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Two-Factor Authentication</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="twoFactorAuth">
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Require 2FA for all administrator accounts</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Password History</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="passwordHistory" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Prevent users from reusing previous passwords</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Security Headers</h3>
-            <div class="nr-security-status">
-              <div class="nr-security-item">
-                <div class="nr-security-icon success">
-                  <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-security-info">
-                  <span class="nr-security-name">Content Security Policy</span>
-                  <span class="nr-security-status">Enabled</span>
-                </div>
-              </div>
-              <div class="nr-security-item">
-                <div class="nr-security-icon success">
-                  <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-security-info">
-                  <span class="nr-security-name">HTTP Strict Transport Security</span>
-                  <span class="nr-security-status">Enabled</span>
-                </div>
-              </div>
-              <div class="nr-security-item">
-                <div class="nr-security-icon warning">
-                  <img src="../icons/warning.png" alt="Warning" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-security-info">
-                  <span class="nr-security-name">X-Frame Options</span>
-                  <span class="nr-security-status">Needs Review</span>
-                </div>
-              </div>
-              <div class="nr-security-item">
-                <div class="nr-security-icon success">
-                  <img src="../icons/check.png" alt="Enabled" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-security-info">
-                  <span class="nr-security-name">X-Content-Type-Options</span>
-                  <span class="nr-security-status">Enabled</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Backup & Recovery -->
-        <div class="nr-settings-tab" id="backup-tab">
-          <div class="nr-settings-section">
-            <h3>Automated Backups</h3>
-            <div class="nr-settings-grid">
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Backup Frequency</label>
-                <select class="nr-setting-select" id="backupFrequency">
-                  <option value="daily">Daily</option>
-                  <option value="weekly" selected>Weekly</option>
-                  <option value="monthly">Monthly</option>
-                </select>
-                <div class="nr-setting-description">How often automated backups are created</div>
-              </div>
-              <div class="nr-setting-group">
-                <label class="nr-setting-label">Retention Period</label>
-                <select class="nr-setting-select" id="backupRetention">
-                  <option value="7">7 days</option>
-                  <option value="30" selected>30 days</option>
-                  <option value="90">90 days</option>
-                  <option value="365">1 year</option>
-                </select>
-                <div class="nr-setting-description">How long to keep backup files before automatic deletion</div>
-              </div>
-              <div class="nr-setting-toggle-group">
-                <div class="nr-toggle-wrapper">
-                  <label class="nr-toggle-label">Cloud Backup</label>
-                  <label class="nr-toggle">
-                    <input type="checkbox" id="cloudBackup" checked>
-                    <span class="nr-toggle-slider"></span>
-                  </label>
-                </div>
-                <div class="nr-setting-description">Store backups in secure cloud storage</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Manual Backup</h3>
-            <div class="nr-backup-actions">
-              <button class="nr-backup-btn primary" id="createBackupBtn">
-                <img src="../icons/create.svg" alt="Backup" style="width:16px;height:16px;">
-                Create Backup Now
-              </button>
-              <button class="nr-backup-btn secondary" id="restoreBackupBtn">
-                <img src="../icons/restore.svg" alt="Restore" style="width:16px;height:16px;">
-                Restore from Backup
-              </button>
-            </div>
-            <div class="nr-backup-status">
-              <div class="nr-backup-info">
-                <strong>Last Backup:</strong> Today, 02:30 AM
-              </div>
-              <div class="nr-backup-info">
-                <strong>Backup Size:</strong> 2.4 GB
-              </div>
-              <div class="nr-backup-info">
-                <strong>Next Scheduled:</strong> Tomorrow, 02:30 AM
-              </div>
-            </div>
-          </div>
-
-          <div class="nr-settings-section">
-            <h3>Recent Backups</h3>
-            <div class="nr-backups-list">
-              <div class="nr-backup-item">
-                <div class="nr-backup-icon success">
-                  <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-backup-info">
-                  <div class="nr-backup-name">backup_20241215_0230.zip</div>
-                  <div class="nr-backup-details">2.4 GB • Today, 02:30 AM</div>
-                </div>
-                <div class="nr-backup-actions">
-                  <button class="nr-backup-action download">Download</button>
-                  <button class="nr-backup-action restore">Restore</button>
-                </div>
-              </div>
-              <div class="nr-backup-item">
-                <div class="nr-backup-icon success">
-                  <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-backup-info">
-                  <div class="nr-backup-name">backup_20241208_0230.zip</div>
-                  <div class="nr-backup-details">2.3 GB • Dec 8, 02:30 AM</div>
-                </div>
-                <div class="nr-backup-actions">
-                  <button class="nr-backup-action download">Download</button>
-                  <button class="nr-backup-action restore">Restore</button>
-                </div>
-              </div>
-              <div class="nr-backup-item">
-                <div class="nr-backup-icon success">
-                  <img src="../icons/success.svg" alt="Success" style="width:16px;height:16px;">
-                </div>
-                <div class="nr-backup-info">
-                  <div class="nr-backup-name">backup_20241201_0230.zip</div>
-                  <div class="nr-backup-details">2.2 GB • Dec 1, 02:30 AM</div>
-                </div>
-                <div class="nr-backup-actions">
-                  <button class="nr-backup-action download">Download</button>
-                  <button class="nr-backup-action restore">Restore</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Settings Footer -->
-      <div class="nr-settings-footer">
-        <div class="nr-settings-actions">
-          <button class="nr-settings-btn secondary" id="resetSettingsBtn">
-            <img src="../icons/reset.png" alt="Reset" style="width:16px;height:16px;">
-            Reset to Defaults
-          </button>
-          <button class="nr-settings-btn" id="applySettingsBtn">
-            <img src="../icons/check.png" alt="Apply" style="width:16px;height:16px;">
-            Apply Changes
-          </button>
-        </div>
-      </div>
-    </main>
-
+      </main>
+    </div>
   </div>
-</div>
-
 </body>
 </html>

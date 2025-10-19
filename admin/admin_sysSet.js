@@ -1,33 +1,6 @@
-// admin_sysSet.js - SYSTEM SETTINGS SPECIFIC FUNCTIONALITY ONLY
+// admin_sysSet.js - SYSTEM SETTINGS SPECIFIC FUNCTIONALITY
 document.addEventListener('DOMContentLoaded', () => {
-  // Only system settings specific functionality here
-  // NO DROPDOWN CODE - that's in admin_common.js
-
   console.log('System Settings initialized');
-
-  // Tab Navigation
-  const navItems = document.querySelectorAll('.nr-nav-item');
-  const tabs = document.querySelectorAll('.nr-settings-tab');
-
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const targetTab = item.dataset.tab;
-      
-      // Update active nav item
-      navItems.forEach(nav => nav.classList.remove('active'));
-      item.classList.add('active');
-      
-      // Show target tab
-      tabs.forEach(tab => {
-        tab.classList.remove('active');
-        if (tab.id === `${targetTab}-tab`) {
-          tab.classList.add('active');
-        }
-      });
-      
-      console.log(`Switched to ${targetTab} settings`);
-    });
-  });
 
   // Save Settings Button
   const saveSettingsBtn = document.getElementById('saveSettingsBtn');
@@ -64,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const maintenanceMessageGroup = document.getElementById('maintenanceMessageGroup');
 
   if (maintenanceMode) {
-    maintenanceMode.addEventListener('change', function() {
+    maintenanceMode.addEventListener('change', function () {
       if (this.checked) {
         maintenanceMessageGroup.style.display = 'block';
         showWarning('Maintenance mode will restrict access to administrators only.');
@@ -77,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Auto-approve Books Toggle
   const autoApproveBooks = document.getElementById('autoApproveBooks');
   if (autoApproveBooks) {
-    autoApproveBooks.addEventListener('change', function() {
+    autoApproveBooks.addEventListener('change', function () {
       if (this.checked) {
         showWarning('Auto-approval may allow inappropriate content. Ensure you have proper moderation systems in place.');
       }
@@ -87,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Two-Factor Authentication Toggle
   const twoFactorAuth = document.getElementById('twoFactorAuth');
   if (twoFactorAuth) {
-    twoFactorAuth.addEventListener('change', function() {
+    twoFactorAuth.addEventListener('change', function () {
       if (this.checked) {
         if (confirm('Enabling 2FA will require all administrators to set up two-factor authentication on their next login. Continue?')) {
           showSuccess('Two-factor authentication will be enabled for all administrators.');
@@ -101,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Cloud Backup Toggle
   const cloudBackup = document.getElementById('cloudBackup');
   if (cloudBackup) {
-    cloudBackup.addEventListener('change', function() {
+    cloudBackup.addEventListener('change', function () {
       if (this.checked) {
         showInfo('Cloud backup requires additional configuration. Please check the integration settings.');
       }
@@ -111,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Permission Group Actions
   const permissionActions = document.querySelectorAll('.nr-permission-action');
   permissionActions.forEach(action => {
-    action.addEventListener('click', function() {
+    action.addEventListener('click', function () {
       const card = this.closest('.nr-permission-card');
-      const role = card.querySelector('h4').textContent;
+      const role = card.querySelector('.card-title').textContent;
       const actionType = this.classList.contains('edit') ? 'edit' : 'manage';
-      
+
       if (actionType === 'edit') {
         editPermissionGroup(role);
       } else {
@@ -127,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Template Edit Actions
   const templateEdits = document.querySelectorAll('.nr-template-edit');
   templateEdits.forEach(edit => {
-    edit.addEventListener('click', function() {
+    edit.addEventListener('click', function () {
       const template = this.closest('.nr-template-item').querySelector('h4').textContent;
       editEmailTemplate(template);
     });
@@ -148,11 +121,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Individual Backup Item Actions
   const backupActions = document.querySelectorAll('.nr-backup-action');
   backupActions.forEach(action => {
-    action.addEventListener('click', function() {
+    action.addEventListener('click', function () {
       const backupItem = this.closest('.nr-backup-item');
       const backupName = backupItem.querySelector('.nr-backup-name').textContent;
       const actionType = this.classList.contains('download') ? 'download' : 'restore';
-      
+
       if (actionType === 'download') {
         downloadBackup(backupName);
       } else {
@@ -164,17 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Range Input Feedback
   const rangeInputs = document.querySelectorAll('.nr-range-input');
   rangeInputs.forEach(range => {
-    range.addEventListener('input', function() {
+    range.addEventListener('input', function () {
       const value = this.value;
       console.log(`Range value changed to: ${value}`);
-      // In a real application, you might update a display value or preview
     });
   });
 
   // Setting Chips Management
   const chipAddButtons = document.querySelectorAll('.nr-setting-chip-add');
   chipAddButtons.forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
       const chipsContainer = this.closest('.nr-setting-chips');
       const newChipValue = prompt('Enter new value:');
       if (newChipValue && newChipValue.trim()) {
@@ -187,8 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function saveAllSettings() {
     console.log('Saving all settings...');
     const settings = gatherAllSettings();
-    
-    // Simulate API call
+
     setTimeout(() => {
       showSuccess('All settings have been saved successfully.');
       console.log('Settings saved:', settings);
@@ -198,8 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function applySettings() {
     console.log('Applying settings...');
     const settings = gatherAllSettings();
-    
-    // Simulate API call
+
     setTimeout(() => {
       showSuccess('Settings have been applied successfully. Some changes may require a system restart.');
       console.log('Settings applied:', settings);
@@ -209,18 +179,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetSettings() {
     if (confirm('Are you sure you want to reset all settings to their default values? This action cannot be undone.')) {
       console.log('Resetting settings to defaults...');
-      
-      // Simulate API call
+
       setTimeout(() => {
         showSuccess('All settings have been reset to their default values.');
-        location.reload(); // Refresh to show default values
+        location.reload();
       }, 1000);
     }
   }
 
   function importSettings() {
     console.log('Importing settings from file...');
-    // This would typically open a file picker
     alert('Settings import functionality would open a file picker to select a configuration file.');
   }
 
@@ -283,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cloudBackup: document.getElementById('cloudBackup')?.checked
       }
     };
-    
+
     return settings;
   }
 
@@ -304,20 +272,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createBackup() {
     console.log('Creating manual backup...');
-    
-    // Simulate backup process
+
     const button = createBackupBtn;
     const originalHTML = button.innerHTML;
-    
+
     button.innerHTML = '<img src="../icons/loading.png" alt="Creating..." style="width:16px;height:16px;"> Creating Backup...';
     button.disabled = true;
-    
+
     setTimeout(() => {
       showSuccess('Backup created successfully. The backup file has been saved to the server.');
       button.innerHTML = originalHTML;
       button.disabled = false;
-      
-      // Add to backups list
+
       addNewBackup();
     }, 3000);
   }
@@ -329,10 +295,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function downloadBackup(backupName) {
     console.log(`Downloading backup: ${backupName}`);
-    
-    // Simulate download
+
     showInfo(`Downloading backup: ${backupName}\nThis may take a few moments...`);
-    
+
     setTimeout(() => {
       showSuccess(`Backup ${backupName} downloaded successfully.`);
     }, 2000);
@@ -341,10 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function restoreFromBackup(backupName) {
     if (confirm(`Are you sure you want to restore from backup: ${backupName}? This will overwrite current system data.`)) {
       console.log(`Restoring from backup: ${backupName}`);
-      
-      // Simulate restoration
+
       showWarning(`Initiating system restoration from: ${backupName}\nThe system may be temporarily unavailable.`);
-      
+
       setTimeout(() => {
         showSuccess(`System successfully restored from backup: ${backupName}`);
       }, 3000);
@@ -353,19 +317,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function addNewChip(container, value) {
     const newChip = document.createElement('span');
-    newChip.className = 'nr-setting-chip';
+    newChip.className = 'nr-setting-chip badge bg-light text-dark';
     newChip.textContent = value;
-    
+
     const removeBtn = document.createElement('span');
     removeBtn.textContent = '×';
     removeBtn.style.cursor = 'pointer';
     removeBtn.style.marginLeft = '5px';
-    removeBtn.addEventListener('click', function() {
+    removeBtn.addEventListener('click', function () {
       newChip.remove();
     });
-    
+
     newChip.appendChild(removeBtn);
-    container.insertBefore(newChip, container.lastElementChild);
+    container.insertBefore(newChip, container.querySelector('.nr-setting-chip-add'));
   }
 
   function addNewBackup() {
@@ -375,37 +339,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const now = new Date();
     const timestamp = now.toISOString().replace(/[-:]/g, '').split('.')[0];
     const backupName = `backup_${timestamp}.zip`;
-    const formattedDate = now.toLocaleDateString() + ', ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    const formattedDate = now.toLocaleDateString() + ', ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     const newBackup = document.createElement('div');
-    newBackup.className = 'nr-backup-item';
-    
+    newBackup.className = 'nr-backup-item d-flex align-items-center p-3 bg-light rounded mb-2';
+
     newBackup.innerHTML = `
-      <div class="nr-backup-icon success">
+      <div class="nr-backup-icon success rounded-circle p-2">
         <img src="../icons/success.png" alt="Success" style="width:16px;height:16px;">
       </div>
-      <div class="nr-backup-info">
+      <div class="nr-backup-info flex-grow-1">
         <div class="nr-backup-name">${backupName}</div>
         <div class="nr-backup-details">2.4 GB • ${formattedDate}</div>
       </div>
-      <div class="nr-backup-actions">
-        <button class="nr-backup-action download">Download</button>
-        <button class="nr-backup-action restore">Restore</button>
+      <div class="nr-backup-actions d-flex gap-2">
+        <button class="nr-backup-action download btn btn-outline-primary btn-sm">Download</button>
+        <button class="nr-backup-action restore btn btn-outline-warning btn-sm">Restore</button>
       </div>
     `;
 
     backupsList.insertBefore(newBackup, backupsList.firstChild);
-    
-    // Add event listeners to new buttons
-    newBackup.querySelector('.nr-backup-action.download').addEventListener('click', function() {
+
+    newBackup.querySelector('.nr-backup-action.download').addEventListener('click', function () {
       downloadBackup(backupName);
     });
-    
-    newBackup.querySelector('.nr-backup-action.restore').addEventListener('click', function() {
+
+    newBackup.querySelector('.nr-backup-action.restore').addEventListener('click', function () {
       restoreFromBackup(backupName);
     });
-    
-    // Update backup status
+
     updateBackupStatus();
   }
 
@@ -413,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastBackupInfo = document.querySelector('.nr-backup-info:first-child');
     if (lastBackupInfo) {
       const now = new Date();
-      lastBackupInfo.innerHTML = `<strong>Last Backup:</strong> ${now.toLocaleDateString()}, ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+      lastBackupInfo.innerHTML = `<strong>Last Backup:</strong> ${now.toLocaleDateString()}, ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     }
   }
 
@@ -436,8 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize settings
   console.log('System Settings loaded successfully');
-  
-  // Load saved settings from localStorage (simulated)
+
   setTimeout(() => {
     console.log('Settings loaded from storage');
   }, 500);
