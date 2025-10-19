@@ -10,27 +10,31 @@ body {
   background: #ffffff;
 }
 
-/* Reports Header */
+/* Reports Header - MINIMAL BOOTSTRAP ENHANCEMENT */
 .nr-reports-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 30px;
 }
-.nr-reports-title h1 {
+
+/* ONLY CHANGE THESE SPECIFIC ELEMENTS */
+.nr-reports-header h1 {
   font-family: 'Fredoka', sans-serif;
   font-size: 32px;
   color: #297a79;
   margin-bottom: 5px;
 }
-.nr-reports-title p {
+
+.nr-reports-header p {
   color: #666;
   font-size: 14px;
+  font-family: "Poppins", sans-serif;
 }
+/* END OF SPECIFIC CHANGES */
+
 .nr-reports-actions {
   display: flex;
   gap: 15px;
 }
+
 .nr-reports-btn {
   background: var(--primary-color);
   color: white;
@@ -45,20 +49,25 @@ body {
   align-items: center;
   gap: 8px;
 }
+
 .nr-reports-btn:hover {
   background: var(--primary-dark);
 }
+
 .nr-reports-btn.secondary {
   background: #6c757d;
 }
+
 .nr-reports-btn.secondary:hover {
   background: #5a6268;
 }
+
 .nr-reports-btn.small {
   padding: 6px 12px;
   font-size: 12px;
 }
 
+/* Rest of your existing CSS remains exactly the same */
 /* Date Range Selector */
 .nr-date-range {
   background: white;
@@ -67,23 +76,27 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   margin-bottom: 30px;
 }
+
 .nr-date-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
+
 .nr-date-header h3 {
   font-weight: 600;
   color: #333;
   font-size: 16px;
   margin: 0;
 }
+
 .nr-date-presets {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .nr-date-preset {
   background: #f8f9fa;
   border: 1px solid #dee2e6;
@@ -94,35 +107,42 @@ body {
   transition: all 0.3s ease;
   font-family: "Poppins", sans-serif;
 }
+
 .nr-date-preset:hover {
   background: #e9ecef;
 }
+
 .nr-date-preset.active {
   background: var(--primary-color);
   color: white;
   border-color: var(--primary-color);
 }
+
 .nr-date-custom {
   margin-top: 15px;
   padding-top: 15px;
   border-top: 1px solid #e9ecef;
 }
+
 .nr-date-inputs {
   display: flex;
   gap: 15px;
   align-items: flex-end;
   flex-wrap: wrap;
 }
+
 .nr-date-group {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
+
 .nr-date-group label {
   font-weight: 600;
   color: #555;
   font-size: 12px;
 }
+
 .nr-date-input {
   padding: 8px 12px;
   border: 2px solid #e9ecef;
@@ -130,10 +150,12 @@ body {
   font-family: "Poppins", sans-serif;
   transition: border-color 0.3s ease;
 }
+
 .nr-date-input:focus {
   border-color: var(--primary-color);
   outline: none;
 }
+
 .nr-date-apply {
   background: var(--primary-color);
   color: white;
@@ -144,6 +166,7 @@ body {
   font-family: "Poppins", sans-serif;
   transition: background 0.3s ease;
 }
+
 .nr-date-apply:hover {
   background: var(--primary-dark);
 }
@@ -155,6 +178,7 @@ body {
   gap: 20px;
   margin-bottom: 30px;
 }
+
 .nr-metric-card {
   background: white;
   border-radius: 12px;
@@ -162,12 +186,14 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   border-left: 4px solid var(--primary-color);
 }
+
 .nr-metric-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
+
 .nr-metric-icon {
   width: 40px;
   height: 40px;
@@ -177,32 +203,38 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .nr-metric-trend {
   font-size: 12px;
   font-weight: 600;
   padding: 2px 6px;
   border-radius: 10px;
 }
+
 .nr-metric-trend.up {
   background: #e8f5e8;
   color: #388e3c;
 }
+
 .nr-metric-trend.down {
   background: #ffebee;
   color: #d32f2f;
 }
+
 .nr-metric-value {
   font-size: 28px;
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 5px;
 }
+
 .nr-metric-label {
   font-weight: 600;
   color: #666;
   font-size: 14px;
   margin-bottom: 5px;
 }
+
 .nr-metric-change {
   font-size: 12px;
   color: #6c757d;
@@ -215,6 +247,7 @@ body {
   gap: 20px;
   margin-bottom: 30px;
 }
+
 .nr-report-card {
   background: white;
   border-radius: 12px;
@@ -224,10 +257,12 @@ body {
   gap: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .nr-report-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
+
 .nr-report-icon {
   width: 60px;
   height: 60px;
@@ -238,33 +273,39 @@ body {
   justify-content: center;
   flex-shrink: 0;
 }
+
 .nr-report-content {
   flex: 1;
 }
+
 .nr-report-content h3 {
   font-weight: 600;
   color: #333;
   margin-bottom: 8px;
   font-size: 16px;
 }
+
 .nr-report-content p {
   color: #666;
   font-size: 13px;
   margin-bottom: 10px;
   line-height: 1.4;
 }
+
 .nr-report-meta {
   display: flex;
   gap: 15px;
   font-size: 11px;
   color: #8a8a8a;
 }
+
 .nr-report-actions {
   display: flex;
   gap: 5px;
   flex-direction: column;
   flex-shrink: 0;
 }
+
 .nr-report-action {
   background: transparent;
   border: none;
@@ -276,18 +317,23 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .nr-report-action.view:hover {
   background: #e3f2fd;
 }
+
 .nr-report-action.download:hover {
   background: #e8f5e8;
 }
+
 .nr-report-action.schedule:hover {
   background: #fff3e0;
 }
+
 .nr-report-action.create:hover {
   background: #f3e5f5;
 }
+
 .nr-report-action.template:hover {
   background: #e0f2f1;
 }
@@ -300,23 +346,27 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   margin-bottom: 30px;
 }
+
 .nr-scheduled-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .nr-scheduled-header h3 {
   font-weight: 600;
   color: #333;
   font-size: 18px;
   margin: 0;
 }
+
 .nr-scheduled-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .nr-scheduled-item {
   display: flex;
   align-items: center;
@@ -326,23 +376,28 @@ body {
   background: #f8f9fa;
   transition: background 0.3s ease;
 }
+
 .nr-scheduled-item:hover {
   background: #e9ecef;
 }
+
 .nr-scheduled-info {
   flex: 1;
 }
+
 .nr-scheduled-title {
   font-weight: 600;
   color: #333;
   margin-bottom: 5px;
 }
+
 .nr-scheduled-details {
   display: flex;
   gap: 15px;
   font-size: 11px;
   color: #6c757d;
 }
+
 .nr-scheduled-status {
   padding: 4px 8px;
   border-radius: 12px;
@@ -350,18 +405,22 @@ body {
   font-weight: 600;
   text-transform: uppercase;
 }
+
 .nr-scheduled-status.active {
   background: #e8f5e8;
   color: #388e3c;
 }
+
 .nr-scheduled-status.paused {
   background: #fff3e0;
   color: #f57c00;
 }
+
 .nr-scheduled-actions {
   display: flex;
   gap: 5px;
 }
+
 .nr-scheduled-action {
   background: transparent;
   border: none;
@@ -370,13 +429,16 @@ body {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 .nr-scheduled-action.edit:hover {
   background: #e3f2fd;
 }
+
 .nr-scheduled-action.pause:hover,
 .nr-scheduled-action.resume:hover {
   background: #fff3e0;
 }
+
 .nr-scheduled-action.delete:hover {
   background: #ffebee;
 }
@@ -388,23 +450,27 @@ body {
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
+
 .nr-recent-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
+
 .nr-recent-header h3 {
   font-weight: 600;
   color: #333;
   font-size: 18px;
   margin: 0;
 }
+
 .nr-recent-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
+
 .nr-recent-item {
   display: flex;
   align-items: center;
@@ -414,9 +480,11 @@ body {
   background: #f8f9fa;
   transition: background 0.3s ease;
 }
+
 .nr-recent-item:hover {
   background: #e9ecef;
 }
+
 .nr-recent-icon {
   width: 30px;
   height: 30px;
@@ -426,33 +494,41 @@ body {
   justify-content: center;
   flex-shrink: 0;
 }
+
 .nr-recent-icon.success {
   background: #e8f5e8;
 }
+
 .nr-recent-icon.warning {
   background: #fff3e0;
 }
+
 .nr-recent-icon.error {
   background: #ffebee;
 }
+
 .nr-recent-content {
   flex: 1;
 }
+
 .nr-recent-title {
   font-weight: 600;
   color: #333;
   margin-bottom: 5px;
 }
+
 .nr-recent-details {
   display: flex;
   gap: 15px;
   font-size: 11px;
   color: #6c757d;
 }
+
 .nr-recent-actions {
   display: flex;
   gap: 5px;
 }
+
 .nr-recent-action {
   background: transparent;
   border: none;
@@ -461,10 +537,10 @@ body {
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 .nr-recent-action.download:hover {
   background: #e8f5e8;
 }
-/* Add to admin_reports.css */
 
 /* Charts Container */
 .nr-charts-container {
@@ -535,35 +611,43 @@ body {
     gap: 15px;
     align-items: flex-start;
   }
+  
   .nr-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
   .nr-reports-grid {
     grid-template-columns: 1fr;
   }
+  
   .nr-date-header {
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
   }
+  
   .nr-date-presets {
     width: 100%;
     justify-content: flex-start;
   }
+  
   .nr-report-card {
     flex-direction: column;
     text-align: center;
   }
+  
   .nr-report-actions {
     flex-direction: row;
     justify-content: center;
   }
+  
   .nr-scheduled-item,
   .nr-recent-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
+  
   .nr-scheduled-actions,
   .nr-recent-actions {
     align-self: flex-end;
@@ -574,9 +658,11 @@ body {
   .nr-metrics-grid {
     grid-template-columns: 1fr;
   }
+  
   .nr-date-inputs {
     flex-direction: column;
   }
+  
   .nr-scheduled-details,
   .nr-recent-details {
     flex-direction: column;
