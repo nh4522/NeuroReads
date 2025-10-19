@@ -640,6 +640,217 @@
 
 
         </div>
+        <!-- Advanced Settings -->
+<div class="nr-settings-tab tab-pane fade" id="advanced-tab">
+  <div class="nr-settings-section mb-4">
+    <h3>System Performance</h3>
+    <div class="nr-settings-grid row g-4">
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Cache Duration</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="3600" id="cacheDuration">
+          <span class="nr-setting-unit input-group-text">seconds</span>
+        </div>
+        <div class="nr-setting-description form-text">How long to cache static content (1 hour = 3600 seconds)</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Session Storage</label>
+        <select class="nr-setting-select form-select" id="sessionStorage">
+          <option value="database">Database</option>
+          <option value="redis" selected>Redis</option>
+          <option value="file">File System</option>
+        </select>
+        <div class="nr-setting-description form-text">Storage backend for user sessions</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">API Rate Limit</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="1000" id="apiRateLimit">
+          <span class="nr-setting-unit input-group-text">requests/hour</span>
+        </div>
+        <div class="nr-setting-description form-text">Maximum API requests per hour per user</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Log Retention</label>
+        <select class="nr-setting-select form-select" id="logRetention">
+          <option value="7">7 days</option>
+          <option value="30" selected>30 days</option>
+          <option value="90">90 days</option>
+          <option value="365">1 year</option>
+        </select>
+        <div class="nr-setting-description form-text">How long to keep system logs</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nr-settings-section mb-4">
+    <h3>Database Configuration</h3>
+    <div class="nr-settings-grid row g-4">
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Connection Pool Size</label>
+        <input type="number" class="nr-setting-input form-control" value="20" min="5" max="100" id="dbPoolSize">
+        <div class="nr-setting-description form-text">Number of database connections in the pool</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Query Timeout</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="30" id="queryTimeout">
+          <span class="nr-setting-unit input-group-text">seconds</span>
+        </div>
+        <div class="nr-setting-description form-text">Maximum time for database queries to execute</div>
+      </div>
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Enable Query Logging</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="queryLogging">
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Log all database queries (for debugging)</div>
+      </div>
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Enable Slow Query Log</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="slowQueryLog" checked>
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Log queries taking longer than 1 second</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nr-settings-section mb-4">
+    <h3>Developer Options</h3>
+    <div class="nr-settings-grid row g-4">
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Debug Mode</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="debugMode">
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Enable detailed error reporting and logging</div>
+      </div>
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Maintenance Mode</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="devMaintenanceMode">
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Show maintenance page to all users</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Error Reporting Level</label>
+        <select class="nr-setting-select form-select" id="errorReporting">
+          <option value="none">None</option>
+          <option value="errors" selected>Errors Only</option>
+          <option value="warnings">Warnings & Errors</option>
+          <option value="all">All Messages</option>
+        </select>
+        <div class="nr-setting-description form-text">Level of PHP error reporting</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">API Version</label>
+        <select class="nr-setting-select form-select" id="apiVersion">
+          <option value="v1">v1.0 (Stable)</option>
+          <option value="v2">v2.0 (Beta)</option>
+          <option value="v3">v3.0 (Alpha)</option>
+        </select>
+        <div class="nr-setting-description form-text">REST API version to use</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nr-settings-section mb-4">
+    <h3>System Monitoring</h3>
+    <div class="nr-settings-grid row g-4">
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Health Check Interval</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="60" id="healthCheckInterval">
+          <span class="nr-setting-unit input-group-text">seconds</span>
+        </div>
+        <div class="nr-setting-description form-text">How often to check system health status</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Performance Metrics</label>
+        <select class="nr-setting-select form-select" id="performanceMetrics">
+          <option value="basic">Basic</option>
+          <option value="detailed" selected>Detailed</option>
+          <option value="verbose">Verbose</option>
+        </select>
+        <div class="nr-setting-description form-text">Level of performance monitoring</div>
+      </div>
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Enable Real-time Monitoring</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="realtimeMonitoring" checked>
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Monitor system performance in real-time</div>
+      </div>
+      <div class="nr-setting-toggle-group col-md-6">
+        <div class="nr-toggle-wrapper d-flex justify-content-between align-items-center">
+          <label class="nr-toggle-label">Auto-scale Resources</label>
+          <div class="form-check form-switch">
+            <input class="nr-toggle form-check-input" type="checkbox" id="autoScale">
+          </div>
+        </div>
+        <div class="nr-setting-description form-text">Automatically scale resources based on load</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nr-settings-section">
+    <h3>Danger Zone</h3>
+    <div class="alert alert-warning">
+      <h5><i class="fas fa-exclamation-triangle me-2"></i>Warning</h5>
+      <p class="mb-2">These settings can significantly impact system performance and stability. Only modify if you know what you're doing.</p>
+    </div>
+    <div class="nr-settings-grid row g-4">
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">System Memory Limit</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="256" id="memoryLimit">
+          <span class="nr-setting-unit input-group-text">MB</span>
+        </div>
+        <div class="nr-setting-description form-text">Maximum memory allocated to the application</div>
+      </div>
+      <div class="nr-setting-group col-md-6">
+        <label class="nr-setting-label form-label">Execution Time Limit</label>
+        <div class="nr-setting-with-unit input-group">
+          <input type="number" class="nr-setting-input form-control" value="30" id="executionTime">
+          <span class="nr-setting-unit input-group-text">seconds</span>
+        </div>
+        <div class="nr-setting-description form-text">Maximum script execution time</div>
+      </div>
+      <div class="nr-setting-group col-md-12">
+        <label class="nr-setting-label form-label">Custom Configuration</label>
+        <textarea class="nr-setting-textarea form-control" id="customConfig" rows="4" placeholder='{"key": "value"}'>{
+  "optimize_queries": true,
+  "compress_output": true,
+  "enable_gzip": true
+}</textarea>
+        <div class="nr-setting-description form-text">Custom JSON configuration (advanced users only)</div>
+      </div>
+    </div>
+    <div class="mt-4 p-3 bg-light rounded">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="mb-1">System Reset</h6>
+          <p class="mb-0 text-muted">Reset all system settings to factory defaults</p>
+        </div>
+        <button class="btn btn-danger" id="factoryResetBtn">
+          <i class="fas fa-bomb me-2"></i>
+          Factory Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
         <!-- Settings Footer - ORIGINAL STYLE -->
         <div class="nr-settings-footer">
