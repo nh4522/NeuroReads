@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NeuroReads — Profile Demo</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeuroReads — Profile</title>
 
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Common CSS -->
+<link rel="stylesheet" href="user_common.css">
+<!-- Enhanced Profile CSS -->
 <link rel="stylesheet" href="profile.css">
-<script defer src="profile.js"></script>
-
-
 </head>
-<body>
 
+<body>
 <div class="nr-wrapper">
   <div class="nr-page">
 
@@ -22,7 +25,14 @@
         <div class="nr-logo">NeuroReads</div>
         <div class="nr-subtitle">Pages & Peace</div>
       </div>
-      <div class="nr-search"><input type="search" placeholder="🔎  Title, Author, ISBN"></div>
+      <div class="nr-search">
+        <div class="nr-search-container">
+          <input type="text" class="nr-search-input" placeholder="Search books, authors, genres...">
+          <button class="nr-search-btn">🔍</button>
+          <div class="nr-search-loading"></div>
+          <div class="nr-search-suggestions"></div>
+        </div>
+      </div>
       <div class="nr-user-info">
         <button title="notification" class="nr-notification-btn">🔔</button>
         <div class="nr-user-profile" id="userProfile">
@@ -41,82 +51,258 @@
       </div>
     </header>
 
-    <!-- sidebar -->
+    <!-- Sidebar -->
     <aside class="nr-sidebar">
-      
       <nav class="nr-side-nav">
         <ul>
-          <li><a href="profile.html" class="active"><img src="../icons/home.png" alt=""> <span>Home</span></a></li>
-          <li><a href="explore.html"><img src="../icons/explore.png" alt=""> <span>Explore</span></a></li>
-          <li><a href="mybooks.html"><img src="../icons/books.png" alt=""> <span>My Books</span></a></li>
-          <li><a href="search.html"><img src="../icons/search.png" alt=""> <span>Search</span></a></li>
-          <li><a href="#"><img src="../icons/settings.png" alt=""> <span>Settings</span></a></li>
+          <li><a href="home.html" class="active"><img src="../icons/home.png" alt=""> Home</a></li>
+          <li><a href="explore.html"><img src="../icons/explore.png" alt=""> Explore</a></li>
+          <li><a href="mybooks.html"><img src="../icons/books.png" alt=""> My Books</a></li>
+          <li><a href="search.html"><img src="../icons/search.png" alt=""> Search</a></li>
+          <li><a href="#"><img src="../icons/settings.png" alt=""> Settings</a></li>
         </ul>
       </nav>
+
       <div class="nr-side-bottom">
-        <div class="nr-side-card">
-          <h4>Connect With Us</h4>
-          <div class="icons">
-            <a href="#" title="Email Us">
-              <img src="../icons/gmail_icon.png" alt="Email">
-            </a>
-            <a href="#"  title="Follow on Instagram">
-              <img src="../icons/instagram_icon.png" alt="Instagram">
-            </a>
-            <a href="#" s title="Follow on Twitter">
-              <img src="../icons/x_icon.png" alt="Twitter">
-            </a>
-          </div>
-        </div>
-        <div class="nr-side-card">
-          <h4>Support</h4>
-          <ul class="nr-support-links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-            <li>Help</li>
-            <li>Terms</li>
-          </ul>
-        </div>
         <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
       </div>
     </aside>
 
-    <!-- main content -->
+    <!-- Enhanced Main Content -->
     <main class="nr-main">
-      <section class="nr-profile">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Left Column - Profile Info & Stats -->
+          <div class="col-lg-4">
+            <!-- Profile Card -->
+            <div class="card profile-card mb-4">
+              <div class="card-body text-center">
+                <div class="avatar-section mb-4">
+                  <div class="avatar-container">
+                    <img id="avatarPreview" src="../icons/avatar-placeholder.png" alt="Avatar" class="avatar-image">
+                    <label for="fileInput" class="avatar-overlay">
+                      <span>📷</span>
+                    </label>
+                  </div>
+                  <input id="fileInput" type="file" accept="image/*" class="d-none">
+                  <h4 id="userDisplayName" class="mt-3 mb-1">User XYZ</h4>
+                  <p class="text-muted mb-3">@username</p>
+                </div>
 
-        <!-- left avatar -->
-        <div class="nr-avatar-col">
-          <div class="nr-avatar-card">
-            <img id="avatarPreview" src="../icons/avatar-placeholder.png" alt="avatar preview">
-          </div>
-          <label class="nr-change-photo" for="fileInput">Change Photo</label>
-          <input id="fileInput" type="file" accept="image/*" style="display:none;">
-        </div>
-
-        <!-- right info -->
-        <div class="nr-info-col">
-          <div class="nr-profile-head">
-            <h2>Profile</h2>
-            <span class="subtitle">Update user photo and personal details</span>
-          </div>
-          <button id="saveBtn" class="nr-save-btn">save</button>
-          <form id="profileForm" class="nr-form" autocomplete="off">
-            <div class="nr-field">
-              <label for="name">Name:</label>
-              <input id="name" name="name" type="text" placeholder="Your name">
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                  <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Books Read</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number">356</div>
+                    <div class="stat-label">Reviews</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-number">1.2k</div>
+                    <div class="stat-label">Followers</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="nr-field">
-              <label for="email">Email:</label>
-              <input id="email" name="email" type="email" placeholder="your@email.com">
-            </div>
-          </form>
-        </div>
 
-      </section>
+            <!-- Reading Challenge -->
+            <div class="card reading-challenge-card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">2024 Reading Challenge</h5>
+                <div class="challenge-progress">
+                  <div class="progress-info">
+                    <span class="progress-text">8 of 12 books</span>
+                    <span class="progress-percent">67%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: 67%"></div>
+                  </div>
+                  <small class="text-muted">4 books to go!</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Currently Reading -->
+            <div class="card currently-reading-card">
+              <div class="card-body">
+                <h5 class="card-title">Currently Reading</h5>
+                <div class="current-book">
+                  <img src="../images/bookCover/harry_potter_hbp.jpg" alt="Book" class="book-cover-sm">
+                  <div class="book-info">
+                    <h6>Harry Potter and the Half Blood Prince</h6>
+                    <p class="text-muted">J.K. Rowling</p>
+                    <div class="progress">
+                      <div class="progress-bar" style="width: 65%"></div>
+                    </div>
+                    <small class="text-muted">65% complete</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Enhanced Settings & Activity -->
+          <div class="col-lg-8">
+            <!-- Profile Settings Card -->
+            <div class="card settings-card mb-4">
+              <div class="card-header">
+                <h4 class="mb-0">Profile Settings</h4>
+                <p class="text-muted mb-0">Manage your account information and preferences</p>
+              </div>
+              <div class="card-body">
+                <form id="profileForm" class="settings-form">
+                  <!-- Personal Information -->
+                  <div class="settings-section">
+                    <h5 class="section-title">Personal Information</h5>
+                    
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label for="firstName" class="form-label">First Name</label>
+                          <input type="text" class="form-control" id="firstName" value="User">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="mb-3">
+                          <label for="lastName" class="form-label">Last Name</label>
+                          <input type="text" class="form-control" id="lastName" value="XYZ">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <div class="input-group">
+                        <span class="input-group-text">@</span>
+                        <input type="text" class="form-control" id="username" value="username">
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email Address</label>
+                      <input type="email" class="form-control" id="email" value="user@example.com">
+                      <div class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="bio" class="form-label">Bio</label>
+                      <textarea class="form-control" id="bio" rows="3" placeholder="Tell us about yourself and your reading preferences...">Avid reader who loves fantasy and science fiction. Currently exploring classic literature!</textarea>
+                    </div>
+                  </div>
+
+                  <!-- Reading Preferences -->
+                  <div class="settings-section">
+                    <h5 class="section-title">Reading Preferences</h5>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">Favorite Genres</label>
+                      <div class="genre-tags">
+                        <span class="genre-tag">Fantasy</span>
+                        <span class="genre-tag">Science Fiction</span>
+                        <span class="genre-tag">Mystery</span>
+                        <span class="genre-tag active">Classics</span>
+                        <span class="genre-tag">+ Add</span>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">Reading Goal for 2024</label>
+                      <select class="form-select" id="readingGoal">
+                        <option>12 books</option>
+                        <option selected>24 books</option>
+                        <option>36 books</option>
+                        <option>52 books</option>
+                        <option>Custom</option>
+                      </select>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                      <label class="form-check-label" for="emailNotifications">
+                        Email notifications for new releases
+                      </label>
+                    </div>
+
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="publicProfile" checked>
+                      <label class="form-check-label" for="publicProfile">
+                        Public profile
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Privacy & Security -->
+                  <div class="settings-section">
+                    <h5 class="section-title">Privacy & Security</h5>
+                    
+                    <div class="mb-3">
+                      <label for="currentPassword" class="form-label">Current Password</label>
+                      <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="newPassword" class="form-label">New Password</label>
+                      <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                      <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="settings-actions">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card activity-card">
+              <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+              </div>
+              <div class="card-body">
+                <div class="activity-timeline">
+                  <div class="activity-item">
+                    <div class="activity-icon">📖</div>
+                    <div class="activity-content">
+                      <p>You started reading <strong>Project Hail Mary</strong></p>
+                      <small class="text-muted">2 hours ago</small>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon">⭐</div>
+                    <div class="activity-content">
+                      <p>You rated <strong>The Midnight Library</strong> 5 stars</p>
+                      <small class="text-muted">1 day ago</small>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <div class="activity-icon">💬</div>
+                    <div class="activity-content">
+                      <p>You commented on a post about classic literature</p>
+                      <small class="text-muted">2 days ago</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-
   </div>
 </div>
+
+<!-- Bootstrap & Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="user_common.js"></script>
+<script src="profile.js"></script>
 </body>
 </html>
