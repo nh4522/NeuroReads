@@ -27,7 +27,16 @@
     padding-left: calc(var(--bs-gutter-x) * 0.5);
     margin-top: var(--bs-gutter-y);
 }
+.nr-page {
+  grid-template-columns: 1fr; /* No sidebar */
+  grid-template-areas:
+    "nr-top"
+    "nr-main";
+}
 
+.nr-main {
+  margin-left: 0; /* Remove sidebar spacing */
+}
 /* Bootstrap columns */
 .col-lg-4 {
     flex: 0 0 auto;
