@@ -6,8 +6,88 @@ body {
 }
 
 /* Main content adjustments for users page */
+
+/* ==========================
+   MAIN CONTENT AREA FIX
+========================== */
+
+/* Fix the main content area positioning */
 .nr-main {
+  grid-area: nr-main;
+  padding: 34px 48px !important;
   background: #ffffff;
+  min-height: calc(100vh - var(--top-h));
+  overflow-y: auto;
+  height: calc(100vh - var(--top-h));
+  margin: 0 !important;
+  position: relative;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Ensure the container starts from the top */
+.account-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+
+
+/* Ensure content flows properly from top */
+.container-fluid:first-child {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Fix any potential grid issues */
+.nr-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  grid-template-rows: var(--top-h) 1fr;
+  grid-template-areas:
+    "nr-top nr-top"
+    "nr-sidebar nr-main";
+  position: relative;
+}
+
+/* Ensure main content takes full available space */
+.nr-main {
+  grid-area: nr-main;
+  display: block !important;
+  position: static !important;
+}
+
+/* Remove any unwanted margins from bootstrap containers */
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Fix for the first row in main content */
+.nr-main > .container-fluid:first-child,
+.nr-main > .nr-books-header:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Ensure the books header starts at the top */
+.nr-books-header:first-child {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Fix for responsive design */
+@media (max-width: 768px) {
+  .nr-main {
+    padding: 20px !important;
+  }
+  
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Users Header */
