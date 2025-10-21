@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroReads — Account Settings</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="user_common.css">
+    <link rel="stylesheet" href="user_settings.css">
+</head>
+<body>
+    <div class="nr-wrapper">
+        <div class="nr-page">
+            <!-- Topbar -->
+            <header class="nr-topbar">
+                <div class="nr-logo-container">
+                    <div class="nr-logo">NeuroReads</div>
+                    <div class="nr-subtitle">Pages & Peace</div>
+                </div>
+                
+                <!-- Search Box -->
+                <div class="nr-search">
+                    <div class="nr-search-container">
+                        <input type="search" class="nr-search-input" placeholder="Search books, authors, or topics...">
+                        <button class="nr-search-btn">🔍</button>
+                        <div class="nr-search-suggestions"></div>
+                    </div>
+                </div>
+
+                <!-- User Info -->
+                <div class="nr-user-info">
+                    <button title="notification" class="nr-notification-btn">🔔</button>
+                    <div class="nr-user-profile" id="userProfile">
+                        <img src="../icons/top-user.png" alt="User" class="nr-user-avatar">
+                        <span class="nr-username">User XYZ</span>
+                    </div>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="nr-dropdown" id="userDropdown">
+                        <ul>
+                            <li><a href="profile.html"><img src="../icons/settings.png" alt=""> My Profile</a></li>
+                            
+                            <li class="nr-dropdown-divider"></li>
+                            <li><button id="logoutBtn"><img src="../icons/home.png" alt=""> Log Out</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sidebar -->
+            <aside class="nr-sidebar">
+                <nav class="nr-side-nav">
+                    <ul>
+                        <li><a href="home.html"><img src="../icons/home.png" alt=""> <span>Home</span></a></li>
+                        <li><a href="explore.html"><img src="../icons/explore.png" alt=""> <span>Explore</span></a></li>
+                        <li><a href="mybooks.html"><img src="../icons/books.png" alt=""> <span>My Books</span></a></li>
+                        <li><a href="search.html"><img src="../icons/search.png" alt=""> <span>Search</span></a></li>
+                        <li><a href="user_settings.html" class="active"><img src="../icons/settings.png" alt=""> <span>Settings</span></a></li>
+                    </ul>
+                </nav>
+                <div class="nr-side-bottom">
+                    <!--<div class="nr-side-card">
+                        <h4>Connect With Us</h4>
+                        <div class="icons">
+                            <a href="#"><img src="../icons/facebook.png" alt="Facebook"></a>
+                            <a href="#"><img src="../icons/twitter.png" alt="Twitter"></a>
+                            <a href="#"><img src="../icons/instagram.png" alt="Instagram"></a>
+                        </div> 
+                    </div>-->
+                    <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="nr-main">
+                <div class="account-container">
+                    <!-- Header Section -->
+                    <div class="account-header">
+                        <div class="header-content">
+                            <h1 class="account-title">
+                                <i class="bi bi-person-gear"></i>
+                                Account Settings
+                            </h1>
+                            <p class="account-subtitle">Manage your NeuroReads account and preferences</p>
+                        </div>
+                        <div class="header-stats">
+                            <div class="stat-card">
+                                <div class="stat-number">24</div>
+                                <div class="stat-label">Books Read</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Currently Reading</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Grid -->
+                    <div class="account-content">
+                        <!-- Left Column - Profile & Security -->
+                        <div class="account-column">
+                            <!-- Profile Card -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-person-circle"></i>
+                                    <h3>Profile Information</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="avatar-section">
+                                        <div class="avatar-container">
+                                            <img src="../icons/top-user.png" alt="User Avatar" class="user-avatar" id="userAvatar">
+                                            <div class="avatar-overlay">
+                                                <i class="bi bi-camera"></i>
+                                            </div>
+                                        </div>
+                                        <button class="btn-change-avatar" onclick="accountManager.changeAvatar()">
+                                            Change Avatar
+                                        </button>
+                                    </div>
+                                    
+                                    <form class="profile-form" id="profileForm">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">First Name</label>
+                                                <input type="text" class="form-control" value="John" id="firstName">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" value="Doe" id="lastName">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label">Username</label>
+                                                <input type="text" class="form-control" value="johndoe_reader" id="username">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" value="john.doe@example.com" id="email">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label">Bio</label>
+                                                <textarea class="form-control" rows="3" id="bio" placeholder="Tell us about yourself...">Avid reader who loves fantasy and science fiction. Currently exploring classic literature!</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="button" class="btn btn-secondary" onclick="accountManager.discardChanges()">
+                                                Discard Changes
+                                            </button>
+                                            <button type="submit" class="btn btn-primary">
+                                                Save Profile
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Security Card -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-shield-lock"></i>
+                                    <h3>Security Settings</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="security-item">
+                                        <div class="security-info">
+                                            <h5>Password</h5>
+                                            <p>Last changed 3 months ago</p>
+                                        </div>
+                                        <button class="btn-security-action" onclick="accountManager.changePassword()">
+                                            Change Password
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="security-item">
+                                        <div class="security-info">
+                                            <h5>Two-Factor Authentication</h5>
+                                            <p>Add an extra layer of security to your account</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorToggle">
+                                            <label class="form-check-label" for="twoFactorToggle">Enable 2FA</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="security-item">
+                                        <div class="security-info">
+                                            <h5>Login Sessions</h5>
+                                            <p>Manage your active login sessions</p>
+                                        </div>
+                                        <button class="btn-security-action" onclick="accountManager.viewSessions()">
+                                            View Sessions
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Preferences & Membership -->
+                        <div class="account-column">
+                            <!-- Reading Preferences -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-book"></i>
+                                    <h3>Reading Preferences</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="preference-item">
+                                        <label class="form-label">Default Language</label>
+                                        <select class="form-select" id="defaultLanguage">
+                                            <option value="en">English</option>
+                                            <option value="es">Spanish</option>
+                                            <option value="fr">French</option>
+                                            <option value="de">German</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <label class="form-label">Reading Goal</label>
+                                        <select class="form-select" id="readingGoal">
+                                            <option value="12">12 books per year</option>
+                                            <option value="24" selected>24 books per year</option>
+                                            <option value="52">52 books per year</option>
+                                            <option value="100">100 books per year</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="preference-item">
+                                        <label class="form-label">Favorite Genres</label>
+                                        <div class="genre-tags" id="genreTags">
+                                            <span class="genre-tag active">Fantasy</span>
+                                            <span class="genre-tag active">Science Fiction</span>
+                                            <span class="genre-tag">Mystery</span>
+                                            <span class="genre-tag">Romance</span>
+                                            <span class="genre-tag">History</span>
+                                            <span class="genre-tag add-genre">+ Add</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                            <label class="form-check-label" for="emailNotifications">
+                                                Email notifications for new releases
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="publicProfile" checked>
+                                            <label class="form-check-label" for="publicProfile">
+                                                Public profile
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Membership Card -->
+                            <div class="account-card premium-card">
+                                <div class="card-header">
+                                    <i class="bi bi-gem"></i>
+                                    <h3>Membership</h3>
+                                    <span class="badge premium-badge">PREMIUM</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="membership-info">
+                                        <div class="membership-icon">
+                                            <i class="bi bi-stars"></i>
+                                        </div>
+                                        <div class="membership-details">
+                                            <h4>NeuroReads Premium</h4>
+                                            <p>Unlimited access to all features</p>
+                                            <div class="membership-features">
+                                                <div class="feature-item">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    <span>Unlimited book downloads</span>
+                                                </div>
+                                                <div class="feature-item">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    <span>Ad-free reading experience</span>
+                                                </div>
+                                                <div class="feature-item">
+                                                    <i class="bi bi-check-circle"></i>
+                                                    <span>Early access to new releases</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="membership-actions">
+                                        <button class="btn btn-outline-primary" onclick="accountManager.manageSubscription()">
+                                            Manage Subscription
+                                        </button>
+                                        <button class="btn btn-primary" onclick="accountManager.upgradePlan()">
+                                            Upgrade Plan
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Danger Zone -->
+                            <div class="account-card danger-card">
+                                <div class="card-header">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    <h3>Danger Zone</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="danger-item">
+                                        <div class="danger-info">
+                                            <h5>Delete Account</h5>
+                                            <p>Permanently delete your account and all data</p>
+                                        </div>
+                                        <button class="btn btn-danger" onclick="accountManager.deleteAccount()">
+                                            Delete Account
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="danger-item">
+                                        <div class="danger-info">
+                                            <h5>Export Data</h5>
+                                            <p>Download all your reading data and preferences</p>
+                                        </div>
+                                        <button class="btn btn-outline-secondary" onclick="accountManager.exportData()">
+                                            Export Data
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="user_common.js"></script>
+    <script src="user_settings.js"></script>
+</body>
+</html>
