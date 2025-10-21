@@ -417,11 +417,21 @@ body {
 /* ==========================
    Main Content Area Base
 ========================== */
+/* ==========================
+   Main Content Area Base
+========================== */
 .nr-main {
   grid-area: nr-main;
   padding: 34px 48px;
   background: rgba(255, 255, 255, 0.9);
   min-height: calc(100vh - var(--top-h));
+  overflow-y: auto; /* Add scrolling if content overflows */
+  height: calc(100vh - var(--top-h)); /* Fixed height for proper grid layout */
+}
+
+/* Ensure the search page container can grow as needed */
+.search-page-container {
+  min-height: fit-content;
 }
 
 /* ==========================
