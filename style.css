@@ -11,37 +11,46 @@
    Body & Global Fonts
 ========================== */
 body {
-  font-family: "popping", sans-serif;
+  font-family: "Poppins", sans-serif;
   background: url('images/background.jpg') no-repeat center center/cover;
   color: #fff;
-  height: 100vh;
+  min-height: 100vh;
 }
 
+
 /* ==========================
-   Navbar
+   Navbar - RESET
 ========================== */
-.navbar {
+header.navbar, .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #f5efe1;
   padding: 10px 40px;
   border-radius: 0 0 15px 15px;
+  height: auto;
+  min-height: auto;
+ 
 }
 
 .logo h1 {
   font-family: "kavoon", serif;
   color: #4b3b1a;
+  font-size: 1.8em;
 }
 .logo p {
   color: #6b5d3c;
   font-size: 0.9em;
+  margin: 0;
+
 }
 
 nav ul {
   display: flex;
   list-style: none;
   gap: 25px;
+  margin: 0;
+  padding: 0;
 }
 
 nav a {
@@ -49,23 +58,30 @@ nav a {
   color: #3a2c17;
   font-weight: 600;
   transition: color 0.3s;
+  font-size: 1em;
 }
 nav a:hover {
   color: #b8860b;
 }
 
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
 .buttons button {
   border: none;
-  padding: 7px 15px;
+  padding: 8px 16px;
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
-  margin-left: 10px;
+  font-size: 0.9em;
 }
 
 #loginBtn {
   background: #fff;
   color: #3a2c17;
+  border: 2px solid #3a2c17;
 }
 
 .register {
@@ -81,7 +97,7 @@ nav a:hover {
   text-align: center;
   padding: 80px 60px;
   background: rgba(0, 0, 0, 0.5);
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 80px);
 }
 
 .overlay {
@@ -93,7 +109,7 @@ nav a:hover {
 }
 
 .main-title {
-  font-family: "kavoon", serif;
+  font-family: "Kavoon", serif;
   color: #d2a44d;
   font-size: 2.8em;
 }
@@ -147,9 +163,247 @@ nav a:hover {
   color: #fff;
 }
 
+
+/* ==========================
+   Contact Section - FIXED
+========================== */
+.contact-hero {
+  padding: 40px 20px 20px 20px;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0.5);
+  margin-top: 0;
+}
+
+.contact-main-wrapper {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-radius: 25px;
+  padding: 40px 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.contact-header {
+  margin-bottom: 30px;
+}
+
+.contact-header .main-title {
+  font-family: "Kavoon", cursive;
+  color: #d2a44d;
+  font-size: 3rem;
+  margin-bottom: 15px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  color: #f5f5f5;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contact Form Styles */
+.contact-form-wrapper {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 40px;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+
+.form-header h3 {
+  color: #ffd27f;
+  font-family: "Fredoka", sans-serif;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-subtitle {
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+/* Bootstrap Form Overrides */
+.form-floating {
+  margin-bottom: 1rem;
+}
+
+.form-floating > .form-control {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #fff;
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > label {
+  color: #ccc;
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > .form-control:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #d2a44d;
+  box-shadow: 0 0 0 0.2rem rgba(210, 164, 77, 0.25);
+  color: #fff;
+}
+
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  color: #ffd27f;
+}
+
+.form-floating > textarea.form-control {
+  height: 150px !important;
+  resize: none;
+}
+
+/* Send Button */
+.btn-send-message {
+  background: linear-gradient(135deg, #d2a44d, #b8860b);
+  border: none;
+  border-radius: 12px;
+  color: #3a2c17;
+  font-weight: bold;
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn-send-message:hover {
+  background: linear-gradient(135deg, #b8860b, #9a6d08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(210, 164, 77, 0.3);
+  color: #3a2c17;
+}
+
+/* Contact Info Styles */
+.contact-info-wrapper {
+  height: 100%;
+}
+
+.contact-methods {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 25px;
+}
+
+.info-title {
+  color: #ffd27f;
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.contact-icon {
+  font-size: 1.5rem;
+  background: rgba(210, 164, 77, 0.2);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-details h5 {
+  color: #ffd27f;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.contact-details p {
+  color: #e0e0e0;
+  margin-bottom: 3px;
+  font-size: 0.9rem;
+}
+
+/* Social Section */
+.social-section {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.social-subtitle {
+  color: #e0e0e0;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(5px);
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-btn .social-icon {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
 /* ==========================
    Auth Page Styles
-   (Only applied when body has class="auth-page")
 ========================== */
 .auth-page {
   font-family: "Fredoka", sans-serif;
@@ -157,7 +411,7 @@ nav a:hover {
   align-items: center;
   justify-content: center;
   background: url('images/background.jpg') no-repeat center center/cover;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .auth-page .auth-container {
@@ -206,6 +460,7 @@ nav a:hover {
   outline: none;
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
+  padding-right: 45px;
 }
 
 .auth-page input::placeholder {
@@ -214,10 +469,20 @@ nav a:hover {
 
 .auth-page .toggle-password {
   position: absolute;
-  right: 10px;
-  top: 35px;
+  right: 12px;
+  top: 50%;
+  transform: translateY(0%);
   cursor: pointer;
   font-size: 1.1em;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  width: 30px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-page .btn-primary {
@@ -283,7 +548,180 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* ==========================
+   Enhanced Auth Styles
+========================== */
+.auth-header {
+  margin-bottom: 25px;
+}
 
+.auth-logo {
+  font-family: "Kavoon", cursive;
+  color: #d2a44d;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.remember-me input[type="checkbox"] {
+  width: auto;
+  transform: scale(1.1);
+}
+
+.remember-me label {
+  color: #f5f5f5;
+  font-size: 0.9em;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.error-message {
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 15px 0;
+  color: #ff6b6b;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-loading {
+  display: none;
+}
+
+.social-login {
+  margin: 25px 0;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  color: #f5f5f5;
+  font-size: 0.9em;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.divider::before {
+  margin-right: 10px;
+}
+
+.divider::after {
+  margin-left: 10px;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.social-icon {
+  flex-shrink: 0;
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.google-btn:hover {
+  border-color: #4285f4;
+  background: rgba(66, 133, 244, 0.1);
+}
+
+.facebook-btn:hover {
+  border-color: #1877f2;
+  background: rgba(24, 119, 242, 0.1);
+}
+
+.social-btn:active {
+  transform: translateY(0);
+}
+
+.social-btn img.social-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.auth-page input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(210, 164, 77, 0.3);
+}
+
+.password-strength {
+  margin-top: 5px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .auth-page .auth-container {
+    width: 90%;
+    margin: 20px;
+    padding: 30px 20px;
+  }
+  
+  .social-buttons {
+    flex-direction: column;
+  }
+}
+
+.success-message {
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  margin: 15px 0;
+  color: #51cf66;
+  font-size: 0.9em;
+  text-align: center;
+}
 
 /* ==========================
    Animations
@@ -294,250 +732,8 @@ nav a:hover {
 }
 
 /* ==========================
-   Contact Page Styles
+   About Us Page Styles
 ========================== */
-.contact-hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.contact-overlay {
-  max-width: 600px;
-  background: rgba(0, 0, 0, 0.55);
-  border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-}
-
-.contact-overlay .main-title {
-  color: #d2a44d;
-  margin-bottom: 20px;
-  font-size: 2.2em;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.contact-hero .main-title{
-   color: #ffd27f;
-  font-family: "Fredoka", cursive;
-  margin-bottom: 10px;
-  font-size: 2.8em;
-}
-
-.contact-form h3 {
-  color: #ffd27f;
-  font-family: "Fredoka", cursive;
-  margin-bottom: 10px;
-}
-
-.contact-form input,
-.contact-form textarea {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  padding: 12px;
-  color: #fff;
-  font-size: 1em;
-  outline: none;
-}
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  color: #ddd;
-}
-
-.contact-form .send-btn {
-  background: #d2a44d;
-  color: #3a2c17;
-  font-weight: bold;
-  border: none;
-  padding: 12px 0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.1s;
-}
-
-.contact-form .send-btn:hover {
-  background: #b8860b;
-}
-
-.contact-form .send-btn:active {
-  transform: scale(0.98);
-}
-
-.contact-form {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(6px);
-  border: 06px solid rgba(255, 255, 255, 0.3); /* semi-transparent white border */
-  border-radius: 15px;
-  padding: 40px;
-  width: 420px;
-  color: #fff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
-}
-
-/* Social box */
-.social-box {
-  margin-top: 25px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 15px;
-  display: inline-block;
-}
-
-.social-box h4 {
-  color: #fff;
-  font-size: 1em;
-  margin-bottom: 10px;
-}
-
-.social-box .icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.social-box .icons img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-  transition: transform 0.3s;
-}
-
-.social-box .icons img:hover {
-  transform: scale(1.2);
-}
-
-/* Highlight active nav link */
-nav a.active {
-  color: #b8860b;
-  font-weight: bold;
-}
-
-
-.contact-right {
-  position: absolute;
-  bottom: 40px;
-  right: 60px;
-}
-
-.contact-right .social-box {
-  width: 230px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
-}
-
-.social-box h4 {
-  color: #ffd27f;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.social-box .icons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-}
-
-.social-box .icons img {
-  width: 28px;
-  height: 28px;
-  filter: brightness(0) invert(1);
-  transition: transform 0.3s, filter 0.3s;
-}
-
-.social-box .icons img:hover {
-  transform: scale(1.2);
-  filter: brightness(1) sepia(1) hue-rotate(20deg) saturate(2);
-}
-
-/* Responsive: move up on small screens */
-@media (max-width: 900px) {
-  .contact-right {
-    position: static;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-  }
-}
-
-/* About us page */
-/*====================*/
-.body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: url('background.jpg') no-repeat center center/cover;
-  color: #fff;
-}
-
-/* HEADER 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f3ede1;
-  padding: 10px 40px;
-  border-bottom: 2px solid #000;
-}
-
-.logo h1 {
-  font-family: 'Cinzel Decorative', serif;
-  margin: 0;
-  color: #3a2400;
-}
-
-.logo p {
-  margin: 0;
-  color: #4a3a2f;
-  font-size: 0.9rem;
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 25px;
-}
-
-nav a {
-  text-decoration: none;
-  color: #000;
-  font-weight: 600;
-}
-
-nav a.active,
-nav a:hover {
-  border-bottom: 2px solid #d2a44d;
-}
-
-.auth-buttons button {
-  background: #4a3a2f;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 5px 15px;
-  cursor: pointer;
-}
-
-.auth-buttons .login {
-  background: transparent;
-  color: #4a3a2f;
-  border: 1px solid #4a3a2f;
-}*/
-
-/* ABOUT SECTION */
 .about-section {
   text-align: center;
   margin-top: 60px;
@@ -546,8 +742,6 @@ nav a:hover {
   align-items: center;
 }
 
-
-/* “About us” title box */
 .about-box {
   width: 70%;
   margin: 0 auto;
@@ -565,7 +759,6 @@ nav a:hover {
   margin: 0;
 }
 
-/* Members big box */
 .members-box {
   margin: 50px auto;
   width: 85%;
@@ -574,13 +767,11 @@ nav a:hover {
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 25px;
   backdrop-filter: blur(10px);
-
-  /* layout fix */
   display: grid;
-  grid-template-columns: 1fr 1fr; /* two equal columns */
-  gap: 50px 80px; /* row and column spacing */
+  grid-template-columns: 1fr 1fr;
+  gap: 50px 80px;
   justify-content: center;
-  align-items: start; /* keep all aligned to top */
+  align-items: start;
 }
 
 .member {
@@ -605,7 +796,7 @@ nav a:hover {
   background-size: cover;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.1);
-  flex-shrink: 0; /* prevents circle from resizing */
+  flex-shrink: 0;
 }
 
 .info {
@@ -626,4 +817,38 @@ nav a:hover {
   line-height: 1.3rem;
 }
 
-/* Profile */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-hero {
+    padding: 20px 15px;
+    min-height: calc(100vh - 80px);
+  }
+  
+  .contact-main-wrapper {
+    padding: 25px 20px;
+  }
+  
+  .contact-header .main-title {
+    font-size: 2.2rem;
+  }
+  
+  .contact-form-wrapper {
+    padding: 20px;
+  }
+  
+  .contact-methods,
+  .social-section {
+    padding: 20px;
+  }
+  
+  .members-box {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+    width: 90%;
+  }
+  
+  .about-box {
+    width: 90%;
+  }
+}

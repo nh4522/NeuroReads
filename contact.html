@@ -4,65 +4,163 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuroReads | Contact Us</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script defer src="script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Kavoon&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <!-- ==========================
-       Navbar
+       Navbar 
   =========================== -->
-  <div class="navbar">
-    <div class="logo">
-      <h1>NeuroReads</h1>
-      <p>Pages And Peace</p>
-    </div>
-
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="contact.html" class="active">Contacts</a></li>
-      </ul>
-    </nav>
-
-    <div class="buttons">
-      <button id="loginBtn">Log in</button>
-      <button class="register" id="registerBtn">Register</button>
-    </div>
+ <header class="navbar">
+  <div class="logo">
+    <h1>NeuroReads</h1>
+    <p>Pages And Peace</p>
   </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html" class="active">Contacts</a></li>
+    </ul>
+  </nav>
+  <div class="buttons">
+    <a href="login.html"><button id="loginBtn">Log in</button></a>
+    <a href="register.html"><button id="registerBtn" class="register">Register</button></a>
+  </div>
+</header>
 
   <!-- ==========================
-       Contact Section
+        Contact Section
   =========================== -->
   <section class="hero contact-hero">
-    <div class="overlay contact-layout">
-      <div class="contact-left">
-        <h2 class="main-title">Contact Us</h2>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+          <div class="contact-main-wrapper">
+            <!-- Header Section -->
+            <div class="contact-header text-center mb-5">
+              <h1 class="main-title">Get In Touch</h1>
+              <p class="contact-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
 
-        <form class="contact-form">
-          <h3>Send Us A Message</h3>
+            <div class="row g-5">
+              <!-- Contact Form Column -->
+              <div class="col-md-8">
+                <div class="contact-form-wrapper">
+                  <div class="form-header mb-4">
+                    <h3><i class="form-icon">💬</i> Send Us a Message</h3>
+                    <p class="form-subtitle">Fill out the form below and we'll get back to you shortly</p>
+                  </div>
 
-          <input type="text" placeholder="Your Name" required />
-          <input type="email" placeholder="Email" required />
-          <textarea placeholder="Write Message" rows="5" required></textarea>
+                  <form class="contact-form">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="nameInput" placeholder="John Doe" required>
+                          <label for="nameInput">Your Name</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="email" class="form-control" id="emailInput" placeholder="name@example.com" required>
+                          <label for="emailInput">Email Address</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="subjectInput" placeholder="Subject">
+                          <label for="subjectInput">Subject</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <textarea class="form-control" id="messageInput" placeholder="Your message" style="height: 150px" required></textarea>
+                          <label for="messageInput">Your Message</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-send-message w-100">
+                          <span class="btn-text">Send Message</span>
+                          <span class="btn-loader" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                            Sending...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
 
-          <button type="submit" class="send-btn">Send</button>
-        </form>
-      </div>
+              <!-- Contact Info & Social Column -->
+              <div class="col-md-4">
+                <div class="contact-info-wrapper">
+                  <!-- Contact Methods -->
+                  <div class="contact-methods">
+                    <h4 class="info-title">Contact Information</h4>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">📧</div>
+                      <div class="contact-details">
+                        <h5>Email Us</h5>
+                        <p>contact@neuroreads.com</p>
+                        <p>support@neuroreads.com</p>
+                      </div>
+                    </div>
 
+                    <div class="contact-item">
+                      <div class="contact-icon">📞</div>
+                      <div class="contact-details">
+                        <h5>Call Us</h5>
+                        <p>+880-1-7777777</p>
+                        <p>Mon-Fri: 10:30 AM - 5:00 PM</p>
+                      </div>
+                    </div>
 
-      <div class="contact-right">
-        <div class="social-box">
-          <h4>Connect With Us</h4>
-          <div class="icons">
-            <a href="#" target="_blank" title="Email us"><img src="icons/gmail_icon.png" alt="Mail" /></a>
-            <a href="#" target="_blank" title="Follow us on instagram"><img src="icons/instagram_icon.png" alt="Instagram" /></a>
-            <a href="#" target="_blank" title="Follow us on X"><img src="icons/x_icon.png" alt="X" /></a>
+                    <div class="contact-item">
+                      <div class="contact-icon">📍</div>
+                      <div class="contact-details">
+                        <h5>Visit Us</h5>
+                        <p>123 Book Street</p>
+                        <p>Mirpur, Dhaka.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Social Links -->
+                  <div class="social-section">
+                    <h4 class="info-title">Follow Us</h4>
+                    <p class="social-subtitle">Stay connected with NeuroReads</p>
+                    
+                    <div class="social-buttons">
+                      <a href="#" class="social-btn google-btn" title="Email us">
+                        <img src="icons/gmail_icon.png" alt="Gmail" class="social-icon">
+                        <span>Gmail</span>
+                      </a>
+                      <a href="#" class="social-btn instagram-btn" title="Follow us on Instagram">
+                        <img src="icons/instagram_icon.png" alt="Instagram" class="social-icon">
+                        <span>Instagram</span>
+                      </a>
+                      <a href="#" class="social-btn twitter-btn" title="Follow us on X">
+                        <img src="icons/x_icon.png" alt="X" class="social-icon">
+                        <span>Twitter</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
