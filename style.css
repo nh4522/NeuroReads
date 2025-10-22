@@ -17,9 +17,8 @@ body {
   min-height: 100vh;
 }
 
-
 /* ==========================
-   Navbar - RESET
+   Navbar - FIXED
 ========================== */
 header.navbar, .navbar {
   display: flex;
@@ -30,7 +29,6 @@ header.navbar, .navbar {
   border-radius: 0 0 15px 15px;
   height: auto;
   min-height: auto;
- 
 }
 
 .logo h1 {
@@ -42,7 +40,6 @@ header.navbar, .navbar {
   color: #6b5d3c;
   font-size: 0.9em;
   margin: 0;
-
 }
 
 nav ul {
@@ -163,9 +160,8 @@ nav a:hover {
   color: #fff;
 }
 
-
 /* ==========================
-   Contact Section - FIXED
+   Contact Section - ENHANCED
 ========================== */
 .contact-hero {
   padding: 40px 20px 20px 20px;
@@ -353,7 +349,7 @@ nav a:hover {
   font-size: 0.9rem;
 }
 
-/* Social Section */
+/* Social Section - FIXED */
 .social-section {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
@@ -389,17 +385,24 @@ nav a:hover {
   font-weight: 500;
 }
 
+/* FIXED: Consistent hover for all social buttons */
 .social-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   transform: translateX(5px);
   color: #fff;
   text-decoration: none;
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .social-btn .social-icon {
   width: 24px;
   height: 24px;
   filter: brightness(0) invert(1);
+  transition: transform 0.3s ease;
+}
+
+.social-btn:hover .social-icon {
+  transform: scale(1.1);
 }
 
 /* ==========================
@@ -471,7 +474,7 @@ nav a:hover {
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(0%);
+  transform: translateY(-50%); /* FIXED: was translateY(0%) */
   cursor: pointer;
   font-size: 1.1em;
   background: rgba(255, 255, 255, 0.2);
@@ -661,16 +664,6 @@ nav a:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.google-btn:hover {
-  border-color: #4285f4;
-  background: rgba(66, 133, 244, 0.1);
-}
-
-.facebook-btn:hover {
-  border-color: #1877f2;
-  background: rgba(24, 119, 242, 0.1);
-}
-
 .social-btn:active {
   transform: translateY(0);
 }
@@ -850,5 +843,14 @@ nav a:hover {
   
   .about-box {
     width: 90%;
+  }
+  
+  header.navbar {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  
+  nav ul {
+    gap: 15px;
   }
 }
