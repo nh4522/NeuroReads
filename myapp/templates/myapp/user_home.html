@@ -1,0 +1,217 @@
+<!-- myapp/templates/myapp/user_home.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroReads — Home</title>
+    
+    <!-- Prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="{% static 'myapp/css/user_common.css' %}?v=4">
+    <!-- Home Specific CSS -->
+    <link rel="stylesheet" href="{% static 'myapp/css/user_home.css' %}?v=4">
+</head>
+
+<body>
+    <div class="nr-wrapper">
+        <div class="nr-page">
+
+            <!-- Topbar (Common) -->
+            <header class="nr-topbar">
+                <div class="nr-logo-container">
+                    <div class="nr-logo">NeuroReads</div>
+                    <div class="nr-subtitle">Pages & Peace</div>
+                </div>
+                <div class="nr-search">
+                    <div class="nr-search-container">
+                        <input type="text" class="nr-search-input" placeholder="Search books, authors, genres...">
+                        <button class="nr-search-btn">🔍</button>
+                    </div>
+                </div>
+                
+                <!-- SIMPLIFIED: User Info Section - NO NOTIFICATION -->
+                <div class="nr-user-info">
+                    <!-- User Profile Dropdown Only -->
+                    <div class="nr-user-profile" id="userProfile">
+                        <img src="{% static 'myapp/icons/top-user.png' %}" alt="User" class="nr-user-avatar">
+                        <span class="nr-username">
+                            {% if user %}{{ user.username }}{% else %}User XYZ{% endif %}
+                        </span>
+                    </div>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="nr-dropdown" id="userDropdown">
+                        <ul>
+                            <li><a href="{% url 'profile' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> My Profile</a></li>
+                            <li class="nr-dropdown-divider"></li>
+                            <li><a href="{% url 'logout' %}" id="logoutBtn"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sidebar (Common) -->
+            <aside class="nr-sidebar">
+                <nav class="nr-side-nav">
+                    <ul>
+                        <li><a href="{% url 'user_home' %}" class="active"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Home</a></li>
+                        <li><a href="{% url 'explore' %}"><img src="{% static 'myapp/icons/explore.png' %}" alt=""> Explore</a></li>
+                        <li><a href="{% url 'user_books' %}"><img src="{% static 'myapp/icons/books.png' %}" alt=""> My Books</a></li>
+                        <li><a href="{% url 'search' %}"><img src="{% static 'myapp/icons/search.png' %}" alt=""> Search</a></li>
+                        <li><a href="{% url 'profile_settings' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> Settings</a></li>
+                    </ul>
+                </nav>
+                <div class="nr-side-bottom">
+                    <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="nr-main">
+                <div class="container-fluid">
+                    
+                    <!-- Messages Display -->
+                    {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <!-- Left Column - Create Post & Timeline -->
+                        <div class="col-lg-8">
+                            <!-- Create Post Card -->
+                            <div class="card create-post-card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <img src="{% static 'myapp/icons/top-user.png' %}" alt="User" class="user-avatar-sm">
+                                        <div class="flex-grow-1">
+                                            <textarea class="form-control post-input" id="postContent" placeholder="What are you reading? Share your thoughts..." rows="3"></textarea>
+                                            <div class="post-actions mt-3">
+                                                <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="addBookBtn">
+                                                    📚 Add Book
+                                                </button>
+                                                <button type="button" class="btn btn-primary btn-sm ms-auto" id="submitPostBtn">
+                                                    Post
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Book Selection Modal -->
+                            <div class="modal fade" id="bookSelectionModal" tabindex="-1">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Select a Book</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" id="bookSearchInput" placeholder="Search for books...">
+                                                <button class="btn btn-outline-secondary" type="button" id="searchBooksBtn">Search</button>
+                                            </div>
+                                            <div id="bookSearchResults" class="row g-2">
+                                                <!-- Books will be loaded here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Timeline -->
+                            <div id="timeline">
+                                <!-- Posts will be loaded here by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Stats & Friends -->
+                        <div class="col-lg-4">
+                            <!-- Reading Stats -->
+                            <div class="card stats-card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Your Reading Stats</h5>
+                                    <div class="stats-grid">
+                                        <div class="stat-item">
+                                            <div class="stat-number">{{ user_stats.books_read }}</div>
+                                            <div class="stat-label">Books Read</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">{{ user_stats.pages_today }}</div>
+                                            <div class="stat-label">Pages Today</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">{{ user_stats.current_streak }}</div>
+                                            <div class="stat-label">Current Streak</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Currently Reading -->
+                            <div class="card currently-reading-card mb-4">
+                                <div class="card-body">
+                                    <h5 class="card-title">Currently Reading</h5>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{% static 'myapp/images/bookCover/default.jpg' %}" alt="Book" class="book-cover-sm">
+                                        <div>
+                                            <h6 class="mb-1">{{ currently_reading.title }}</h6>
+                                            <p class="text-muted mb-0">{{ currently_reading.author }}</p>
+                                            <div class="progress mt-2">
+                                                <div class="progress-bar" style="width: {{ currently_reading.progress }}%"></div>
+                                            </div>
+                                            <small class="text-muted">{{ currently_reading.progress }}% complete</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Friends Activity -->
+                            <div class="card friends-activity-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Friends Activity</h5>
+                                    <div class="friends-list" id="friendsList">
+                                        <!-- Will be loaded by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- CSRF Token for AJAX requests -->
+    {% csrf_token %}
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Common JavaScript -->
+    <script src="{% static 'myapp/js/user_common.js' %}?v=4"></script>
+    <!-- Logout JavaScript -->
+    <script src="{% static 'myapp/js/logout.js' %}?v=4"></script>
+    <!-- Home Specific JavaScript -->
+    <script src="{% static 'myapp/js/user_home.js' %}?v=4"></script>
+</body>
+</html>

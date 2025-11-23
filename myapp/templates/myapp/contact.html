@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroReads | Contact Us</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FIXED: Django static path -->
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}" />
+  <script defer src="{% static 'myapp/js/script.js' %}"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Kavoon&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ==========================
+       Navbar 
+  =========================== -->
+  <header class="navbar">
+    <div class="logo">
+      <!-- FIXED: Django URL -->
+      <a href="{% url 'home' %}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+        <h1>NeuroReads</h1>
+        <p>Pages & Peace</p>
+      </a>
+    </div>
+    <nav>
+      <ul>
+        <!-- FIXED: Django URLs -->
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'contact' %}" class="active">Contacts</a></li>
+      </ul>
+    </nav>
+    <div class="buttons">
+      <!-- FIXED: Django URLs -->
+      <a href="{% url 'login' %}"><button id="loginBtn">Log in</button></a>
+      <a href="{% url 'register' %}"><button id="registerBtn" class="register">Register</button></a>
+    </div>
+  </header>
+
+  <!-- ==========================
+        Contact Section
+  =========================== -->
+  <section class="hero contact-hero">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-8">
+          <div class="contact-main-wrapper">
+            <!-- Header Section -->
+            <div class="contact-header text-center mb-5">
+              <h1 class="main-title">Get In Touch</h1>
+              <p class="contact-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+            </div>
+
+            <!-- ==========================
+                 Success/Error Messages Display - UPDATED
+            =========================== -->
+            {% if success %}
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+                  <div class="d-flex align-items-center">
+                    <span class="me-2">✅</span>
+                    <div class="flex-grow-1">
+                      <strong>Success!</strong> Thank you for your message! We will get back to you within 24 hours.
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if error %}
+            <div class="row mb-4">
+              <div class="col-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+                  <div class="d-flex align-items-center">
+                    <span class="me-2">❌</span>
+                    <div class="flex-grow-1">
+                      <strong>Error!</strong> Sorry, there was an error sending your message. Please try again.
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+            <div class="row g-5">
+              <!-- Contact Form Column -->
+              <div class="col-md-8">
+                <div class="contact-form-wrapper">
+                  <div class="form-header mb-4">
+                    <h3><i class="form-icon">💬</i> Send Us a Message</h3>
+                    <p class="form-subtitle">Fill out the form below and we'll get back to you shortly</p>
+                  </div>
+
+                  <!-- Contact Form -->
+                  <form class="contact-form" method="post">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="nameInput" name="name" placeholder="John Doe" required>
+                          <label for="nameInput">Your Name</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-floating">
+                          <input type="email" class="form-control" id="emailInput" name="email" placeholder="name@example.com" required>
+                          <label for="emailInput">Email Address</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="subjectInput" name="subject" placeholder="Subject">
+                          <label for="subjectInput">Subject</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <textarea class="form-control" id="messageInput" name="message" placeholder="Your message" style="height: 150px" required></textarea>
+                          <label for="messageInput">Your Message</label>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-send-message w-100">
+                          <span class="btn-text">Send Message</span>
+                          <span class="btn-loader" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status"></span>
+                            Sending...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Contact Info & Social Column -->
+              <div class="col-md-4">
+                <div class="contact-info-wrapper">
+                  <!-- Contact Methods -->
+                  <div class="contact-methods">
+                    <h4 class="info-title">Contact Information</h4>
+                    
+                    <div class="contact-item">
+                      <div class="contact-icon">📧</div>
+                      <div class="contact-details">
+                        <h5>Email Us</h5>
+                        <p>contact@neuroreads.com</p>
+                        <p>support@neuroreads.com</p>
+                      </div>
+                    </div>
+
+                    <div class="contact-item">
+                      <div class="contact-icon">📞</div>
+                      <div class="contact-details">
+                        <h5>Call Us</h5>
+                        <p>+880-1-7777777</p>
+                        <p>Mon-Fri: 10:30 AM - 5:00 PM</p>
+                      </div>
+                    </div>
+
+                    <div class="contact-item">
+                      <div class="contact-icon">📍</div>
+                      <div class="contact-details">
+                        <h5>Visit Us</h5>
+                        <p>123 Book Street</p>
+                        <p>Mirpur, Dhaka.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Social Links -->
+                  <div class="social-section">
+                    <h4 class="info-title">Follow Us</h4>
+                    <p class="social-subtitle">Stay connected with NeuroReads</p>
+                    
+                    <div class="social-buttons">
+                      <!-- FIXED: Django static paths for icons -->
+                      <a href="#" class="social-btn google-btn" title="Email us">
+                        <img src="{% static 'myapp/icons/gmail_icon.png' %}" alt="Gmail" class="social-icon">
+                        <span>Gmail</span>
+                      </a>
+                      <a href="#" class="social-btn instagram-btn" title="Follow us on Instagram">
+                        <img src="{% static 'myapp/icons/instagram_icon.png' %}" alt="Instagram" class="social-icon">
+                        <span>Instagram</span>
+                      </a>
+                      <a href="#" class="social-btn twitter-btn" title="Follow us on X">
+                        <img src="{% static 'myapp/icons/x_icon.png' %}" alt="X" class="social-icon">
+                        <span>Twitter</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Clear URL parameters after page load -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Remove success/error parameters from URL without refreshing
+      if (window.location.search.includes('success=') || window.location.search.includes('error=')) {
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+      }
+      
+      // Auto-dismiss alerts after 5 seconds
+      const successAlert = document.getElementById('successAlert');
+      const errorAlert = document.getElementById('errorAlert');
+      
+      if (successAlert) {
+        setTimeout(() => {
+          const bsAlert = new bootstrap.Alert(successAlert);
+          bsAlert.close();
+        }, 5000);
+      }
+      
+      if (errorAlert) {
+        setTimeout(() => {
+          const bsAlert = new bootstrap.Alert(errorAlert);
+          bsAlert.close();
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+/* admin_users.css */
+/* User Management Specific Styles */
+
+.nr-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+}
+
+.nr-users-title h1 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 32px;
+  color: #297a79;
+  margin-bottom: 5px;
+}
+
+.nr-users-title p {
+  color: #666;
+  font-size: 14px;
+}
+
+.nr-users-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* Users Grid */
+.nr-users-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.nr-user-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nr-user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.nr-user-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.nr-user-avatar-large {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nr-user-info {
+  flex: 1;
+}
+
+.nr-user-name {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+.nr-user-email {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.nr-user-username {
+  color: #888;
+  font-size: 12px;
+}
+
+.nr-user-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.nr-user-stat {
+  text-align: center;
+}
+
+.nr-user-stat-value {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 18px;
+  display: block;
+}
+
+.nr-user-stat-label {
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nr-user-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+/* Admin Badge */
+.nr-admin-badge {
+  background: linear-gradient(135deg, #ffd700, #ffa500);
+  color: #000;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* User Table View */
+.nr-users-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.nr-users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.nr-users-table th {
+  background: #f8f9fa;
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #e9ecef;
+  font-family: 'Poppins', sans-serif;
+}
+
+.nr-users-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: middle;
+}
+
+.nr-users-table tr:hover {
+  background: #f8f9fa;
+}
+
+/* Status Indicators */
+.nr-status-active {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.nr-status-inactive {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.nr-status-pending {
+  color: #ffc107;
+  font-weight: 600;
+}
+
+/* Search and Filters */
+.nr-users-filters {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+}
+
+.nr-filter-row {
+  display: flex;
+  gap: 15px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.nr-filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.nr-filter-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nr-users-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .nr-users-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .nr-users-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .nr-filter-row {
+    flex-direction: column;
+  }
+  
+  .nr-filter-group {
+    min-width: 100%;
+  }
+  
+  .nr-users-table {
+    font-size: 14px;
+  }
+  
+  .nr-users-table th,
+  .nr-users-table td {
+    padding: 12px 8px;
+  }
+  
+  .nr-user-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroReads — Account Settings</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/myapp/css/user_common.css">
+    <link rel="stylesheet" href="/static/myapp/css/user_settings.css">
+    
+    <style>
+        /* Additional styles for the password modal */
+        .password-modal .modal-header {
+            background: linear-gradient(135deg, #b78f5c, #a67c52);
+            color: white;
+        }
+        
+        .password-modal .modal-header .btn-close {
+            filter: invert(1);
+        }
+        
+        .password-modal .form-control:focus {
+            border-color: #b78f5c;
+            box-shadow: 0 0 0 0.2rem rgba(183, 143, 92, 0.25);
+        }
+        
+        .username-availability {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .username-available {
+            color: #28a745;
+        }
+        
+        .username-taken {
+            color: #dc3545;
+        }
+        
+        /* Fix for navbar layout when search is removed */
+        .nr-topbar {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .nr-logo-container {
+            grid-column: 1;
+        }
+        
+        .nr-user-info {
+            grid-column: 3;
+            justify-self: end;
+        }
+        
+        /* Ensure user info stays on the right */
+        .nr-user-info {
+            margin-left: auto;
+        }
+
+        /* Debug button */
+        .debug-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
+    <div class="nr-wrapper">
+        <div class="nr-page">
+            <!-- Topbar -->
+            <header class="nr-topbar">
+                <div class="nr-logo-container">
+                    <a href="{% url 'user_home' %}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+                        <div class="nr-logo">NeuroReads</div>
+                        <div class="nr-subtitle">Pages & Peace</div>
+                    </a>
+                </div>
+                
+                <!-- Empty space where search bar was - this maintains the layout -->
+                <div class="nr-search-placeholder"></div>
+
+                <!-- User Info -->
+                <div class="nr-user-info">
+                    <button title="notification" class="nr-notification-btn">🔔</button>
+                    <div class="nr-user-profile" id="userProfile">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture }}" alt="User" class="nr-user-avatar" id="topbarUserAvatar">
+                        {% else %}
+                            <img src="/static/myapp/icons/top-user.png" alt="User" class="nr-user-avatar" id="topbarUserAvatar">
+                        {% endif %}
+                        <span class="nr-username" id="topbarUsername">{{ user.username|default:user.email }}</span>
+                    </div>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="nr-dropdown" id="userDropdown">
+                        <ul>
+                            <li><a href="{% url 'profile' %}"><img src="/static/myapp/icons/settings.png" alt=""> My Profile</a></li>
+                            <li class="nr-dropdown-divider"></li>
+                            <li><button id="logoutBtn"><img src="/static/myapp/icons/home.png" alt=""> Log Out</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sidebar -->
+            <aside class="nr-sidebar">
+                <nav class="nr-side-nav">
+                    <ul>
+                        <li><a href="{% url 'user_home' %}"><img src="/static/myapp/icons/home.png" alt=""> <span>Home</span></a></li>
+                        <li><a href="{% url 'explore' %}"><img src="/static/myapp/icons/explore.png" alt=""> <span>Explore</span></a></li>
+                        <li><a href="{% url 'user_books' %}"><img src="/static/myapp/icons/books.png" alt=""> <span>My Books</span></a></li>
+                        <li><a href="{% url 'search' %}"><img src="/static/myapp/icons/search.png" alt=""> <span>Search</span></a></li>
+                        <li><a href="{% url 'profile_settings' %}" class="active"><img src="/static/myapp/icons/settings.png" alt=""> <span>Settings</span></a></li>
+                    </ul>
+                </nav>
+                <div class="nr-side-bottom">
+                    <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="nr-main">
+                <div class="account-container">
+                    <!-- Header Section -->
+                    <div class="account-header">
+                        <div class="header-content">
+                            <h1 class="account-title">
+                                <i class="bi bi-person-gear"></i>
+                                Account Settings
+                            </h1>
+                            <p class="account-subtitle">Manage your NeuroReads account and preferences</p>
+                        </div>
+                        <div class="header-stats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="booksReadCount">0</div>
+                                <div class="stat-label">Books Read</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="currentlyReadingCount">0</div>
+                                <div class="stat-label">Currently Reading</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Grid -->
+                    <div class="account-content">
+                        <!-- Left Column - Profile & Security -->
+                        <div class="account-column">
+                            <!-- Profile Card -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-person-circle"></i>
+                                    <h3>Profile Information</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="avatar-section">
+                                        <div class="avatar-container">
+                                            {% if user.profile_picture %}
+                                                <img src="{{ user.profile_picture }}" alt="User Avatar" class="user-avatar" id="userAvatar">
+                                            {% else %}
+                                                <img src="/static/myapp/icons/top-user.png" alt="User Avatar" class="user-avatar" id="userAvatar">
+                                            {% endif %}
+                                            <div class="avatar-overlay">
+                                                <i class="bi bi-camera"></i>
+                                            </div>
+                                        </div>
+                                        <button class="btn-change-avatar" id="changeAvatarBtn">
+                                            Change Avatar
+                                        </button>
+                                        <div class="file-size-info">
+                                            <i class="bi bi-info-circle"></i> Maximum file size: 200KB
+                                        </div>
+                                    </div>
+                                    
+                                    <form class="profile-form" id="profileForm" autocomplete="off">
+                                        {% csrf_token %}
+                                        
+                                        <!-- Name Section -->
+                                        <div class="form-section" id="nameSection">
+                                            <div class="section-header">
+                                                <h5 class="section-title">Name</h5>
+                                                <p class="section-description">Your first and last name</p>
+                                            </div>
+                                            <div class="section-fields">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">First Name</label>
+                                                        <input type="text" class="form-control" value="{{ user.first_name|default:'' }}" id="firstName" autocomplete="given-name">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label">Last Name</label>
+                                                        <input type="text" class="form-control" value="{{ user.last_name|default:'' }}" id="lastName" autocomplete="family-name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-actions">
+                                                <button type="button" class="btn btn-primary section-save-btn" data-fields='["firstName", "lastName"]'>
+                                                    Save Name
+                                                </button>
+                                                <div class="section-status"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Username Section -->
+                                        <div class="form-section" id="usernameSection">
+                                            <div class="section-header">
+                                                <h5 class="section-title">Username</h5>
+                                                <p class="section-description">Your unique username</p>
+                                            </div>
+                                            <div class="section-fields">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Username</label>
+                                                    <input type="text" class="form-control" value="{{ user.username|default:'' }}" id="username" autocomplete="username">
+                                                    <div class="username-availability" id="usernameAvailability"></div>
+                                                </div>
+                                            </div>
+                                            <div class="section-actions">
+                                                <button type="button" class="btn btn-primary section-save-btn" data-fields='["username"]'>
+                                                    Save Username
+                                                </button>
+                                                <div class="section-status"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Email Section -->
+                                        <div class="form-section" id="emailSection">
+                                            <div class="section-header">
+                                                <h5 class="section-title">Email Address</h5>
+                                                <p class="section-description">Your email address for notifications</p>
+                                            </div>
+                                            <div class="section-fields">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Email Address</label>
+                                                    <input type="email" class="form-control" value="{{ user.email }}" id="email" autocomplete="email">
+                                                </div>
+                                            </div>
+                                            <div class="section-actions">
+                                                <button type="button" class="btn btn-primary section-save-btn" data-fields='["email"]'>
+                                                    Save Email
+                                                </button>
+                                                <div class="section-status"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Bio Section -->
+                                        <div class="form-section" id="bioSection">
+                                            <div class="section-header">
+                                                <h5 class="section-title">Bio</h5>
+                                                <p class="section-description">Tell others about yourself</p>
+                                            </div>
+                                            <div class="section-fields">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Bio</label>
+                                                    <textarea class="form-control" rows="3" id="bio" placeholder="Tell us about yourself...">{{ user.bio|default:'' }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="section-actions">
+                                                <button type="button" class="btn btn-primary section-save-btn" data-fields='["bio"]'>
+                                                    Save Bio
+                                                </button>
+                                                <div class="section-status"></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <!-- Security Card -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-shield-lock"></i>
+                                    <h3>Security Settings</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="security-item">
+                                        <div class="security-info">
+                                            <h5>Password</h5>
+                                            <p>Change your account password</p>
+                                        </div>
+                                        <button class="btn-security-action" id="changePasswordBtn">
+                                            Change Password
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="security-item">
+                                        <div class="security-info">
+                                            <h5>Two-Factor Authentication</h5>
+                                            <p>Add an extra layer of security to your account</p>
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="twoFactorToggle" {% if user.two_factor_enabled %}checked{% endif %}>
+                                            <label class="form-check-label" for="twoFactorToggle">Enable 2FA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column - Preferences & Membership -->
+                        <div class="account-column">
+                            <!-- Reading Preferences -->
+                            <div class="account-card">
+                                <div class="card-header">
+                                    <i class="bi bi-book"></i>
+                                    <h3>Reading Preferences</h3>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Reading Goal Section -->
+                                    <div class="form-section reading-goal-section">
+                                        <h4>📚 Reading Challenge</h4>
+                                        <p>Set your annual reading goal</p>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Books to read this year</label>
+                                                    <input type="number" 
+                                                        class="form-control reading-goal-input" 
+                                                        id="readingGoalInput"
+                                                        min="1" 
+                                                        max="1000"
+                                                        value="{{ user.reading_goal|default:12 }}"
+                                                        placeholder="e.g., 12">
+                                                    <div class="form-text text-light">How many books do you want to read this year?</div>
+                                                </div>
+                                                <button type="button" class="btn btn-light" id="saveReadingGoalBtn">
+                                                    Save Reading Goal
+                                                </button>
+                                                <div class="section-status text-light mt-2" id="readingGoalStatus"></div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="goal-preview">
+                                                    <h5>Your Progress</h5>
+                                                    <div class="progress" style="height: 20px;">
+                                                        <div class="progress-bar" role="progressbar" style="width: 25%;">25%</div>
+                                                    </div>
+                                                    <small>3 of {{ user.reading_goal|default:12 }} books completed</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Favorite Genres Section -->
+                                    <div class="form-section">
+                                        <div class="section-header">
+                                            <h5 class="section-title">❤️ Favorite Genres</h5>
+                                            <p class="section-description">Select up to 10 genres you enjoy reading</p>
+                                        </div>
+                                        
+                                        <div class="genre-search mb-3">
+                                            <input type="text" 
+                                                class="form-control" 
+                                                id="genreSearch"
+                                                placeholder="Search genres...">
+                                        </div>
+                                        
+                                        <div class="genres-container" id="genresContainer">
+                                            <!-- Genres will be loaded here dynamically -->
+                                            <div class="text-center py-3">
+                                                <div class="spinner-border text-primary" role="status">
+                                                    <span class="visually-hidden">Loading genres...</span>
+                                                </div>
+                                                <p class="mt-2">Loading genres...</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="selection-count mt-2" id="selectedGenresCount">
+                                            0/10 genres selected
+                                        </div>
+                                        
+                                        <div class="section-actions mt-3">
+                                            <button type="button" class="btn btn-primary" id="saveGenresBtn">
+                                                Save Favorite Genres
+                                            </button>
+                                            <div class="section-status" id="genresStatus"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-item mt-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emailNotifications" {% if user.email_notifications %}checked{% endif %}>
+                                            <label class="form-check-label" for="emailNotifications">
+                                                Email notifications for new releases
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="preference-item">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="publicProfile" {% if user.public_profile %}checked{% endif %}>
+                                            <label class="form-check-label" for="publicProfile">
+                                                Public profile
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Danger Zone -->
+                            <div class="account-card danger-card">
+                                <div class="card-header">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    <h3>Danger Zone</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="danger-item">
+                                        <div class="danger-info">
+                                            <h5>Export Data</h5>
+                                            <p>Download all your reading data and preferences</p>
+                                        </div>
+                                        <button class="btn btn-outline-secondary" id="exportDataBtn">
+                                            Export Data
+                                        </button>
+                                    </div>
+
+                                    <div class="danger-item">
+                                        <div class="danger-info">
+                                            <h5>Delete Account</h5>
+                                            <p>Permanently delete your account and all data</p>
+                                        </div>
+                                        <button class="btn btn-danger" id="deleteAccountBtn">
+                                            Delete Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Password Change Modal -->
+    <div class="security-item">
+    <div class="security-info">
+        <h5>Password</h5>
+        <p>Change your account password</p>
+    </div>
+    <a href="{% url 'password_change' %}" class="btn-security-action">
+        Change Password
+    </a>
+    </div>
+
+    <!-- Debug Button -->
+    <div class="debug-button">
+        <button onclick="testAllAPIs()" class="btn btn-warning btn-sm">Test APIs</button>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="/static/myapp/js/user_common.js"></script>
+    <script src="/static/myapp/js/logout.js"></script>
+    <script src="/static/myapp/js/user_settings.js"></script>
+    <script src="/static/myapp/js/genre_selection.js"></script>
+
+    <script>
+    // Simple API test function
+    async function testAllAPIs() {
+        console.log('🧪 Testing all APIs...');
+        
+        // Test genres API
+        try {
+            const response = await fetch('/api/genres/all/');
+            const result = await response.json();
+            console.log('📚 Genres API:', result);
+            alert('Genres API: ' + (result.success ? 'SUCCESS' : 'FAILED - ' + result.error));
+        } catch (error) {
+            console.error('❌ Genres API failed:', error);
+            alert('Genres API: FAILED - ' + error.message);
+        }
+        
+        // Test reading goal API
+        try {
+            const response = await fetch('/api/profile/reading-goal/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ reading_goal: 15 })
+            });
+            const result = await response.json();
+            console.log('📖 Reading goal API:', result);
+            alert('Reading goal API: ' + (result.success ? 'SUCCESS' : 'FAILED - ' + result.error));
+        } catch (error) {
+            console.error('❌ Reading goal API failed:', error);
+            alert('Reading goal API: FAILED - ' + error.message);
+        }
+
+        // Test favorite genres API
+        try {
+            const response = await fetch('/api/profile/favorite-genres/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify({ favorite_genres: ["Fiction", "Science"] })
+            });
+            const result = await response.json();
+            console.log('❤️ Favorite genres API:', result);
+            alert('Favorite genres API: ' + (result.success ? 'SUCCESS' : 'FAILED - ' + result.error));
+        } catch (error) {
+            console.error('❌ Favorite genres API failed:', error);
+            alert('Favorite genres API: FAILED - ' + error.message);
+        }
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('📊 User stats loaded from backend');
+        
+        // Setup preference toggles
+        const twoFactorToggle = document.getElementById('twoFactorToggle');
+        if (twoFactorToggle) {
+            twoFactorToggle.addEventListener('change', function() {
+                console.log('2FA toggled:', this.checked);
+                // Add API call here to update 2FA setting
+            });
+        }
+        
+        const emailNotifications = document.getElementById('emailNotifications');
+        if (emailNotifications) {
+            emailNotifications.addEventListener('change', function() {
+                console.log('Email notifications toggled:', this.checked);
+                // Add API call here to update email notifications
+            });
+        }
+        
+        const publicProfile = document.getElementById('publicProfile');
+        if (publicProfile) {
+            publicProfile.addEventListener('change', function() {
+                console.log('Public profile toggled:', this.checked);
+                // Add API call here to update public profile setting
+            });
+        }
+        
+        // Export data button
+        const exportDataBtn = document.getElementById('exportDataBtn');
+        if (exportDataBtn) {
+            exportDataBtn.addEventListener('click', function() {
+                alert('Export data functionality will be implemented soon!');
+            });
+        }
+        
+        // Delete account button
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        if (deleteAccountBtn) {
+            deleteAccountBtn.addEventListener('click', function() {
+                const confirmed = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+                if (confirmed) {
+                    alert('Account deletion functionality will be implemented soon!');
+                }
+            });
+        }
+    });
+    </script>
+    <!-- ADD THIS DEBUG SCRIPT TO YOUR user_books.html -->
+<script>
+console.log('🟢 DEBUG: HTML loaded successfully');
+
+// Test if basic JavaScript works
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🟢 DEBUG: DOMContentLoaded fired');
+    
+    // Test if we can manipulate the DOM
+    const testElement = document.createElement('div');
+    testElement.innerHTML = '🟢 JavaScript is working';
+    testElement.style.cssText = 'position: fixed; top: 10px; left: 10px; background: green; color: white; padding: 10px; z-index: 99999;';
+    document.body.appendChild(testElement);
+    
+    // Force button clicks to work
+    setTimeout(forceEnableButtons, 1000);
+});
+
+function forceEnableButtons() {
+    console.log('🟢 DEBUG: Force enabling buttons...');
+    
+    // Method 1: Add onclick handlers directly
+    const buttons = document.querySelectorAll('.book-action-btn');
+    console.log(`🟢 DEBUG: Found ${buttons.length} buttons to enable`);
+    
+    buttons.forEach(button => {
+        // Remove all existing event listeners
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        // Add direct onclick handler
+        newButton.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🟢 DEBUG: FORCED BUTTON CLICK:', this.textContent);
+            
+            // Get book data
+            const bookCard = this.closest('.book-card');
+            if (bookCard) {
+                const bookId = bookCard.getAttribute('data-book-id');
+                const bookTitle = bookCard.getAttribute('data-book-title');
+                
+                console.log('🟢 DEBUG: Book data:', { bookId, bookTitle });
+                
+                if (bookId && this.textContent.includes('Continue')) {
+                    // Open PDF reader
+                    const url = `/read/${bookId}/`;
+                    console.log('🟢 DEBUG: Opening URL:', url);
+                    window.open(url, '_blank');
+                }
+            }
+        };
+    });
+}
+
+// Global emergency handler
+window.handleEmergencyClick = function(button) {
+    console.log('🟢 DEBUG: EMERGENCY HANDLER CALLED');
+    const bookCard = button.closest('.book-card');
+    if (bookCard) {
+        const bookId = bookCard.getAttribute('data-book-id');
+        const url = `/read/${bookId}/`;
+        console.log('🟢 DEBUG: Emergency opening:', url);
+        window.open(url, '_blank');
+    }
+};
+</script>
+</body>
+</html>

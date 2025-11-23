@@ -1,0 +1,130 @@
+<!-- myapp/templates/myapp/user_books.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeuroReads — My Books</title>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+<!-- Common CSS -->
+<link rel="stylesheet" href="{% static 'myapp/css/user_common.css' %}">
+<!-- User Books Specific CSS -->
+<link rel="stylesheet" href="{% static 'myapp/css/user_books.css' %}">
+</head>
+
+<body>
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- Topbar (Common) -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Pages & Peace</div>
+      </div>
+      <div class="nr-search">
+        <div class="nr-search-container">
+          <input type="text" class="nr-search-input" placeholder="Search books, authors, genres...">
+          <button class="nr-search-btn">🔍</button>
+          <div class="nr-search-loading"></div>
+          <div class="nr-search-suggestions"></div>
+        </div>
+      </div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          <img src="{% static 'myapp/icons/top-user.png' %}" alt="User" class="nr-user-avatar">
+          <span class="nr-username">
+            {% if user %}{{ user.username }}{% else %}User XYZ{% endif %}
+          </span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="{% url 'profile' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><a href="{% url 'logout' %}" id="logoutBtn"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar (Common) -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="{% url 'user_home' %}"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Home</a></li>
+          <li><a href="{% url 'explore' %}"><img src="{% static 'myapp/icons/explore.png' %}" alt=""> Explore</a></li>
+          <li><a href="{% url 'user_books' %}" class="active"><img src="{% static 'myapp/icons/books.png' %}" alt=""> My Books</a></li>
+          <li><a href="{% url 'search' %}"><img src="{% static 'myapp/icons/search.png' %}" alt=""> Search</a></li>
+          <li><a href="{% url 'profile_settings' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> Settings</a></li>
+        </ul>
+      </nav>
+
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- Main Content (User Books Specific) -->
+    <main class="nr-main">
+      <div class="container-fluid">
+        <!-- Continue Reading Section -->
+        <div class="book-section mb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="section-title m-0">Continue Reading</h3>
+            <button class="btn view-all-btn">View All</button>
+          </div>
+          <div id="continueReading" class="row g-4">
+            <!-- Books loaded dynamically from database -->
+            <div class="col-12 text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading your books...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Booklist Section -->
+        <div class="book-section">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="section-title m-0">My Wishlist</h3>
+            <button class="btn view-all-btn">View All</button>
+          </div>
+          <div id="myBooklist" class="row g-4">
+            <!-- Books loaded dynamically from database -->
+            <div class="col-12 text-center">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading your wishlist...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+<!-- Add this temporarily to user_books.html -->
+<!-- CSRF Token for AJAX requests -->
+{% csrf_token %}
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Common JavaScript -->
+<script src="{% static 'myapp/js/user_common.js' %}"></script>
+<!-- Logout JavaScript -->
+<script src="/static/myapp/js/logout.js"></script>
+<!-- User Books Specific JavaScript -->
+<script src="{% static 'myapp/js/user_books.js' %}"></script>
+</body>
+</html>

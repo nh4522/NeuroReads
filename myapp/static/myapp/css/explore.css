@@ -1,0 +1,709 @@
+/* explore.css - COMPLETE FIXED VERSION */
+
+/* ==========================
+   Main Area (Explore)
+========================== */
+.nr-main {
+  grid-area: nr-main;
+  background: rgba(255,255,255,0.9);
+  padding: 40px 60px;
+  overflow-y: auto;
+  height: calc(100vh - var(--top-h));
+}
+
+.section-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 24px;
+  color: #3a2c17;
+  font-weight: 600;
+}
+
+.view-all-btn {
+  background: #dccdbd;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #3a2c17;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: #c9b8a5;
+  transform: translateY(-2px);
+  color: #3a2c17;
+}
+
+.book-section { 
+  margin-bottom: 40px; 
+}
+
+/* Bootstrap Card Customization */
+.book-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  background: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+}
+
+.book-card .card-img-top {
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+  transition: transform 0.3s ease;
+}
+
+.book-card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.book-card .card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* FIXED: Proper line-clamp implementation */
+.book-card .card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3a2c17;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  
+  /* Standard line-clamp with vendor prefixes for compatibility */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  
+  /* Standard property */
+  line-clamp: 2;
+  box-orient: vertical;
+  
+  /* Fallback for browsers that don't support line-clamp */
+  max-height: 2.6em;
+}
+
+.book-card .card-text {
+  font-size: 14px;
+  color: #7a6f67;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+/* Dual Button Styles */
+.book-action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.book-action-btn {
+  flex: 1;
+  background: #b78f5c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.book-action-btn:hover {
+  background: #a57d4a;
+  transform: translateY(-2px);
+  color: white;
+}
+
+/* Specific button styles */
+.btn-start-reading {
+  background: #4CAF50;
+}
+
+.btn-start-reading:hover {
+  background: #45a049;
+}
+
+.btn-add-wishlist {
+  background: #2196F3;
+}
+
+.btn-add-wishlist:hover {
+  background: #1976D2;
+}
+
+/* Disabled state */
+.book-action-btn:disabled {
+  background: #6c757d !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.book-action-btn:disabled:hover {
+  background: #6c757d !important;
+  transform: none !important;
+}
+
+/* Status indicators */
+.status-reading {
+  background: #4CAF50 !important;
+}
+
+.status-wishlist {
+  background: #2196F3 !important;
+}
+
+.status-completed {
+  background: #FF9800 !important;
+}
+
+/* Category Badges */
+.book-category {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(183, 143, 92, 0.9);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+/* Section-specific category colors */
+.book-card[data-category="featured"] .book-category {
+  background: rgba(220, 205, 189, 0.9);
+  color: #3a2c17;
+}
+
+.book-card[data-category="bestseller"] .book-category {
+  background: rgba(52, 152, 219, 0.9);
+}
+
+.book-card[data-category="new"] .book-category {
+  background: rgba(46, 204, 113, 0.9);
+}
+
+.book-card[data-category="classic"] .book-category {
+  background: rgba(155, 89, 182, 0.9);
+}
+
+.book-card[data-category="quick"] .book-category {
+  background: rgba(241, 196, 15, 0.9);
+}
+
+.book-card[data-category="trending"] .book-category {
+  background: rgba(231, 76, 60, 0.9);
+}
+
+.book-card[data-category="general"] .book-category {
+  background: rgba(183, 143, 92, 0.9);
+}
+
+/* All Books section specific styling */
+#allBooks .book-category {
+  background: rgba(106, 90, 205, 0.9); /* Slate blue for All Books */
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #9b8f86;
+}
+
+.empty-state h4 {
+  font-family: "Fredoka", sans-serif;
+  margin-bottom: 1rem;
+  color: #3a2c17;
+  font-size: 20px;
+}
+
+.empty-state p {
+  margin-bottom: 1.5rem;
+  font-size: 16px;
+}
+
+.empty-state .book-action-btn {
+  width: auto;
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+/* ==========================
+   Expand/Collapse Functionality - COMPLETELY FIXED
+========================== */
+
+/* Expanded section styling */
+.book-section.expanded {
+    background: rgba(248, 249, 250, 0.8);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border: 2px solid rgba(183, 143, 92, 0.2);
+    transition: all 0.3s ease;
+}
+
+.book-section.expanded .section-title {
+    color: #b78f5c;
+    border-bottom: 2px solid #b78f5c;
+    padding-bottom: 0.5rem;
+}
+
+/* FIXED: Let Bootstrap handle the grid completely */
+/* No grid overrides - Bootstrap's row/col system will work naturally */
+
+/* View All button states */
+.view-all-btn.loading {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+.view-all-btn.show-less {
+    background: #a57d4a;
+    color: white;
+}
+
+.view-all-btn.show-less:hover {
+    background: #8a6a3f;
+}
+
+/* Smooth transitions for expansion */
+.book-section {
+    transition: all 0.3s ease;
+}
+
+#booksContainer .row {
+    transition: all 0.3s ease;
+}
+
+/* Loading spinner in button */
+.view-all-btn .spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* FIXED: Ensure proper spacing in expanded view */
+.book-section.expanded .row {
+    margin: 0 -0.5rem;
+}
+
+.book-section.expanded .col-xl-3,
+.book-section.expanded .col-lg-4, 
+.book-section.expanded .col-md-6,
+.book-section.expanded .col-sm-6 {
+    padding: 0.5rem;
+}
+
+/* ==========================
+   Book Details Modal Styling
+========================== */
+
+#bookDetailsModal .modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+#bookDetailsModal .modal-header {
+    background: linear-gradient(135deg, #f8f5f0 0%, #ececec 100%);
+    border-bottom: 2px solid #b78f5c;
+    border-radius: 20px 20px 0 0;
+    padding: 1.5rem 2rem;
+}
+
+#bookDetailsModal .modal-title {
+    font-family: "Fredoka", sans-serif;
+    color: #3a2c17;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+#bookDetailsModal .modal-body {
+    padding: 2rem;
+    background: #fff;
+}
+
+#bookDetailsModal .modal-footer {
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    border-radius: 0 0 20px 20px;
+    padding: 1.5rem 2rem;
+}
+
+/* Book details content styling */
+.book-details-image {
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.book-details-image:hover {
+    transform: scale(1.02);
+}
+
+.book-details-title {
+    font-family: "Fredoka", sans-serif;
+    color: #3a2c17;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.book-details-author {
+    color: #b78f5c;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.book-details-section {
+    margin-bottom: 1.5rem;
+}
+
+.book-details-section h6 {
+    color: #3a2c17;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    border-bottom: 2px solid #b78f5c;
+    padding-bottom: 0.25rem;
+    display: inline-block;
+}
+
+.book-details-section p {
+    color: #5a4d3e;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.book-details-genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.genre-badge {
+    background: linear-gradient(135deg, #b78f5c, #a57d4a);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(183, 143, 92, 0.3);
+}
+
+.book-details-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #3a2c17;
+}
+
+.book-details-rating .stars {
+    color: #FFD700;
+    font-size: 1.2rem;
+}
+
+.book-details-status {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+/* Modal action buttons */
+.modal-action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.modal-action-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    text-align: center;
+}
+
+.modal-action-btn.primary {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.modal-action-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.modal-action-btn.secondary {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+}
+
+.modal-action-btn.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+.modal-action-btn.outline {
+    background: transparent;
+    border: 2px solid #b78f5c;
+    color: #b78f5c;
+}
+
+.modal-action-btn.outline:hover {
+    background: #b78f5c;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.modal-action-btn:disabled {
+    background: #6c757d !important;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading animation for modal */
+.modal-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #b78f5c;
+}
+
+.modal-loading .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    color: #b78f5c;
+}
+
+/* Hover effects for book cards in expanded view */
+.book-section.expanded .book-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+/* Animation for modal entrance */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal.fade .modal-dialog {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Scrollbar styling for modal */
+#bookDetailsModal .modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+#bookDetailsModal .modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+#bookDetailsModal .modal-body::-webkit-scrollbar-thumb {
+    background: #b78f5c;
+    border-radius: 10px;
+}
+
+#bookDetailsModal .modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a57d4a;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .book-card .card-img-top {
+        height: 200px;
+    }
+}
+
+@media (max-width: 992px) {
+    #bookDetailsModal .modal-lg {
+        max-width: 95%;
+        margin: 1rem auto;
+    }
+    
+    .book-details-title {
+        font-size: 1.5rem;
+    }
+    
+    .modal-action-buttons {
+        justify-content: center;
+    }
+    
+    .modal-action-btn {
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nr-main {
+        padding: 20px;
+    }
+    
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .book-card .card-img-top {
+        height: 180px;
+    }
+    
+    .book-card .card-body {
+        padding: 1rem;
+    }
+    
+    .book-card .card-title {
+        font-size: 15px;
+    }
+    
+    .book-card .card-text {
+        font-size: 13px;
+    }
+    
+    .book-action-buttons {
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .book-action-btn {
+        font-size: 10px;
+        padding: 6px 8px;
+    }
+    
+    /* Expanded section mobile adjustments */
+    .book-section.expanded {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Mobile modal adjustments */
+    #bookDetailsModal .modal-body {
+        padding: 1.5rem;
+    }
+    
+    .modal-action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .modal-action-btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .book-details-section {
+        margin-bottom: 1rem;
+    }
+    
+    .book-details-title {
+        font-size: 1.3rem;
+    }
+    
+    .book-details-author {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .book-card .card-img-top {
+        height: 160px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+    }
+    
+    .view-all-btn {
+        padding: 6px 16px;
+        font-size: 13px;
+    }
+    
+    /* Mobile book details */
+    .book-details-title {
+        font-size: 1.3rem;
+    }
+    
+    .book-details-author {
+        font-size: 1rem;
+    }
+    
+    #bookDetailsModal .modal-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    #bookDetailsModal .modal-footer {
+        padding: 1rem 1.5rem;
+    }
+    
+    /* Expanded section small screen adjustments */
+    .book-section.expanded {
+        padding: 0.5rem;
+    }
+    
+    .book-section.expanded .section-title {
+        font-size: 18px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .view-all-btn,
+    .book-action-buttons {
+        display: none !important;
+    }
+    
+    .book-card {
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+}

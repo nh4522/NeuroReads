@@ -1,0 +1,224 @@
+<!-- myapp/templates/myapp/explore.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NeuroReads — Explore</title>
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+<!-- Common CSS -->
+<link rel="stylesheet" href="{% static 'myapp/css/user_common.css' %}">
+<!-- Explore Specific CSS -->
+<link rel="stylesheet" href="{% static 'myapp/css/explore.css' %}">
+</head>
+
+<body>
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- Topbar (Common) -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <a href="{% url 'user_home' %}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column;">
+          <div class="nr-logo">NeuroReads</div>
+          <div class="nr-subtitle">Pages & Peace</div>
+        </a>
+      </div>
+      <div class="nr-search">
+        <div class="nr-search-container">
+          <input type="text" class="nr-search-input" placeholder="Search books, authors, genres...">
+          <button class="nr-search-btn">🔍</button>
+          <div class="nr-search-loading"></div>
+          <div class="nr-search-suggestions"></div>
+        </div>
+      </div>
+      <div class="nr-user-info">
+        <button title="notification" class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+          {% if user.profile_picture %}
+            <img src="{{ user.profile_picture }}" alt="User" class="nr-user-avatar" id="topbarUserAvatar">
+          {% else %}
+            <img src="{% static 'myapp/icons/top-user.png' %}" alt="User" class="nr-user-avatar" id="topbarUserAvatar">
+          {% endif %}
+          <span class="nr-username" id="topbarUsername">
+            {% if user %}{{ user.username }}{% else %}User XYZ{% endif %}
+          </span>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div class="nr-dropdown" id="userDropdown">
+          <ul>
+            <li><a href="{% url 'profile' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> My Profile</a></li>
+            <li class="nr-dropdown-divider"></li>
+            <li><button id="logoutBtn"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Log Out</button></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sidebar (Common) -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="{% url 'user_home' %}"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Home</a></li>
+          <li><a href="{% url 'explore' %}" class="active"><img src="{% static 'myapp/icons/explore.png' %}" alt=""> Explore</a></li>
+          <li><a href="{% url 'user_books' %}"><img src="{% static 'myapp/icons/books.png' %}" alt=""> My Books</a></li>
+          <li><a href="{% url 'search' %}"><img src="{% static 'myapp/icons/search.png' %}" alt=""> Search</a></li>
+          <li><a href="{% url 'profile_settings' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> Settings</a></li>
+        </ul>
+      </nav>
+
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- Main Content (Explore Specific) -->
+    <main class="nr-main">
+      <div class="container-fluid">
+        
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading books...</span>
+          </div>
+          <p class="mt-2">Loading books from NeuroReads...</p>
+        </div>
+
+        <!-- Books will be loaded here dynamically -->
+        <div id="booksContainer" style="display: none;">
+          
+          <!-- Featured This Season -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">Featured This Season</h3>
+              <button class="btn view-all-btn" data-section="featuredSeason">View All</button>
+            </div>
+            <div id="featuredSeason" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Best Sellers This Year -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">Best Sellers This Year</h3>
+              <button class="btn view-all-btn" data-section="bestSellers">View All</button>
+            </div>
+            <div id="bestSellers" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- New Releases -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">New Releases</h3>
+              <button class="btn view-all-btn" data-section="newReleases">View All</button>
+            </div>
+            <div id="newReleases" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Classics Revisited -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">Classics Revisited</h3>
+              <button class="btn view-all-btn" data-section="classics">View All</button>
+            </div>
+            <div id="classics" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Quick Reads -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">Quick Reads</h3>
+              <button class="btn view-all-btn" data-section="quickReads">View All</button>
+            </div>
+            <div id="quickReads" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Trending on Social Media -->
+          <div class="book-section mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">Trending on Social Media</h3>
+              <button class="btn view-all-btn" data-section="trending">View All</button>
+            </div>
+            <div id="trending" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- All Books Section - AT THE BOTTOM -->
+          <div class="book-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="section-title m-0">All Books</h3>
+              <button class="btn view-all-btn" data-section="allBooks">View All</button>
+            </div>
+            <div id="allBooks" class="row g-4">
+              <!-- Books inserted dynamically by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="text-center py-5" style="display: none;">
+          <div class="empty-state">
+            <h4>Unable to load books</h4>
+            <p>Please try refreshing the page or check your connection.</p>
+            <button class="book-action-btn" onclick="loadBooks()">Try Again</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<!-- Book Details Modal -->
+<div class="modal fade" id="bookDetailsModal" tabindex="-1" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookDetailsModalLabel">Book Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="bookDetailsContent">
+        <!-- Book details will be loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <div id="bookActionButtons">
+          <!-- Action buttons will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSRF Token for AJAX requests -->
+{% csrf_token %}
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Common JavaScript -->
+<script src="{% static 'myapp/js/user_common.js' %}"></script>
+<!-- Logout JavaScript -->
+<script src="/static/myapp/js/logout.js"></script>
+<!-- Explore Specific JavaScript -->
+<script src="{% static 'myapp/js/explore.js' %}"></script>
+</body>
+</html>

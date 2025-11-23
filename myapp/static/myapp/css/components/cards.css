@@ -1,0 +1,148 @@
+/* Cards Component Styles */
+.stats-card, .currently-reading-card, .friends-activity-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.stats-card:hover, .currently-reading-card:hover, .friends-activity-card:hover {
+    transform: translateY(-2px);
+}
+
+.stats-card .card-title, 
+.currently-reading-card .card-title,
+.friends-activity-card .card-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: linear-gradient(135deg, #b78f5c 0%, #a67c52 100%);
+    color: white;
+}
+
+.stat-item:hover .stat-number,
+.stat-item:hover .stat-label {
+    color: white;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #b78f5c;
+    margin-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Currently Reading */
+.currently-reading-card .card-body {
+    padding: 25px;
+}
+
+.book-cover-sm {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Friends Activity */
+.friends-activity-card .card-body {
+    padding: 25px;
+}
+
+.friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.friend-activity {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.friend-activity:hover {
+    background: #e9ecef;
+}
+
+.friend-activity-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #b78f5c;
+}
+
+.friend-activity-content {
+    flex: 1;
+}
+
+.friend-activity-text {
+    font-size: 0.9rem;
+    color: #2c3e50;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.friend-activity-text strong {
+    color: #b78f5c;
+}
+
+.friend-activity-time {
+    font-size: 0.75rem;
+    color: #7f8c8d;
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+/* Progress Bar */
+.progress {
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #b78f5c, #d4b18a);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}

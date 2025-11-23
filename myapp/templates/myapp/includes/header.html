@@ -1,0 +1,32 @@
+<!-- myapp/templates/myapp/includes/header.html -->
+{% load static %}
+<header class="nr-topbar">
+    <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Connect Through Books</div>
+    </div>
+    
+    {% if user %}
+    <div class="nr-user-info">
+        <button class="nr-notification-btn">🔔</button>
+        <div class="nr-user-profile" id="userProfile">
+            <img src="{% static 'icons/top-user.png' %}" alt="User" class="nr-user-avatar">
+            <span class="nr-username">{{ user.full_name }}</span>
+        </div>
+        
+        <div class="nr-dropdown" id="userDropdown">
+            <ul>
+                <li><a href="{% url 'profile' %}">👤 Profile</a></li>
+                <li><a href="#">📚 My Library</a></li>
+                <li><a href="#">⚙️ Settings</a></li>
+                <li class="nr-dropdown-divider"></li>
+                <li><a href="{% url 'logout' %}" id="logoutBtn">🚪 Logout</a></li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="nr-user-info">
+        <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Login</a>
+    </div>
+    {% endif %}
+</header>

@@ -1,0 +1,374 @@
+{% extends 'myapp/admin/admin_base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'myapp/css/admin/admin_common.css' %}">
+<link rel="stylesheet" href="{% static 'myapp/css/admin/admin_dashboard.css' %}">
+<style>
+    .admin-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        margin-left: 8px;
+    }
+    .stats-grid {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Dashboard Actions Button Styles */
+    .nr-dashboard-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .nr-dashboard-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nr-dashboard-btn img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .btn-export {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .btn-export:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-add-admin {
+        background: #28a745;
+        color: white;
+    }
+
+    .btn-add-admin:hover {
+        background: #218838;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="nr-wrapper">
+  <div class="nr-page">
+
+    <!-- topbar -->
+    <header class="nr-topbar">
+      <div class="nr-logo-container">
+        <div class="nr-logo">NeuroReads</div>
+        <div class="nr-subtitle">Admin Dashboard</div>
+      </div>
+      <div class="nr-search">
+        <input type="search" placeholder="🔎  Search books, users, reports...">
+      </div>
+      <div class="nr-user-info">
+  <button class="nr-notification-btn">🔔</button>
+  <div class="nr-user-profile" id="userProfile">
+    <img src="{% static 'myapp/icons/top-user.png' %}" alt="User Avatar" class="nr-user-avatar">
+    <span class="nr-username">{{ user.full_name }}</span>
+  </div>
+  
+  <!-- Dropdown Menu -->
+  <div class="nr-dropdown" id="userDropdown">
+    <ul>
+      <li><a href="{% url 'admin_profile' %}">
+        <img src="{% static 'myapp/icons/settings.png' %}" alt="Settings"> My Profile
+      </a></li>
+      <li><a href="{% url 'admin_account' %}">
+        <img src="{% static 'myapp/icons/books.png' %}" alt="Books"> Account Settings
+      </a></li>
+      <li class="nr-dropdown-divider"></li>
+      <li><a href="{% url 'user_home' %}">
+        <img src="{% static 'myapp/icons/home.png' %}" alt="Home"> User View
+      </a></li>
+      <li><button id="logoutBtn" class="logout-btn">
+        <img src="{% static 'myapp/icons/home.png' %}" alt="Logout"> Log Out
+      </button></li>
+    </ul>
+  </div>
+</div>
+    </header>
+
+    <!-- sidebar -->
+    <aside class="nr-sidebar">
+      <nav class="nr-side-nav">
+        <ul>
+          <li><a href="{% url 'admin_dashboard' %}" class="active">
+            <img src="{% static 'myapp/icons/explore.png' %}" alt="Dashboard"> <span>Dashboard</span>
+          </a></li>
+          <li><a href="{% url 'admin_books' %}">
+            <img src="{% static 'myapp/icons/books.png' %}" alt="Books"> <span>Books</span>
+          </a></li>
+          <li><a href="{% url 'admin_users' %}">
+            <img src="{% static 'myapp/icons/home.png' %}" alt="Users"> <span>User Management</span>
+          </a></li>
+          <li><a href="{% url 'admin_moderation' %}">
+            <img src="{% static 'myapp/icons/search.png' %}" alt="Moderation"> <span>Moderation</span>
+          </a></li>
+          <li><a href="{% url 'admin_reports' %}">
+            <img src="{% static 'myapp/icons/report.png' %}" alt="Reports"> <span>Reports</span>
+          </a></li>
+          <li><a href="{% url 'admin_contacts' %}">
+            <img src="{% static 'myapp/icons/contact.png' %}" alt="Contacts"> <span>Contacts</span>
+          </a></li>
+          <li><a href="{% url 'admin_settings' %}">
+            <img src="{% static 'myapp/icons/settings.png' %}" alt="Settings"> <span>System Settings</span>
+          </a></li>
+        </ul>
+      </nav>
+      <div class="nr-side-bottom">
+        <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+      </div>
+    </aside>
+
+    <!-- main content -->
+    <main class="nr-main">
+      <!-- Dashboard Header -->
+      <div class="nr-dashboard-header">
+        <div class="nr-dashboard-title">
+          <h1>Admin Dashboard</h1>
+          <p>Welcome back, {{ user.full_name }}! Here's what's happening with your library today.</p>
+        </div>
+        <!-- CORRECT BUTTON PLACEMENT - Add Admin button to the LEFT of Export Data -->
+        <div class="nr-dashboard-actions">
+            <button class="nr-dashboard-btn btn-add-admin" id="addAdminBtn">
+                <img src="{% static 'myapp/icons/add-user.png' %}" alt="Add Admin">
+                Add Admin
+            </button>
+            <button class="nr-dashboard-btn btn-export" id="exportDataBtn">
+                <img src="{% static 'myapp/icons/export.png' %}" alt="Export">
+                Export Data
+            </button>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="nr-stats-grid row g-4 stats-grid">
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">👥</div>
+                <span class="badge bg-success">+0</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Total Users</div>
+              <div class="nr-stat-value h3 text-primary" id="totalUsers">0</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> <span id="newUsersToday">0</span> new today
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">📚</div>
+                <span class="badge bg-success">+0</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Total Books</div>
+              <div class="nr-stat-value h3 text-primary" id="totalBooks">0</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> <span id="newBooksToday">0</span> new today
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">📖</div>
+                <span class="badge bg-info">Active</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Books Read</div>
+              <div class="nr-stat-value h3 text-primary" id="totalBooksRead">0</div>
+              <div class="nr-stat-change text-success small">
+                <i class="bi bi-arrow-up"></i> <span id="activeReaders">0</span> active readers
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-lg-6 col-md-6">
+          <div class="nr-stat-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-stat-header d-flex justify-content-between align-items-center mb-3">
+                <div class="nr-stat-icon">👑</div>
+                <span class="badge bg-warning">Admins</span>
+              </div>
+              <div class="nr-stat-title text-muted small">Administrators</div>
+              <div class="nr-stat-value h3 text-primary" id="totalAdmins">0</div>
+              <div class="nr-stat-change text-info small">
+                <i class="bi bi-shield-check"></i> System administrators
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="nr-charts-section row g-4">
+        <div class="col-xl-8 col-lg-7">
+          <div class="nr-chart-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-chart-header d-flex justify-content-between align-items-center mb-4">
+                <div class="nr-chart-title h5 mb-0">User Activity Overview (Last 7 Days)</div>
+                <div class="nr-chart-actions btn-group">
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm active">Week</button>
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm">Month</button>
+                  <button class="nr-chart-btn btn btn-outline-secondary btn-sm">Year</button>
+                </div>
+              </div>
+              <div class="nr-chart-container">
+                <canvas id="userActivityChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-xl-4 col-lg-5">
+          <div class="nr-chart-card card border-0 shadow-sm h-100">
+            <div class="card-body">
+              <div class="nr-chart-header d-flex justify-content-between align-items-center mb-4">
+                <div class="nr-chart-title h5 mb-0">Content Distribution</div>
+              </div>
+              <div class="nr-chart-container">
+                <canvas id="contentDistributionChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Analytics Charts (Dynamically Added) -->
+      <div class="nr-charts-section row g-4" id="additionalCharts">
+        <!-- Reading Progress and Popular Books charts will be added here by JavaScript -->
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="nr-quick-actions card border-0 shadow-sm mt-4">
+        <div class="card-body">
+          <div class="nr-activity-header d-flex justify-content-between align-items-center mb-4">
+            <div class="nr-activity-title h5 mb-0">Quick Actions</div>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <a href="{% url 'admin_users' %}" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center py-3">
+                <i class="bi bi-people me-2"></i>
+                Manage Users
+              </a>
+            </div>
+            <div class="col-md-3">
+              <a href="{% url 'admin_books' %}" class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center py-3">
+                <i class="bi bi-book me-2"></i>
+                Manage Books
+              </a>
+            </div>
+            <div class="col-md-3">
+              <a href="{% url 'admin_contacts' %}" class="btn btn-outline-warning w-100 d-flex align-items-center justify-content-center py-3">
+                <i class="bi bi-envelope me-2"></i>
+                View Contacts
+              </a>
+            </div>
+            <div class="col-md-3">
+              <a href="{% url 'admin_settings' %}" class="btn btn-outline-info w-100 d-flex align-items-center justify-content-center py-3">
+                <i class="bi bi-gear me-2"></i>
+                System Settings
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Status -->
+      <div class="nr-system-status card border-0 shadow-sm mt-4">
+        <div class="card-body">
+          <div class="nr-activity-header d-flex justify-content-between align-items-center mb-4">
+            <div class="nr-activity-title h5 mb-0">System Status</div>
+            <span class="badge bg-success">All Systems Operational</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="bi bi-database text-success" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                  <div class="fw-bold">Database</div>
+                  <div class="text-muted small">Connected & Healthy</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="bi bi-server text-success" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                  <div class="fw-bold">API Server</div>
+                  <div class="text-muted small">Running Smoothly</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="bi bi-shield-check text-success" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                  <div class="fw-bold">Security</div>
+                  <div class="text-muted small">All Systems Secure</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <i class="bi bi-clock text-success" style="font-size: 1.5rem;"></i>
+                </div>
+                <div>
+                  <div class="fw-bold">Uptime</div>
+                  <div class="text-muted small">99.9% This Month</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Load admin common JS first -->
+<script src="{% static 'myapp/js/admin/admin_common.js' %}"></script>
+<script src="{% static 'myapp/js/admin/admin_dashboard.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,237 @@
+<!-- myapp/templates/myapp/search.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroReads — Advanced Search</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Kavoon&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'myapp/css/user_common.css' %}">
+    <link rel="stylesheet" href="{% static 'myapp/css/search.css' %}">
+</head>
+<body>
+    <div class="nr-wrapper">
+        <div class="nr-page">
+            <!-- Topbar -->
+            <header class="nr-topbar">
+                <div class="nr-logo-container">
+                    <div class="nr-logo">NeuroReads</div>
+                    <div class="nr-subtitle">Pages & Peace</div>
+                </div>
+                
+                <!-- Search Box -->
+                <div class="nr-search">
+                    <div class="nr-search-container">
+                        <input type="search" class="nr-search-input" placeholder="Search books, authors, or topics...">
+                        <button class="nr-search-btn">🔍</button>
+                        <div class="nr-search-suggestions"></div>
+                    </div>
+                </div>
+
+                <!-- User Info -->
+                <div class="nr-user-info">
+                    <button title="notification" class="nr-notification-btn">🔔</button>
+                    <div class="nr-user-profile" id="userProfile">
+                        <img src="{% static 'myapp/icons/top-user.png' %}" alt="User" class="nr-user-avatar">
+                        <span class="nr-username">
+                            {% if user %}{{ user.username  }}{% else %}User XYZ{% endif %}
+                        </span>
+                    </div>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="nr-dropdown" id="userDropdown">
+                        <ul>
+                            <li><a href="{% url 'profile' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> My Profile</a></li>
+                            <li class="nr-dropdown-divider"></li>
+                            <li><a href="{% url 'logout' %}" id="logoutBtn"><img src="{% static 'myapp/icons/home.png' %}" alt=""> Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Sidebar -->
+            <aside class="nr-sidebar">
+                <nav class="nr-side-nav">
+                    <ul>
+                        <li><a href="{% url 'user_home' %}"><img src="{% static 'myapp/icons/home.png' %}" alt=""> <span>Home</span></a></li>
+                        <li><a href="{% url 'explore' %}"><img src="{% static 'myapp/icons/explore.png' %}" alt=""> <span>Explore</span></a></li>
+                        <li><a href="{% url 'user_books' %}"><img src="{% static 'myapp/icons/books.png' %}" alt=""> <span>My Books</span></a></li>
+                        <li><a href="{% url 'search' %}" class="active"><img src="{% static 'myapp/icons/search.png' %}" alt=""> <span>Search</span></a></li>
+                        <li><a href="{% url 'profile_settings' %}"><img src="{% static 'myapp/icons/settings.png' %}" alt=""> <span>Settings</span></a></li>
+                    </ul>
+                </nav>
+                <div class="nr-side-bottom">
+                    <div style="font-size:12px;color:#9b8f86;">© Devcrafters Inc.</div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="nr-main">
+                <div class="search-page-container">
+                    <h2 class="search-page-title">Advanced Search</h2>
+
+                    <!-- Main Search Bar -->
+                    <div class="search-main-container">
+                        <div class="search-main-input-container">
+                            <input type="search" class="search-main-input" placeholder="🔍 Search by Title, Author, ISBN, or Keywords...">
+                            <button class="apply-btn" id="mainSearchBtn">Search</button>
+                        </div>
+                    </div>
+
+                    <!-- Filter Sections -->
+                    <div class="filter-section">
+                        <h5 class="section-title">Language</h5>
+                        <div class="checkbox-group" id="languageGroup">
+                            <div class="checkbox-item lang-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="lang-en">
+                                <label for="lang-en">English</label>
+                            </div>
+                            <div class="checkbox-item lang-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="lang-cn">
+                                <label for="lang-cn">Chinese</label>
+                            </div>
+                            <div class="checkbox-item lang-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="lang-bn">
+                                <label for="lang-bn">Bangla</label>
+                            </div>
+                            <div class="checkbox-item lang-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="lang-es">
+                                <label for="lang-es">Spanish</label>
+                            </div>
+                            <div class="checkbox-item lang-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="lang-fr">
+                                <label for="lang-fr">French</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <h5 class="section-title">Genre</h5>
+                        <div class="checkbox-group" id="genreGroup">
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g1">
+                                <label for="g1">Fiction</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g2">
+                                <label for="g2">Non-Fiction</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g3">
+                                <label for="g3">Science</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g4">
+                                <label for="g4">Romance</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g5">
+                                <label for="g5">Fantasy</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g6">
+                                <label for="g6">Mystery</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g7">
+                                <label for="g7">Thriller</label>
+                            </div>
+                            <div class="checkbox-item genre-neutral" data-state="neutral">
+                                <div class="custom-checkbox"></div>
+                                <input type="checkbox" id="g8">
+                                <label for="g8">History</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sort Section -->
+                    <div class="filter-section">
+                        <h5 class="section-title">Sort Results By...</h5>
+                        <div class="sort-controls">
+                            <select id="sortBy">
+                                <option value="relevance">Relevance</option>
+                                <option value="ratings">Ratings</option>
+                                <option value="popularity">Popularity</option>
+                                <option value="year">Publication Year</option>
+                                <option value="title">Title</option>
+                            </select>
+                            <select id="orderBy">
+                                <option value="desc">Descending</option>
+                                <option value="asc">Ascending</option>
+                            </select>
+                            <button class="apply-filters-btn" id="applyFiltersBtn">
+                                Apply Filters
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" data-filter="reset">
+                            <span>🔄</span> Reset All
+                        </button>
+                        <button class="quick-action-btn" data-filter="popular">
+                            <span>🔥</span> Popular Now
+                        </button>
+                        <button class="quick-action-btn" data-filter="recent">
+                            <span>🆕</span> Recently Added
+                        </button>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div class="results-section" id="resultsSection">
+                        <div class="results-header">
+                            <h5 class="section-title">Search Results</h5>
+                            <div class="results-count" id="resultsCount"></div>
+                        </div>
+                        <div class="results-grid" id="searchResults">
+                            <!-- Results will be populated here -->
+                        </div>
+                        <div class="loading-spinner" id="loadingSpinner">
+                            <div class="spinner"></div>
+                            <p>Searching books...</p>
+                        </div>
+                        <div class="no-results" id="noResults" style="display: none;">
+                            <div class="no-results-icon">🔍</div>
+                            <h4>No books found</h4>
+                            <p>Try adjusting your search criteria or filters</p>
+                        </div>
+                        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+                            <button class="load-more-btn" id="loadMoreBtn">Load More Books</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{% static 'myapp/js/user_common.js' %}"></script>
+    <!-- Logout JavaScript -->
+    <script src="/static/myapp/js/logout.js"></script>
+    <script src="{% static 'myapp/js/search.js' %}"></script>
+</body>
+</html>

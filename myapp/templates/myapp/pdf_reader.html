@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading: {{ book.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/css/pdf_reader.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header with book info and controls -->
+    <header class="reader-header">
+        <div class="header-left">
+            <button id="closeReader" class="btn-icon" title="Close Reader">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="book-info">
+                <h1 id="bookTitle">{{ book.title }}</h1>
+                <p id="bookAuthor">By {{ book.author }}</p>
+            </div>
+        </div>
+        
+        <div class="header-center">
+            <div class="reading-progress">
+                <span id="currentPage">{{ current_page }}</span> of <span id="totalPages">{{ total_pages }}</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: {{ progress }}%"></div>
+                </div>
+                <span id="progressPercent">{{ progress }}%</span>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <button id="zoomOut" class="btn-icon" title="Zoom Out">
+                <i class="fas fa-search-minus"></i>
+            </button>
+            <button id="zoomIn" class="btn-icon" title="Zoom In">
+                <i class="fas fa-search-plus"></i>
+            </button>
+            <button id="fullscreen" class="btn-icon" title="Fullscreen">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button id="settings" class="btn-icon" title="Settings">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main reader content -->
+    <main class="reader-main">
+        <div class="reader-controls left-controls">
+            <button id="prevPage" class="nav-btn" title="Previous Page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="pdf-container">
+            <canvas id="pdfCanvas"></canvas>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading "{{ book.title }}"...</p>
+            </div>
+            <div id="error" class="error hidden">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="errorMessage">Failed to load PDF</p>
+                <button id="retryLoad">Retry</button>
+            </div>
+        </div>
+
+        <div class="reader-controls right-controls">
+            <button id="nextPage" class="nav-btn" title="Next Page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer with navigation -->
+    <footer class="reader-footer">
+        <div class="footer-controls">
+            <button id="firstPage" class="btn-secondary" title="First Page">
+                <i class="fas fa-fast-backward"></i>
+            </button>
+            <button id="prevPageFooter" class="btn-secondary" title="Previous Page">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            
+            <div class="page-input-container">
+                <input type="number" id="pageInput" min="1" value="{{ current_page }}">
+                <span>/</span>
+                <span id="totalPagesFooter">{{ total_pages }}</span>
+            </div>
+            
+            <button id="nextPageFooter" class="btn-secondary" title="Next Page">
+                <i class="fas fa-step-forward"></i>
+            </button>
+            <button id="lastPage" class="btn-secondary" title="Last Page">
+                <i class="fas fa-fast-forward"></i>
+            </button>
+        </div>
+        
+        <div class="reading-stats">
+            <span id="readingTime">Reading time: 0min</span>
+            <span id="lastSaved">Last saved: Just now</span>
+        </div>
+    </footer>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Reading Settings</h3>
+                <button id="closeSettings" class="btn-icon">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="themeSelect">Theme:</label>
+                    <select id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="sepia">Sepia</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="fontSize">Zoom Level:</label>
+                    <input type="range" id="fontSize" min="50" max="200" value="100">
+                    <span id="fontSizeValue">100%</span>
+                </div>
+                <div class="setting-group">
+                    <label for="pageFit">Page Fit:</label>
+                    <select id="pageFit">
+                        <option value="auto">Auto Fit</option>
+                        <option value="width">Fit to Width</option>
+                        <option value="height">Fit to Height</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        // Pass data from Django to JavaScript
+        const BOOK_DATA = {
+            id: "{{ book.id }}",
+            title: "{{ book.title|escapejs }}",
+            author: "{{ book.author|escapejs }}",
+            pdf_url: "{{ book.pdf_url }}",
+            current_page: parseInt("{{ current_page }}"),
+            total_pages: parseInt("{{ total_pages }}"),
+            progress: parseInt("{{ progress }}")
+        };
+        
+        console.log('📖 Book Data:', BOOK_DATA);
+    </script>
+    <script src="{% static 'myapp/js/pdf_reader.js' %}"></script>
+</body>
+</html>

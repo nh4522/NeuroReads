@@ -1,0 +1,111 @@
+<!-- myapp/templates/myapp/login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | NeuroReads</title>
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-card">
+      <!-- Added logo/branding -->
+      <div class="auth-header">
+        <h1 class="auth-logo">NeuroReads</h1>
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Log in to your NeuroReads account</p>
+      </div>
+
+      <!-- Messages Display -->
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="input-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="input-group password-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+          <span class="toggle-password" data-target="loginPassword">👁️</span>
+        </div>
+
+        <!-- Remember me checkbox -->
+        <div class="remember-me">
+          <input type="checkbox" id="rememberMe" name="remember_me">
+          <label for="rememberMe">Remember me</label>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <span class="btn-text">Log in</span>
+          <span class="btn-loading" style="display: none;">Logging in...</span>
+        </button>
+
+        <!-- Error message container -->
+        {% if form.errors %}
+        <div class="error-message">
+          Invalid email or password. Please try again.
+        </div>
+        {% endif %}
+
+        <!-- Forgot Password link -->
+        <div class="forgot-password">
+          <a href="{% url 'forgot_password' %}">Forgot your password?</a>
+        </div>
+      </form>
+
+      <!-- Social login options -->
+      <div class="social-login">
+        <div class="divider">
+          <span>Or continue with</span>
+        </div>
+        <div class="social-buttons">
+          <button type="button" class="social-btn google-btn">
+            <img src="{% static 'myapp/icons/google.png' %}" alt="Google" class="social-icon">
+            <span>Google</span>
+          </button>
+          <button type="button" class="social-btn facebook-btn">
+            <img src="{% static 'myapp/icons/facebook.png' %}" alt="Facebook" class="social-icon">
+            <span>Facebook</span>
+          </button>
+        </div>
+      </div>
+
+      <p class="footer-text">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <p class="text-muted">
+        Admin access? 
+        <a href="#" id="adminLoginHint" class="text-warning">
+            <i class="bi bi-shield-lock"></i> Use admin credentials
+        </a>
+    </p>
+</div>
+
+<script>
+document.getElementById('adminLoginHint').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('id_email').value = 'admin@neuroreads.com';
+    document.getElementById('id_password').value = 'admin123';
+    document.getElementById('id_email').focus();
+});
+</script>
+
+  <!-- JavaScript -->
+  <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+</html>
